@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Ionic Blank
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  dsfasdjfjadfjadsfjadsf
+  <ion-card *ngIf="user">
+    <ion-card-header>{{ user.name }}</ion-card-header>
+    <img [src]="user.picture" />
+    <ion-card-content>
+      <p>Email: {{ user.email }}</p>
+      <p>First Name: {{ user.name }}</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

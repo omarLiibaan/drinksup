@@ -1,5 +1,7 @@
 {
   "name": "drinksupApp",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

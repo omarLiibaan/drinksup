@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>register</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+<!--  <ion-list>
+    <ion-item>
+      <ion-label>Nom</ion-label>
+      <ion-input type="text" [(ngModel)]="PRO_NOM"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Prénom</ion-label>
+      <ion-input type="text" [(ngModel)]="PRO_PRENOM"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Email</ion-label>
+      <ion-input type="email" [(ngModel)]="PRO_EMAIL"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Password</ion-label>
+      <ion-input type="password" [(ngModel)]="PRO_PASSWORD"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Confirm password</ion-label>
+      <ion-input type="password" [(ngModel)]="CONFIRM_PRO_PASSWORD"></ion-input>
+    </ion-item>
+    <div>
+      <div padding>
+        <ion-button type="submit" color="danger" expand="full" (click)="addProprio()">Enregistrer</ion-button>
+        <ion-button color="light" expand="full" (click)="formLogin()">Sign in</ion-button>
+      </div>
+    </div>
+  </ion-list>-->
+  <form [formGroup]="enregistrerForm" (ngSubmit)="addProprio()">
+    <ion-input type="text" placeholder="Nom" formControlName="PRO_NOM"></ion-input>
+    <ion-input type="text" placeholder="Prénom" formControlName="PRO_PRENOM"></ion-input>
+    <ion-input type="email" placeholder="E-mail" formControlName="PRO_EMAIL"></ion-input>
+    <ion-item *ngIf="!enregistrerForm .controls.PRO_EMAIL.valid && (enregistrerForm .controls.PRO_EMAIL.dirty)"> <p>Please enter a valid email.</p> </ion-item>
+    <ion-input type="password" placeholder="Mot de passe" formControlName="PRO_PASSWORD"></ion-input>
+    <ion-input type="password" placeholder="Confirmer mot de passe" formControlName="CONFIRM_PRO_PASSWORD"></ion-input>
+    <ion-button type="submit" color="dark" [disabled]="!enregistrerForm.valid">Enregistrer</ion-button>
+    <ion-button color="light" expand="full" (click)="formLogin()">Sign in</ion-button>
+  </form>
+
+</ion-content>

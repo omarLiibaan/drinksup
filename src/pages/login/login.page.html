@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label>Email</ion-label>
+      <ion-input type="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Password</ion-label>
+      <ion-input type="password"></ion-input>
+    </ion-item>
+  </ion-list>
+  <div padding>
+    <ion-button color="light" expand="full" (click)="formRegister()">Register</ion-button>
+    <ion-button color="danger" expand="full">Sign in</ion-button>
+    <ion-button (click)="loginWithFB()">Login with Facebook</ion-button>
+
+
+  </div>
+
+  <ion-card *ngIf="userData">
+    <ion-card-header>{{ userData.username }}</ion-card-header>
+    <img [src]="userData.picture" />
+    <ion-card-content>
+      <p>Email: {{ userData.email }}</p>
+      <p>First Name: {{ userData.first_name }}</p>
+
+    </ion-card-content>
+  </ion-card>
+</ion-content>

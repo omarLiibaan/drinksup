@@ -57,7 +57,7 @@ export class RegisterPage implements OnInit {
 
         this.http.post(url, JSON.stringify(options), headers).subscribe((data: any) => {
                 this.sendNotification('Félicitations!');
-                this.navCtrl.navigateForward('login');
+                this.formLogin();
             },
             (error: any) => {
                 console.log(error);
@@ -68,38 +68,6 @@ export class RegisterPage implements OnInit {
   ngOnInit() {
   }
     formLogin() {this.navCtrl.navigateForward('login'); }
-    /*addProprio() {
-      // Validation des champs
-      if (this.PRO_NOM === '') {
-          this.toastMessage('Le nom est requis');
-      } else if (this.PRO_PRENOM === '') {
-          this.toastMessage('Le prénom est requis');
-      } else if (this.PRO_EMAIL === '') {
-          this.toastMessage('Adresse mail est requis');
-      } else if (this.PRO_PASSWORD === '') {
-          this.toastMessage('Le mot de passe est requis');
-      } else if (this.PRO_PASSWORD !== this.CONFIRM_PRO_PASSWORD) {
-          this.toastMessage('Mot de passe invalide');
-      } else {
-        const body = {
-          PRO_NOM: this.PRO_NOM,
-          PRO_PRENOM: this.PRO_PRENOM,
-          PRO_EMAIL: this.PRO_EMAIL,
-          PRO_PASSWORD: this.PRO_PASSWORD,
-          aksi: 'add_proprio'
-        };
-        this.postProvider.postData(body, 'aksi.php').subscribe( (data) => {
-            const alertpesan = 'error';
-            console.log(body);
-            if (data) {
-                this.navCtrl.navigateForward('login');
-                this.toastMessage('Enregistrement validé');
-            } else {
-                this.toastMessage(alertpesan);
-            }
-        });
-      }
-    }*/
 
     async sendNotification(msg: string) {
         const toast = await this.toastCtrl.create({

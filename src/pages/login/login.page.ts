@@ -13,7 +13,7 @@ import {Router} from '@angular/router';
 export class LoginPage implements OnInit {
     userData: any;
     public loginForm: FormGroup;
-    public baseURI = 'http://localhost/drinksupProject/serveur/';
+    public baseURI = 'https://macfi.ch/serveur/';
     roleUser = 'user';
     roleAdmin = 'admin';
     roleProprio = 'proprio';

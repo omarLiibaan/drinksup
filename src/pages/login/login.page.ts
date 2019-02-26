@@ -4,6 +4,8 @@ import {NavController, ToastController} from '@ionic/angular';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { Storage } from '@ionic/storage';
 
 @Component({
     selector: 'app-login',
@@ -12,14 +14,18 @@ import {Router} from '@angular/router';
 })
 export class LoginPage implements OnInit {
     userData: any;
-    public loginForm: FormGroup;
-    public baseURI = 'https://macfi.ch/serveur/';
+    loginForm: FormGroup;
+    baseURI = 'https://macfi.ch/serveur/';
+    userGooglePlus : any = {};
+    userDetails : any;
+    userSessionId : string;
+    userSessionRole : string;
     // public baseURI = 'http://localhost/drinksupProject/serveur/';
     roleUser = 'user';
     roleAdmin = 'admin';
     roleProprio = 'proprio';
 
-    constructor(private route: Router, private formBuilder: FormBuilder, private navCtrl: NavController, private fb: Facebook, private toastCtrl: ToastController, public http: HttpClient) {
+    constructor(private route: Router, private formBuilder: FormBuilder, private navCtrl: NavController, private fb: Facebook, private googlePlus : GooglePlus, private toastCtrl: ToastController, public http: HttpClient, private storage: Storage) {
         this.loginForm = new FormGroup({
             PRO_EMAIL: new FormControl(),
             PRO_PASSWORD: new FormControl(),
@@ -34,6 +40,21 @@ export class LoginPage implements OnInit {
     }
 
     ngOnInit() {
+        this.storage.get('SessionRoleKey').then((val) => {
+            this.userSessionRole = val;
+        });
+
+        this.storage.get('SessionInKey').then((val) => {
+            if(val=='Yes' && this.userSessionRole == this.roleAdmin){
+                this.navTabs('/tabsadmin/users');
+            }else if(val=='Yes' && this.userSessionRole == this.roleProprio){
+                this.navTabs('/tabsproprio/bar');
+            }else if(val=='Yes' && this.userSessionRole == this.roleUser){
+                this.navTabs('/tabs/offers');
+            }else{
+                return null;
+            }
+        });
     }
     formRegister() {
         this.navCtrl.navigateForward('register');
@@ -47,6 +68,15 @@ export class LoginPage implements OnInit {
         });
     }
 
+    loginWithGoogle() {
+        this.googlePlus.login({})
+        .then(res => {
+          this.userGooglePlus = res;
+          console.log(res)
+        })
+        .catch(err => console.error(err));    
+    }
+
     LoginForUsers(PRO_EMAIL: string, PRO_PASSWORD: string) {
         const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
             options: any		= { 'key' : 'seLoguerUser', 'PRO_EMAIL' : PRO_EMAIL, 'PRO_PASSWORD' : PRO_PASSWORD},
@@ -54,18 +84,23 @@ export class LoginPage implements OnInit {
 
         this.http.post(url, JSON.stringify(options), headers).subscribe((data: any) =>
             {
-                console.log(data);
-                if (data === this.roleAdmin) {
+                this.userDetails = data;
+                this.storage.set('SessionIdKey', this.userDetails.ID);
+                this.storage.set('SessionInKey', 'Yes');
+                if (this.userDetails.ROLE === this.roleAdmin) {
                     this.navTabs('/tabsadmin/users');
+                    this.storage.set('SessionRoleKey', this.roleAdmin);
                     this.sendNotification('Bienvenue !');
-                } else if (data === this.roleProprio) {
+                } else if (this.userDetails.ROLE === this.roleProprio) {
                     this.navTabs('/tabsproprio/bar');
+                    this.storage.set('SessionRoleKey', this.roleProprio);
                     this.sendNotification('Bienvenue !');
-                } else if (data === this.roleUser) {
+                } else if (this.userDetails.ROLE === this.roleUser) {
                     this.navTabs('/tabs/offers');
+                    this.storage.set('SessionRoleKey', this.roleUser);
                     this.sendNotification('Bienvenue !');
                 } else {
-                    console.log(JSON.stringify(options));
+                    // console.log(JSON.stringify(options));
                     this.sendNotification('Email ou mot de passe erroné');
                 }
             },

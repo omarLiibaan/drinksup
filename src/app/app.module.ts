@@ -11,13 +11,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { IonicStorageModule} from '@ionic/storage';
 import { HttpClientModule } from '@angular/common/http';
 import {Facebook} from '@ionic-native/facebook/ngx';
-import { GooglePlus } from '@ionic-native/google-plus/ngx' 
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import {UsersPageModule} from '../pages/users/users.module';
+import {ModalPageModule} from '../pages/modal/modal.module';
 
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, IonicStorageModule.forRoot(), HttpClientModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, IonicStorageModule.forRoot(), HttpClientModule, UsersPageModule, ModalPageModule],
   providers: [
     StatusBar,
     SplashScreen,

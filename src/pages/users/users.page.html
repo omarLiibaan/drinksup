@@ -5,14 +5,22 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+            pullingIcon="arrow-dropdown"
+            pullingText="Pull to refresh"
+            refreshingSpinner="circles"
+            refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-list>
     <ion-item-sliding *ngFor="let user of users">
       <ion-item >
         <ion-label>{{user.INT_PRENOM}} {{user.INT_NOM}} </ion-label>
       </ion-item>
       <ion-item-options side="start">
-        <ion-item-option (click)="edit(user.INT_ID)">Edit</ion-item-option>
-        <ion-item-option color="danger" (click)="delete(item)">Delete</ion-item-option>
+        <ion-item-option (click)="edit(user.INT_ID, user.INT_PRENOM, user.INT_NOM, user.INT_EMAIL, user.ROL_TYPES)">Edit</ion-item-option>
+        <ion-item-option color="danger" (click)="delete(user.INT_ID, user.INT_NOM)">Delete</ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>

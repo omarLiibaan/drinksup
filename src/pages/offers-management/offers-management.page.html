@@ -5,5 +5,13 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-item>
+    <ion-label>
+      <strong style="color:black">Quel jour ?</strong>
+    </ion-label>
+    <ion-select value="" (ionChange)="showList()">
+      <ion-select-option *ngFor="let day of days" value="{{day}}" >{{day}}</ion-select-option>
+    </ion-select>
+  </ion-item>
 
 </ion-content>

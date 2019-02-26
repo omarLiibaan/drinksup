@@ -12,6 +12,8 @@ const routes: Routes = [
   { path: 'tabsproprio/bar', loadChildren: '../pages/bar/bar.module#BarPageModule' },
   { path: 'register', loadChildren: '../pages/register/register.module#RegisterPageModule' },
 
+
+
 ];
 
 @NgModule({

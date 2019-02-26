@@ -8,8 +8,12 @@ import { Component, OnInit } from '@angular/core';
 export class OffersManagementPage implements OnInit {
 
   constructor() { }
-
+  days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche']
   ngOnInit() {
+    this.days;
+  }
+  async showList() {
+    console.log(this.days[2].toString());
   }
 
 }

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NavController } from '@ionic/angular';
-import { LoadingController } from '@ionic/angular';
 
 
 @Component({
@@ -12,30 +11,24 @@ import { LoadingController } from '@ionic/angular';
 })
 export class ProfilePage implements OnInit {
 
-  sessionId : any;
+  sessionId : string = '';
   loggedUser : any = {};
   baseURI = 'https://macfi.ch/serveur/';
 
-  constructor(public navCtrl : NavController, private storage: Storage, private http : HttpClient, private loadingCtrl : LoadingController) { 
+  constructor(public navCtrl : NavController, private storage: Storage, private http : HttpClient) { 
+    
+  }
+
+  ngOnInit() {
+
+  }
+
+  ionViewWillEnter() : void
+  {
     this.storage.get('SessionIdKey').then((val) => {
       this.sessionId = val;
     });
-
     this.loadData();
-  }
-
-  ngOnInit() {}
-
-  async presentLoading() {
-    const loading = await this.loadingCtrl.create({
-      message: 'Hellooo',
-      duration: 2000
-    });
-    await loading.present();
-
-    const { role, data } = await loading.onDidDismiss();
-
-    console.log('Loading dismissed!');
   }
 
   loadData(){

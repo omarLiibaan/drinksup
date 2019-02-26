@@ -29,7 +29,7 @@ export class AppComponent {
       
       setTimeout(() => {
         this.splashScreen.hide();
-      }, 2500);
+      }, 3000);
     });
 
     // this.storage.get('session_storage').then((res) => {

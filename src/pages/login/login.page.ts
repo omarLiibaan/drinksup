@@ -39,7 +39,8 @@ export class LoginPage implements OnInit {
         });
     }
 
-    ngOnInit() {
+    ionViewWillEnter() : void
+    {
         this.storage.get('SessionRoleKey').then((val) => {
             this.userSessionRole = val;
         });
@@ -55,6 +56,10 @@ export class LoginPage implements OnInit {
                 return null;
             }
         });
+    }
+
+    ngOnInit() {
+        
     }
     formRegister() {
         this.navCtrl.navigateForward('register');

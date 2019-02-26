@@ -9,3 +9,11 @@
 @import '~@ionic/angular/css/text-alignment.css';
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
+
+
+ion-loading.custom-loading {
+    .loading-wrapper {
+      height : 50%;
+      width : 80%;
+    }
+  }

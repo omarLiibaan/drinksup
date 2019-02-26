@@ -14,6 +14,7 @@ export class LoginPage implements OnInit {
     userData: any;
     public loginForm: FormGroup;
     public baseURI = 'https://macfi.ch/serveur/';
+    // public baseURI = 'http://localhost/drinksupProject/serveur/';
     roleUser = 'user';
     roleAdmin = 'admin';
     roleProprio = 'proprio';

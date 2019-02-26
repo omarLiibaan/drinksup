@@ -10,8 +10,8 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 })
 export class RegisterPage implements OnInit {
   public enregistrerForm: FormGroup;
-  public baseURI = 'http://localhost/drinksupProject/serveur/';
-
+  // public baseURI = 'http://localhost/drinksupProject/serveur/';
+  public baseURI = 'https://macfi.ch/serveur/';
   constructor(private formBuilder: FormBuilder, private navCtrl: NavController, private toastCtrl: ToastController, public http: HttpClient) {
     this.enregistrerForm = new FormGroup({
         PRO_NOM: new FormControl(),
@@ -68,7 +68,7 @@ export class RegisterPage implements OnInit {
   ngOnInit() {
   }
     formLogin() {this.navCtrl.navigateForward('login'); }
-
+    mdpOublier(){this.navCtrl.navigateForward('login'); }
     async sendNotification(msg: string) {
         const toast = await this.toastCtrl.create({
             message: msg,

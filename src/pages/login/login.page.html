@@ -1,21 +1,20 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content padding>
-
-  <form [formGroup]="loginForm" (ngSubmit)="loginUsers()">
+<ion-content>
+  <div style="padding:20px; text-align: center;">
+    <h1>Drinks up</h1>
+    <p>Profitez d'une boisson offerte dans les meilleurs bars de Genève</p>
+    <p>Bienvenue !!!</p>
+  </div>
+  <form [formGroup]="loginForm" (ngSubmit)="loginUsers()" style="padding:20px;">
     <ion-input type="text" placeholder="Email" formControlName="PRO_EMAIL"></ion-input>
     <ion-input type="password" placeholder="mot de passe" formControlName="PRO_PASSWORD"></ion-input>
-    <ion-button type="submit" color="dark" [disabled]="!loginForm.valid">Se connecter</ion-button>
+    <ion-button type="submit" color="dark" expand="full" [disabled]="!loginForm.valid">Se connecter</ion-button>
+    <ion-button (click)="loginWithFB()" expand="full">Se connecter via Facebook</ion-button>
+    <a type="button" (click)="mdpOublier()" style="text-decoration: underline; float:right; font-size: 10px;">Mot de passe oublié ?</a>
   </form>
-  <div padding>
-    <ion-button color="light" expand="full" (click)="formRegister()">Register</ion-button>
-    <ion-button (click)="loginWithFB()">Login with Facebook</ion-button>
+  <div style="padding:20px; padding-top: 0px ">
+    <p>Vous n'avez pas de compte ?</p>
+    <ion-button color="light" expand="full" (click)="formRegister()">Inscrivez-vous</ion-button>
   </div>
-  <h1> helloww3ww </h1>
 <!--  <ion-card *ngIf="userData">
     <ion-card-header>{{ userData.username }}</ion-card-header>
     <img [src]="userData.picture" />

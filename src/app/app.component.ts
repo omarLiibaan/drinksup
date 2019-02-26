@@ -26,15 +26,18 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      
+      setTimeout(() => {
+        this.splashScreen.hide();
+      }, 2500);
     });
 
-    this.storage.get('session_storage').then((res) => {
-      if (res == null) {
-        this.router.navigate(['login']);
-      } else {
-        this.router.navigate(['home']);
-      }
-    });
+    // this.storage.get('session_storage').then((res) => {
+    //   if (res == null) {
+    //     this.router.navigate(['login']);
+    //   } else {
+    //     this.router.navigate(['home']);
+    //   }
+    // });
   }
 }

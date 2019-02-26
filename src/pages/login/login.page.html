@@ -9,6 +9,7 @@
     <ion-input type="password" placeholder="mot de passe" formControlName="PRO_PASSWORD"></ion-input>
     <ion-button type="submit" color="dark" expand="full" [disabled]="!loginForm.valid">Se connecter</ion-button>
     <ion-button (click)="loginWithFB()" expand="full">Se connecter via Facebook</ion-button>
+    <ion-button (click)="loginWithGoogle()" expand="full" color="danger">Se connecter via Google+</ion-button>
     <a type="button" (click)="mdpOublier()" style="text-decoration: underline; float:right; font-size: 10px;">Mot de passe oublié ?</a>
   </form>
   <div style="padding:20px; padding-top: 0px ">

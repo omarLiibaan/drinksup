@@ -1,10 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-
-import { Platform, NavController } from '@ionic/angular';
+import { Platform, NavController, ToastController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { Storage} from '@ionic/storage';
-import {Router} from '@angular/router';
 
 
 @Component({
@@ -13,12 +10,12 @@ import {Router} from '@angular/router';
 })
 export class AppComponent {
   @ViewChild('content') nav: NavController;
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private storage: Storage,
-    private router: Router
+    private toastCtrl: ToastController,
   ) {
     this.initializeApp();
   }
@@ -26,18 +23,12 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
+      this.statusBar.overlaysWebView(false);
       
       setTimeout(() => {
         this.splashScreen.hide();
-      }, 3000);
-    });
+      }, 1200);
 
-    // this.storage.get('session_storage').then((res) => {
-    //   if (res == null) {
-    //     this.router.navigate(['login']);
-    //   } else {
-    //     this.router.navigate(['home']);
-    //   }
-    // });
+    });
   }
 }

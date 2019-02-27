@@ -11,9 +11,63 @@
 @import '~@ionic/angular/css/flex-utils.css';
 
 
-ion-loading.custom-loading {
-    .loading-wrapper {
-      height : 50%;
-      width : 80%;
-    }
+// ion-loading.custom-loading {
+//     .loading-wrapper {
+//       height : 50%;
+//       width : 80%;
+//     }
+//   }
+
+@font-face {
+  font-family: "PNB";
+  src: url("../src/assets/fonts/ProximaNovaBold.otf");
+}
+
+@font-face {
+  font-family: "PNL";
+  src: url("../src/assets/fonts/ProximaNovaLight.otf");
+}
+
+*{
+  font-family: "PNL";
+}
+
+ion-header{
+  background-color: #12141b;
+  background:  #12141b;
+  color : #fff;
+  
+}
+
+ion-title{
+  width: 100%;
+  text-align: center;
+  text-transform: capitalize;
+  font-size: 1rem;
+  font-family: "PNB";
+  letter-spacing: 1px;
+}
+ion-tab-bar, ion-tab-button{
+  background-color: #12141b;
+
+  ion-label, ion-icon{
+    color: rgba(255,255,255,.7);
+  } 
+
+  ion-label{
+    text-transform: capitalize;
+    font-size: .85rem;
   }
+}
+
+.tab-selected{
+  ion-label, ion-icon{
+    color: #149da7;
+  }
+}
+
+ion-ripple-effect{
+  background-color: red;
+  background: red;
+  color : red;
+}

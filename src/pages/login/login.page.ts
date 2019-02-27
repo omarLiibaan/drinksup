@@ -31,7 +31,26 @@ export class LoginPage implements OnInit {
             PRO_PASSWORD: new FormControl(),
         });
         this.validationForm();
+
+        
+
+        this.storage.get('SessionInKey').then((val) => {
+            this.storage.get('SessionRoleKey').then((valRole) => {
+                this.userSessionRole = valRole;
+
+                if(val=='Yes' && this.userSessionRole == this.roleAdmin){
+                    this.navTabs('/tabsadmin/users');
+                }else if(val=='Yes' && this.userSessionRole == this.roleProprio){
+                    this.navTabs('/tabsproprio/bar');
+                }else if(val=='Yes' && this.userSessionRole == this.roleUser){
+                    this.navTabs('/tabs/offers');
+                }else{
+                    return null;
+                }
+            });
+        });
     }
+    
     validationForm() {
         this.loginForm = this.formBuilder.group({
             'PRO_EMAIL': ['', Validators.compose([Validators.maxLength(70), Validators.pattern('^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$'), Validators.required])],
@@ -39,28 +58,8 @@ export class LoginPage implements OnInit {
         });
     }
 
-    ionViewWillEnter() : void
-    {
-        this.storage.get('SessionRoleKey').then((val) => {
-            this.userSessionRole = val;
-        });
+    ngOnInit() {}
 
-        this.storage.get('SessionInKey').then((val) => {
-            if(val=='Yes' && this.userSessionRole == this.roleAdmin){
-                this.navTabs('/tabsadmin/users');
-            }else if(val=='Yes' && this.userSessionRole == this.roleProprio){
-                this.navTabs('/tabsproprio/bar');
-            }else if(val=='Yes' && this.userSessionRole == this.roleUser){
-                this.navTabs('/tabs/offers');
-            }else{
-                return null;
-            }
-        });
-    }
-
-    ngOnInit() {
-        
-    }
     formRegister() {
         this.navCtrl.navigateForward('register');
     }

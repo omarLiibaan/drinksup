@@ -1,14 +1,14 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Mon Profile</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>Profil</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding color="secondary">
   <div class="profile-section">
     <img src="../../assets/img/user-icon.svg" alt="">
-    <p>{{loggedUser[0]?.INT_PRENOM}} {{loggedUser[0]?.INT_NOM}}</p>
-    <p>{{loggedUser[0]?.INT_EMAIL}}</p>
+    <p>{{loggedUser.INT_PRENOM}} {{loggedUser.INT_NOM}}</p>
+    <p>{{loggedUser.INT_EMAIL}}</p>
     <ion-button (click)="logout()" color="danger">Se déloguer</ion-button>
   </div>
   

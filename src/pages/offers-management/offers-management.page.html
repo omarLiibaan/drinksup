@@ -5,11 +5,11 @@
 </ion-header>
 
 <ion-content padding color="secondary">
-  <ion-item>
+  <ion-item color="secondary">
     <ion-label>
-      <strong style="color:black">Quel jour ?</strong>
+      <strong style="color:white">Quel jour ?</strong>
     </ion-label>
-    <ion-select value="" (ionChange)="showList()">
+    <ion-select value="" (ionChange)="showList()" [(ngModel)]="jours">
       <ion-select-option *ngFor="let day of days" value="{{day}}" >{{day}}</ion-select-option>
     </ion-select>
   </ion-item>

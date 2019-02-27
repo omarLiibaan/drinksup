@@ -29,6 +29,12 @@ const routes: Routes = [
                 ]
             },
             {
+                path: 'bar-admin',
+                children: [
+                    { path: '', loadChildren: '../bar-admin/bar-admin.module#BarAdminPageModule' },
+                ]
+            },
+            {
                 path: 'profile',
                 children: [
                     { path: '', loadChildren: '../profile/profile.module#ProfilePageModule' },

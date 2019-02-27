@@ -1,27 +1,23 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>users</ion-title>
+    <ion-title>Utilisateurs</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding color="secondary">
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" color="secondary">
-    <ion-refresher-content
-            pullingIcon="arrow-dropdown"
-            pullingText="Pull to refresh"
-            refreshingSpinner="circles"
-            refreshingText="Refreshing...">
-    </ion-refresher-content>
-  </ion-refresher>
-  <ion-list color="secondary">
-    <ion-item-sliding *ngFor="let user of users" color="secondary">
+  <ion-list color="secondary" >
+    <ion-item-sliding *ngFor="let user of users" color="secondary" #slidingItem>
       <ion-item color="secondary">
         <p>{{user.INT_PRENOM}} {{user.INT_NOM}} </p>
       </ion-item>
       <ion-item-options side="start" color="secondary">
-        <ion-item-option color="success" (click)="edit(user.INT_ID, user.INT_PRENOM, user.INT_NOM, user.INT_EMAIL, user.ROL_TYPES)">Edit</ion-item-option>
-        <ion-item-option color="danger" (click)="delete(user.INT_ID, user.INT_NOM)">Delete</ion-item-option>
+        <ion-item-option color="success" (click)="edit(slidingItem,user.INT_ID, user.INT_PRENOM, user.INT_NOM, user.INT_EMAIL, user.ROL_TYPES)">Edit</ion-item-option>
+        <ion-item-option color="danger" (click)="delete(slidingItem,user.INT_ID, user.INT_NOM)">Delete</ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
+
+    <p>{{haveUserOrNot}} </p>
+
+
 </ion-content>

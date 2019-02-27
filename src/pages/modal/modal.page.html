@@ -21,7 +21,10 @@
     </ion-item>
     <ion-item>
       <ion-label>Role :</ion-label>
-      <ion-input type="text" readonly  formControlName="role" [(ngModel)]="passedRoles"></ion-input>
+      <ion-select formControlName="role" placeholder="Internaute">
+        <ion-select-option value="3" selected>Internaute</ion-select-option>
+        <ion-select-option value="2">Propriétaire de bar</ion-select-option>
+      </ion-select>
     </ion-item>
     <ion-input type="text" hidden  formControlName="id" [(ngModel)]="passedId"></ion-input>
     <br>

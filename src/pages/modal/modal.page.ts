@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ModalController, NavController, NavParams, ToastController} from '@ionic/angular';
 import {Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {UsersPage} from "../users/users.page";
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Component({
   selector: 'app-modal',
@@ -30,6 +29,7 @@ export class ModalPage implements OnInit {
     this.validationForm();
   }
 
+
   validationForm() {
     this.modifierForm = this.formBuilder.group({
        'nom': ['', Validators.required],
@@ -51,14 +51,15 @@ export class ModalPage implements OnInit {
     const prenom: string = this.modifierForm.controls['prenom'].value;
     const email: string = this.modifierForm.controls['email'].value;
     const id: number = this.modifierForm.controls['id'].value;
-    console.log(nom + prenom + email + id);
+    const role: number = this.modifierForm.controls['role'].value;
+    console.log(nom + prenom + email + id + role);
     // update users
-    this.updateUsers(nom, prenom, email, id);
+    this.updateUsers(nom, prenom, email, id, role);
 
   }
-  updateUsers(nom: string, prenom: string, email: string, id: number) {
+  updateUsers(nom: string, prenom: string, email: string, id: number, role: number) {
       const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
-          options: any		= { 'key' : 'updateUser', 'nom': nom, 'prenom': prenom, 'email': email, 'id': id},
+          options: any		= { 'key' : 'updateUser', 'nom': nom, 'prenom': prenom, 'email': email, 'id': id, 'role': role},
           url: any      	= this.baseURI + 'aksi.php';
 
       this.http.post(url, JSON.stringify(options), headers).subscribe((data: any) => {
@@ -86,6 +87,5 @@ export class ModalPage implements OnInit {
       });
       toast.present();
   }
-
 
 }

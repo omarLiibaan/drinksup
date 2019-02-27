@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {AlertController, ModalController, NavController, PopoverController, ToastController} from '@ionic/angular';
+import {
+    AlertController,
+    IonItemSliding,
+    ModalController,
+    NavController,
+    ToastController
+} from '@ionic/angular';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {ModalPage} from '../modal/modal.page';
 
@@ -14,34 +20,31 @@ export class UsersPage implements OnInit {
   public baseURI = 'https://macfi.ch/serveur/';
   users = [];
   value = 0;
+  haveUserOrNot = '';
   constructor(private navCtrl: NavController, private toastCtrl: ToastController, public http: HttpClient, public modalController: ModalController, public alertController: AlertController) { }
 
   ngOnInit() {
-      this.users = [];
-      this.getUsers();
-
+      this.ionViewWillEnter();
   }
 
-
+    public ionViewWillEnter(): void {
+        this.users = [];
+        this.getUsers();
+        console.log(this.users.length.valueOf());
+    }
   public getUsers() {
       const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
           options: any		= { 'key' : 'getUsers'},
           url: any      	= this.baseURI + 'aksi.php';
-
       this.http.post(url, JSON.stringify(options), headers).subscribe((data: any) => {
           this.users = data;
+          if (this.users == null ) {this.haveUserOrNot = 'Aucun Internaute ayant le role USERS'; } else {this.haveUserOrNot = ''; }
       });
 
   }
-    doRefresh(event) {
-        console.log('Begin async operation');
-        this.ngOnInit();
-        setTimeout(() => {
-            console.log('Async operation has ended');
-            event.target.complete();
-        }, 2000);
-    }
-  async edit(id, prenom, nom, email, role) {
+
+  async edit(slidingItem: IonItemSliding, id, prenom, nom, email, role) {
+      await slidingItem.close();
       const modal = await this.modalController.create( {
           component: ModalPage,
           componentProps: {
@@ -50,13 +53,19 @@ export class UsersPage implements OnInit {
               nom: nom,
               email: email,
               role: role
-          }
+          },
       });
+      modal.onDidDismiss().then(() => {
+          this.getUsers();
+      })
       modal.present();
+      this.ionViewWillEnter();
   }
-  async delete(id, nom) {
+  async delete(slidingItem: IonItemSliding, id, nom) {
+      await slidingItem.close();
       this.presentAlert(id, nom);
       this.sendNotification('Vous avez cliqué sur le bouton supprimer');
+
   }
     async presentAlert(id, nom) {
         const alert = await this.alertController.create({
@@ -73,6 +82,7 @@ export class UsersPage implements OnInit {
                     text: 'Oui',
                     handler: () => {
                         this.deleteUser(id);
+                        this.ionViewWillEnter();
                         console.log('Confirm Okay');
                     }
                 }

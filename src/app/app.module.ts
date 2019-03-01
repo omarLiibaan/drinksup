@@ -14,6 +14,7 @@ import {Facebook} from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import {UsersPageModule} from '../pages/users/users.module';
 import {ModalPageModule} from '../pages/modal/modal.module';
+import { Camera } from '@ionic-native/camera/ngx'; 
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import {ModalPageModule} from '../pages/modal/modal.module';
     SplashScreen,
     Facebook,
     GooglePlus,
+    Camera,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

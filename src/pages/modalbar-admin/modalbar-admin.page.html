@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>modalbarAdmin</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding color="secondary">
+
+  <form [formGroup]="modifierForm" (ngSubmit)="editBar()" >
+    <ion-item color="secondary">
+      <ion-label position="floating" id="entNom" style="font-weight: bold;">Nom de l'entreprise :</ion-label>
+      <ion-input type="text" for="entNom"  formControlName="nomEnt"  class="form-control form-control-sm" [(ngModel)]="nomEnt"></ion-input>
+    </ion-item>
+    <ion-item color="secondary">
+      <ion-label position="floating" style="font-weight: bold;">Secteur d'activités</ion-label>
+      <ion-input type="text"  formControlName="secteurEnt" class="form-control form-control-sm"  [(ngModel)]="secteurEnt"></ion-input>
+    </ion-item>
+    <ion-item color="secondary">
+      <ion-label position="floating" style="font-weight: bold;">Description</ion-label>
+      <ion-textarea type="text" rows="4" formControlName="descEnt" class="form-control form-control-sm" [(ngModel)]="descEnt"></ion-textarea>
+    </ion-item>
+    <ion-item color="secondary">
+      <ion-label position="floating" style="font-weight: bold;">Adresse</ion-label>
+      <ion-input type="text"  formControlName="adresseEnt" class="form-control form-control-sm" [(ngModel)]="adresseEnt"></ion-input>
+    </ion-item>
+    <ion-item color="secondary">
+      <ion-label position="floating" style="font-weight: bold;">NPA</ion-label>
+      <ion-input type="text"  formControlName="npaEnt" class="form-control form-control-sm"  [(ngModel)]="npaEnt" min="4" max="4"></ion-input>
+    </ion-item>
+    <ion-item color="secondary">
+      <ion-label position="floating" style="font-weight: bold;">Localite</ion-label>
+      <ion-input type="text"  formControlName="localiteEnt" class="form-control form-control-sm" [(ngModel)]="localiteEnt"></ion-input>
+    </ion-item>
+    <ion-input type="text" hidden  formControlName="idEnt" [(ngModel)]="idEnt"></ion-input>
+    <br>
+    <ion-button type="submit" color="dark" expand="full" [disabled]="!modifierForm.valid">Valider</ion-button>
+  </form>
+</ion-content>
+<ion-footer>
+  <ion-toolbar color="primary">
+    <ion-button expand="full" fill="clear" color="light" (click)="closeModal()">
+      Close
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

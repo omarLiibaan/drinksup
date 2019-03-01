@@ -43,7 +43,7 @@ export class UsersPage implements OnInit {
 
   }
 
-  async edit(slidingItem: IonItemSliding, id, prenom, nom, email, role) {
+  async edit(slidingItem: IonItemSliding, id, prenom, nom, email) {
       await slidingItem.close();
       const modal = await this.modalController.create( {
           component: ModalPage,
@@ -51,8 +51,7 @@ export class UsersPage implements OnInit {
               id: id,
               prenom: prenom,
               nom: nom,
-              email: email,
-              role: role
+              email: email
           },
       });
       modal.onDidDismiss().then(() => {
@@ -67,6 +66,39 @@ export class UsersPage implements OnInit {
       this.sendNotification('Vous avez cliqué sur le bouton supprimer');
 
   }
+  async editRole(slidingItem: IonItemSliding, id, nom) {
+      await slidingItem.close();
+      console.log('Utilisateur : ' + id + 'Nom : ' + nom);
+      this.alertRoles(id, nom);
+    }
+
+  async alertRoles(id, nom) {
+        const alert = await this.alertController.create({
+            header: 'Êtes vous sûr de changer le rôle pour cet utilisateur : ' + nom,
+            buttons: [
+                {
+                    text: 'Non',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                    handler: (blah) => {
+                        console.log('Confirm Cancel: blah');
+                    }
+                }, {
+                    text: 'Oui',
+                    handler: () => {
+                        this.updateRole(id);
+                        this.createEntreprise(id);
+                        this.ionViewWillEnter();
+                        console.log('Confirm Okay');
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
+  }
+
+
     async presentAlert(id, nom) {
         const alert = await this.alertController.create({
             header: 'Êtes vous sûr de supprimer cet utilisateur! ' + nom,
@@ -108,6 +140,34 @@ export class UsersPage implements OnInit {
       this.http.post(url, JSON.stringify(options), headers).subscribe((data: any) => {
               this.sendNotification('Votre suppresion a bien été pris en compte !');
 
+          },
+          (error: any) => {
+              console.log(error);
+              this.sendNotification('Erreur!');
+          });
+  }
+
+  updateRole(id: number) {
+      const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
+          options: any		= { 'key' : 'updateRole', 'id': id},
+          url: any      	= this.baseURI + 'aksi.php';
+
+      this.http.post(url, JSON.stringify(options), headers).subscribe((data: any) => {
+              this.sendNotification('Le changement de rôle a bien été pris en compte !');
+
+          },
+          (error: any) => {
+              console.log(error);
+              this.sendNotification('Erreur!');
+          });
+  }
+
+  createEntreprise (id: number) {
+      const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
+          options: any		= { 'key' : 'insertEntreprise', 'id': id},
+          url: any      	= this.baseURI + 'aksi.php';
+
+      this.http.post(url, JSON.stringify(options), headers).subscribe((data: any) => {
           },
           (error: any) => {
               console.log(error);

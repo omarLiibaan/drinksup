@@ -1,9 +1,51 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>bar</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content color="secondary">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="img-slide">
+    <ion-slides pager="true" [options]="slideOpts">
+        <ion-slide>
+            <div class="uploadbtn">
+                <ion-button shape="round" (click)="upload1(1)"><ion-icon name="camera"></ion-icon></ion-button>
+                <ion-button shape="round" (click)="gallery2()"><ion-icon name="image"></ion-icon></ion-button>
+            </div>
+            <!-- <img src="https://images.pexels.com/photos/1438445/pexels-photo-1438445.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Changer photo n° 1" width="100%"> -->
+            <div class="filter-overlay"></div>
+            <img [src]="imgLink1" alt="">
+        </ion-slide>
 
-<ion-content padding color="secondary">
+        <ion-slide>
+          <div class="uploadbtn">
+              <ion-button shape="round" (click)="upload2(2)"><ion-icon name="camera"></ion-icon></ion-button>
+              <ion-button shape="round" (click)="gallery2()"><ion-icon name="image"></ion-icon></ion-button>
+          </div>
+            <div class="filter-overlay"></div>
+            <img [src]="imgLink2" alt="Changer photo n° 2">
+      </ion-slide>
 
+      <ion-slide>
+        <div class="uploadbtn">
+            <ion-button shape="round" (click)="upload3(3)"><ion-icon name="camera"></ion-icon></ion-button>
+            <ion-button shape="round" (click)="gallery2()"><ion-icon name="image"></ion-icon></ion-button>
+        </div>
+          <div class="filter-overlay"></div>
+          <img [src]="imgLink3" alt="Changer photo n° 3">
+    </ion-slide>
+    
+    </ion-slides>
+  </div>
+  <div padding class="bar-content">
+    <div class="shape"></div>
+    <!-- Map Button -->
+    <ion-button class="map-btn" shape="round"><ion-icon name="map"></ion-icon></ion-button>
+    <h1>{{myBar.ENT_NOM}}</h1>
+    <p class="typeBar">{{myBar.ENT_SECTEURACTIVITES}}</p>
+    <p>{{myBar.ENT_ADRESSE}}, {{myBar.ENT_NPA}} - {{myBar.ENT_LOCALITE}}</p>
+    <p>{{myBar.ENT_DESCRIPTION}}</p>
+  </div>
 </ion-content>

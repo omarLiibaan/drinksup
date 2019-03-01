@@ -27,7 +27,7 @@ export class AppComponent {
       
       setTimeout(() => {
         this.splashScreen.hide();
-      }, 1200);
+      }, 1800);
 
     });
   }

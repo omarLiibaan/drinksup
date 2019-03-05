@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {NavController, ToastController} from '@ionic/angular';
+import {ModalController, NavController, ToastController} from '@ionic/angular';
+import {ModalbarAdminPage} from '../modalbar-admin/modalbar-admin.page';
 
 @Component({
   selector: 'app-bar-admin',
@@ -14,12 +15,15 @@ export class BarAdminPage implements OnInit {
   haveBarOrNot = '';
   // public baseURI = 'http://localhost/drinksupProject/serveur/';
   public baseURI = 'https://macfi.ch/serveur/';
-  constructor(private navCtrl: NavController, private toastCtrl: ToastController, public http: HttpClient) { }
+  constructor(private navCtrl: NavController, private toastCtrl: ToastController, public http: HttpClient, public modalController: ModalController) { }
 
   ngOnInit() {
-      this.users = [];
-      this.getProprio();
+      this.ionViewWillEnter();
   }
+    public ionViewWillEnter(): void {
+        this.users = [];
+        this.getProprio();
+    }
   public getProprio() {
         const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
             options: any		= { 'key' : 'getProprio'},
@@ -30,22 +34,22 @@ export class BarAdminPage implements OnInit {
         });
 
   }
-    async showList() {
-        console.log(this.proprio);
-        this.getBarByProprio(this.proprio);
-    }
-  // getBarByProprio
-    getBarByProprio(proprio: number) {
-        const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json'}),
-            options: any		= {'key' : 'getBarByProprio', 'proprio' : proprio},
-            url: any   = this.baseURI + 'aksi.php';
 
-        this.http.post(url, JSON.stringify(options), headers).subscribe((data: any) => {
-                this.bar = data;
-                if (this.bar == false ) {this.haveBarOrNot = 'Pas de bar pour ce propriétaire'; } else {this.haveBarOrNot = ''; }
+    async validated(idUser, idEnt) {
+        console.log('idUser : ' + idUser + ' idEnt : ' + idEnt);
+        const modal = await this.modalController.create( {
+            component: ModalbarAdminPage,
+            componentProps: {
+                idUser: idUser,
+                idEnt: idEnt,
             },
-            (error: any) => {
-                console.dir(error);
-            });
+        });
+        modal.onDidDismiss().then(() => {
+            this.getProprio();
+        })
+        modal.present();
+        this.ionViewWillEnter();
+
     }
+
 }

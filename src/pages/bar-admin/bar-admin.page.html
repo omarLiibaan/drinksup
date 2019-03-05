@@ -1,11 +1,22 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Ajouter un bar</ion-title>
+    <ion-title>Validation d'un bar</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding color="secondary">
-  <ion-item color="secondary">
+  <ion-searchbar animated color="primary" placeholder="Cherchez un propriétaire"></ion-searchbar>
+  <ion-card color="danger" *ngFor="let user of users" (click)="validated(user.INT_ID, user.ENT_ID)">
+    <ion-card-header>
+      <ion-card-title>{{user.ENT_NOM}}</ion-card-title>
+      <ion-card-subtitle>Propriétaire : {{user.INT_PRENOM}} {{user.INT_NOM}}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      {{user.ENT_DESCRIPTION | slice:0:15}}...
+    </ion-card-content>
+  </ion-card>
+ <!-- <ion-item color="secondary">
     <ion-label>
       <strong style="color:white">Propriétaires</strong>
     </ion-label>
@@ -25,6 +36,6 @@
         <ion-item-option color="danger" (click)="delete()">Delete</ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
-  </ion-list>
+  </ion-list>-->
   <p>{{haveBarOrNot}} </p>
 </ion-content>

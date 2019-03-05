@@ -35,7 +35,6 @@ export class ModalPage implements OnInit {
        'nom': ['', Validators.required],
        'prenom': ['', Validators.required],
        'email': ['', Validators.compose([Validators.maxLength(70), Validators.pattern('^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$'), Validators.required])],
-       'role': ['', Validators.required],
        'id' : ['', Validators.required],
     });
   }
@@ -44,22 +43,20 @@ export class ModalPage implements OnInit {
     this.passedPrenom = this.navParams.get('prenom');
     this.passedNom = this.navParams.get('nom');
     this.passedEmail = this.navParams.get('email');
-    this.passedRoles = this.navParams.get('role');
   }
   editUsers() {
     const nom: string = this.modifierForm.controls['nom'].value;
     const prenom: string = this.modifierForm.controls['prenom'].value;
     const email: string = this.modifierForm.controls['email'].value;
     const id: number = this.modifierForm.controls['id'].value;
-    const role: number = this.modifierForm.controls['role'].value;
-    console.log(nom + prenom + email + id + role);
+    console.log(nom + prenom + email + id);
     // update users
-    this.updateUsers(nom, prenom, email, id, role);
+    this.updateUsers(nom, prenom, email, id);
 
   }
-  updateUsers(nom: string, prenom: string, email: string, id: number, role: number) {
+  updateUsers(nom: string, prenom: string, email: string, id: number) {
       const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
-          options: any		= { 'key' : 'updateUser', 'nom': nom, 'prenom': prenom, 'email': email, 'id': id, 'role': role},
+          options: any		= { 'key' : 'updateUser', 'nom': nom, 'prenom': prenom, 'email': email, 'id': id},
           url: any      	= this.baseURI + 'aksi.php';
 
       this.http.post(url, JSON.stringify(options), headers).subscribe((data: any) => {

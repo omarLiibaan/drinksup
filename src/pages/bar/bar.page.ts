@@ -16,7 +16,7 @@ import { ModalPage } from '../modal/modal.page';
 })
 export class BarPage implements OnInit {
   baseURI = 'https://macfi.ch/serveur/aksi.php';
-  uplPhotoURI = "https://www.macfi.ch/serveur/barphotos/";
+  uplPhotoURI = 'https://www.macfi.ch/serveur/barphotos/';
   myBar : any = {};
   barName : string;
   photoNUM : string;

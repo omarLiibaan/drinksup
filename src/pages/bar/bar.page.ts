@@ -20,17 +20,18 @@ export class BarPage implements OnInit {
   myBar : any = {};
   barName : string;
   photoNUM : string;
+  images : any = {};
   imgLink1 : string;
   imgLink2 : string;
   imgLink3 : string;
 
 
-  constructor(private http : HttpClient, private storage : Storage, private camera : Camera, private modalCtrl : ModalController) { 
+  constructor(private http : HttpClient, private storage : Storage, private camera : Camera, private modalCtrl : ModalController, private loadingCtrl : LoadingController) { 
     this.storage.get('SessionIdKey').then((val) => {
       this.loadBar(val);
     });
     this.ionViewWillEnter();
-    
+
   }
 
   ngOnInit() {
@@ -67,9 +68,10 @@ export class BarPage implements OnInit {
         console.log(data);
         this.myBar = data;
         this.barName = data.ENT_NOM;
-        this.imgLink1 = this.uplPhotoURI+this.barName.replace(/\s/g,"_")+"_1?ran="+random;
-        this.imgLink2 = this.uplPhotoURI+this.barName.replace(/\s/g,"_")+"_2?ran="+random;
-        this.imgLink3 = this.uplPhotoURI+this.barName.replace(/\s/g,"_")+"_3?ran="+random;
+        this.imgLink1 = this.uplPhotoURI+this.barName+"_1?ran="+random,
+        this.imgLink2 = this.uplPhotoURI+this.barName+"_2?ran="+random,
+        this.imgLink3 = this.uplPhotoURI+this.barName+"_3?ran="+random
+               
     },
     (error : any) =>
     {
@@ -89,6 +91,18 @@ export class BarPage implements OnInit {
     this.upl(photoNum);
   }
 
+  uploadGal1(photoNum : string){
+    this.gal(photoNum);
+  }
+
+  uploadGal2(photoNum : string){
+    this.gal(photoNum);
+  }
+
+  uploadGal3(photoNum : string){
+    this.gal(photoNum);
+  }
+
   upl(photoNumber : string){
     this.photoNUM = photoNumber;
     const options: CameraOptions = {
@@ -98,22 +112,66 @@ export class BarPage implements OnInit {
       mediaType: this.camera.MediaType.PICTURE,
       correctOrientation: true,
       allowEdit: true,
-      targetHeight: 600,
+      targetHeight: 750,
       targetWidth: 900
     }
     this.camera.getPicture(options).then((imageData) => {
 
-      let barName = "?ImageName="+this.barName.replace(/\s/g,"_")+"_"+this.photoNUM;
+      let barName = "?ImageName="+this.barName+"_"+this.photoNUM;
       let postData = new FormData();
       postData.append("file",imageData);
       let data:Observable<any> = this.http.post(this.uplPhotoURI+"uploadPhoto.php"+barName, postData);
       data.subscribe((res)=>{
       console.log(res);
       console.log("Upload Successful");
+      setTimeout(() => {
+        this.ionViewWillEnter();
+      }, 1000);
+      
       });
     }, (err) => {
       console.log(err);
     });
+  }
+
+  gal(photoNumber : string){
+    this.photoNUM = photoNumber;
+    const options: CameraOptions = {
+      quality: 80,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      correctOrientation: true,
+      allowEdit: true,
+      targetHeight: 750,
+      targetWidth: 900
+    }
+    this.camera.getPicture(options).then((imageData) => {
+
+      let barName = "?ImageName="+this.barName+"_"+this.photoNUM;
+      let postData = new FormData();
+      postData.append("file",imageData);
+      let data:Observable<any> = this.http.post(this.uplPhotoURI+"uploadPhoto.php"+barName, postData);
+      data.subscribe((res)=>{
+      console.log(res);
+      console.log("Upload Successful");
+      setTimeout(() => {
+        this.ionViewWillEnter();
+      }, 1000);
+      
+      });
+    }, (err) => {
+      console.log(err);
+    });
+  }
+
+
+  async presentLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Hellooo'
+    });
+    await loading.present();
   }
 
 

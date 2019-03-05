@@ -6,10 +6,10 @@
 
 <ion-content padding color="secondary">
   <div class="profile-section">
-    <img src="../../assets/img/user-icon.svg" alt="">
-    <p>{{loggedUser.INT_PRENOM}} {{loggedUser.INT_NOM}}</p>
-    <p>{{loggedUser.INT_EMAIL}}</p>
-    <ion-button (click)="logout()" color="danger">Se déloguer</ion-button>
+    <img src="../../assets/img/user-icon.svg" alt="" class="animated fadeIn fast"> 
+    <p [innerHTML]="loggedUser.INT_PRENOM" class="animated fadeInUp delay-500 fast"></p>
+    <p [innerHTML]="loggedUser.INT_EMAIL" class="animated fadeInUp delay-700 fast"></p>
+    <ion-button (click)="logout()" class="animated fadeInUp delay-900 fast">Se déloguer</ion-button>
   </div>
   
 </ion-content>

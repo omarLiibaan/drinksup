@@ -1,0 +1,34 @@
+ion-list{
+    background-color: #12141b;
+}
+
+ion-item{
+    position: relative;
+
+    .img-overlay{
+        position: absolute;
+        background-color: #000;
+        opacity: .7;
+        height: 100%;
+        width: calc(100% - 32px);
+        left: 16px;
+        bottom: 0;
+        z-index: 2;
+    }
+
+    p{
+        position: absolute;
+        bottom: 16px;
+        left: 32px;
+        z-index: 3;
+    }
+   
+}
+
+.bar-img{
+    height: 200px;
+    min-width: 100%;
+    object-fit: cover;
+}
+
+

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonContent } from "@ionic/angular";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Storage } from '@ionic/storage';
 
@@ -8,18 +9,25 @@ import { Storage } from '@ionic/storage';
   styleUrls: ['./bars.page.scss'],
 })
 export class BarsPage implements OnInit {
+  @ViewChild(IonContent) content: IonContent;
   baseURI = 'https://macfi.ch/serveur/aksi.php';
   uplPhotoURI = "https://www.macfi.ch/serveur/barphotos/";
   items : Array<any> = [];
-  // barNOMS :Array<any> = [];
-  // imgUrl : Array<any> = [];
+  random : number;
 
   constructor(private http : HttpClient, private storage : Storage) { 
     this.loadBar();
+    this.random = Math.floor(Math.random() * 100);
+  }
+  scrollToTop() {
+    this.content.scrollToTop(0);
+  }
+  ionViewDidEnter(){
+    this.scrollToTop();
   }
 
+
   ngOnInit() {
-  
   }
 
   loadBar() : void{

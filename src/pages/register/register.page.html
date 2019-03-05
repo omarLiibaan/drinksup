@@ -1,22 +1,41 @@
 
 
 <ion-content color="secondary">
-  <div style="padding:20px; text-align: center;">
+  <div style="padding: 20px 20px 0 20px; text-align: center;">
     <h2>A vous de jouer !</h2>
     <p>Inscrivez-vous pour profiter de boissons offertes</p>
   </div>
   <form [formGroup]="enregistrerForm" (ngSubmit)="addProprio()" style="padding:20px;">
-    <ion-input type="text" placeholder="Nom" formControlName="PRO_NOM"></ion-input>
-    <ion-input type="text" placeholder="Prénom" formControlName="PRO_PRENOM"></ion-input>
-    <ion-input type="email" placeholder="E-mail" formControlName="PRO_EMAIL"></ion-input>
-    <ion-item *ngIf="!enregistrerForm .controls.PRO_EMAIL.valid && (enregistrerForm .controls.PRO_EMAIL.dirty)"> <p>Please enter a valid email.</p> </ion-item>
-    <ion-input type="password" placeholder="Mot de passe" formControlName="PRO_PASSWORD"></ion-input>
-    <ion-input type="password" placeholder="Confirmer mot de passe" formControlName="CONFIRM_PRO_PASSWORD"></ion-input>
-    <ion-button type="submit" color="dark" expand="full" [disabled]="!enregistrerForm.valid">Enregistrer</ion-button>
-    <br>
-    <div style="padding:20px; padding-top: 0px; text-align: center;">
-      <p> Déjà inscrit ?</p>
-      <ion-button color="light" expand="full" (click)="formLogin()">Se connecter</ion-button>
+    <div class="inputWrapper">
+      <ion-label>Nom :</ion-label>
+      <ion-input type="text" formControlName="PRO_NOM"></ion-input>
+    </div>
+
+    <div class="inputWrapper">
+      <ion-label>Prénom :</ion-label>
+      <ion-input type="text" formControlName="PRO_PRENOM"></ion-input>
+    </div>
+
+    <div class="inputWrapper">
+      <ion-label>Email :</ion-label>
+      <ion-input type="email" formControlName="PRO_EMAIL"></ion-input>
+      <span *ngIf="!enregistrerForm .controls.PRO_EMAIL.valid && (enregistrerForm .controls.PRO_EMAIL.dirty)">format email invalid !</span>
+    </div>
+
+    <div class="inputWrapper">
+      <ion-label>Mot de passe :</ion-label>
+      <ion-input type="password" formControlName="PRO_PASSWORD"></ion-input>
+    </div>
+
+    <div class="inputWrapper">
+      <ion-label>Confirmer mot de passe :</ion-label>
+      <ion-input type="password" formControlName="CONFIRM_PRO_PASSWORD"></ion-input>      
+    </div>
+    
+    <ion-button type="submit" color="dark" shape="round" expand="full" [disabled]="!enregistrerForm.valid">Enregistrer</ion-button>
+    
+    <div class="dejaInscrit">
+      <p> Déjà inscrit ?</p> <p (click)="formLogin()">se connecter</p>
     </div>
   </form>
 

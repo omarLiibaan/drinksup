@@ -12,40 +12,41 @@
         <ion-slide>
             <div class="uploadbtn">
                 <ion-button shape="round" (click)="upload1(1)"><ion-icon name="camera"></ion-icon></ion-button>
-                <ion-button shape="round" (click)="gallery2()"><ion-icon name="image"></ion-icon></ion-button>
+                <ion-button shape="round" (click)="uploadGal1(1)"><ion-icon name="image"></ion-icon></ion-button>
             </div>
-            <!-- <img src="https://images.pexels.com/photos/1438445/pexels-photo-1438445.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Changer photo n° 1" width="100%"> -->
-            <div class="filter-overlay"></div>
-            <img [src]="imgLink1" alt="">
+            <img [src]="imgLink1" alt="Photo n° 1">
         </ion-slide>
 
         <ion-slide>
           <div class="uploadbtn">
               <ion-button shape="round" (click)="upload2(2)"><ion-icon name="camera"></ion-icon></ion-button>
-              <ion-button shape="round" (click)="gallery2()"><ion-icon name="image"></ion-icon></ion-button>
+              <ion-button shape="round" (click)="uploadGal2(2)"><ion-icon name="image"></ion-icon></ion-button>
           </div>
-            <div class="filter-overlay"></div>
-            <img [src]="imgLink2" alt="Changer photo n° 2">
+            <img [src]="imgLink2" alt="Photo n° 2">
       </ion-slide>
 
       <ion-slide>
         <div class="uploadbtn">
             <ion-button shape="round" (click)="upload3(3)"><ion-icon name="camera"></ion-icon></ion-button>
-            <ion-button shape="round" (click)="gallery2()"><ion-icon name="image"></ion-icon></ion-button>
+            <ion-button shape="round" (click)="uploadGal3(3)"><ion-icon name="image"></ion-icon></ion-button>
         </div>
-          <div class="filter-overlay"></div>
-          <img [src]="imgLink3" alt="Changer photo n° 3">
+          <img [src]="imgLink3" alt="Photo n° 3">
     </ion-slide>
     
     </ion-slides>
   </div>
   <div padding class="bar-content">
-    <div class="shape"></div>
+    <img class="roundCorner" src="../../assets/img/round-corner.svg" alt="">
     <!-- Map Button -->
-    <ion-button class="map-btn" shape="round"><ion-icon name="map"></ion-icon></ion-button>
+    <ion-button class="map-btn" shape="round"><img src="../../assets/img/map-icon.svg" alt=""></ion-button>
     <h1>{{myBar.ENT_NOM}}</h1>
     <p class="typeBar">{{myBar.ENT_SECTEURACTIVITES}}</p>
-    <p>{{myBar.ENT_ADRESSE}}, {{myBar.ENT_NPA}} - {{myBar.ENT_LOCALITE}}</p>
-    <p>{{myBar.ENT_DESCRIPTION}}</p>
+    <p class="addressBar">{{myBar.ENT_ADRESSE}}, {{myBar.ENT_NPA}} - {{myBar.ENT_LOCALITE}}</p>
+    <span class="divider"></span>
+    <p class="descBar">{{myBar.ENT_DESCRIPTION}}</p>
+
+    <div class="under-btns">
+      <ion-button class="btnModif">Modifier</ion-button>
+    </div>
   </div>
 </ion-content>

@@ -1,5 +1,7 @@
 ion-list{
+    margin-top: 8px;
     background-color: #12141b;
+    padding-bottom: 0 !important;
 }
 
 ion-item{
@@ -7,28 +9,59 @@ ion-item{
 
     .img-overlay{
         position: absolute;
-        background-color: #000;
-        opacity: .7;
-        height: 100%;
+        background: rgb(0,0,0);
+        background: linear-gradient(0deg, rgba(0,0,0,.8) 20%, rgba(0,0,0,0) 100%); 
+        height: 80%;
         width: calc(100% - 32px);
         left: 16px;
         bottom: 0;
         z-index: 2;
     }
 
-    p{
+    .bar-img{
+        height: 200px;
+        min-width: 100%;
+        object-fit: cover;
+    }
+
+    .bar-details{
         position: absolute;
         bottom: 16px;
         left: 32px;
         z-index: 3;
+
+        p{  
+            margin: 0;
+        }
+
+        img{
+            margin: 5px 0 3px 0;
+            width : 120px;
+        }
+
+        .note-sec{
+            display: flex;
+            align-items: center;
+
+            p{
+                margin-left: 9px;
+                font-size: .8rem;
+            }
+        }
+
+        .bar-nom{
+            font-family: "PNB";
+        }
+
+        .bar-desc{
+            font-size: .9rem;
+        }
+       
     }
+
    
 }
 
-.bar-img{
-    height: 200px;
-    min-width: 100%;
-    object-fit: cover;
-}
+
 
 

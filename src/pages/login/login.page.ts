@@ -95,14 +95,17 @@ export class LoginPage implements OnInit {
                     this.navTabs('/tabsadmin/users');
                     this.storage.set('SessionRoleKey', this.roleAdmin);
                     this.sendNotification('Bienvenue !');
+                    setTimeout( () => {this.loginForm.reset();}, 1000);  
                 } else if (this.userDetails.ROLE === this.roleProprio) {
                     this.navTabs('/tabsproprio/bar');
                     this.storage.set('SessionRoleKey', this.roleProprio);
                     this.sendNotification('Bienvenue !');
+                    setTimeout( () => {this.loginForm.reset();}, 1000);  
                 } else if (this.userDetails.ROLE === this.roleUser) {
                     this.navTabs('/tabs/offers');
                     this.storage.set('SessionRoleKey', this.roleUser);
                     this.sendNotification('Bienvenue !');
+                    setTimeout( () => {this.loginForm.reset();}, 1000);  
                 } else {
                     // console.log(JSON.stringify(options));
                     this.sendNotification('Email ou mot de passe erroné');
@@ -118,7 +121,10 @@ export class LoginPage implements OnInit {
         const PRO_EMAIL: string = this.loginForm.controls['PRO_EMAIL'].value,
             PRO_PASSWORD: string = this.loginForm.controls['PRO_PASSWORD'].value;
         this.LoginForUsers(PRO_EMAIL, PRO_PASSWORD);
+             
     }
+
+
     async sendNotification(msg: string) {
         const toast = await this.toastCtrl.create({
             message: msg,

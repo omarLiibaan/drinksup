@@ -4,6 +4,12 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding color="secondary">
-
+<ion-content color="secondary">
+  <ion-list *ngFor="let bars of items">
+      <ion-item color="secondary" lines="none"> 
+          <div class="img-overlay"></div>
+          <img class="bar-img" [src]="uplPhotoURI + bars.ENT_NOM + '_1.jpg'" alt="">
+          <p>{{bars.ENT_NOM}}</p>
+      </ion-item>
+  </ion-list>
 </ion-content>

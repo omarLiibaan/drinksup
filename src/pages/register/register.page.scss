@@ -1,0 +1,64 @@
+form{
+    .inputWrapper{
+        position: relative;
+        height: 45px;
+        width : 100%;
+        margin-bottom: 20px;
+        ion-input{
+            background-color: #1b1e27;
+            position: relative;
+            height: 45px;
+            z-index: 1;
+            border-radius: 50px;
+            border : 1px solid rgba(255,255,255,.8);
+            --padding-start : 2rem;
+        }
+        ion-label{
+            position: absolute;
+            top : -.5rem;
+            left: 1.5rem;
+            z-index: 2;
+            font-size: .9rem;
+            background: rgb(27,30,39);
+            background: linear-gradient(0deg, rgba(27,30,39,1) 50%, rgba(18,20,27,1) 50%); 
+            padding-left: 5px;
+            padding-right: 5px;
+            color : rgba(255,255,255,.8);
+        }
+        span{
+            position: absolute;
+            top : -.5rem;
+            right: 1.5rem;
+            z-index: 2;
+            font-size: .9rem;
+            background: rgb(27,30,39);
+            background: linear-gradient(0deg, rgba(27,30,39,1) 50%, rgba(18,20,27,1) 50%); 
+            padding-left: 5px;
+            padding-right: 5px;
+            color : rgb(211, 35, 35);
+        }
+    }
+}
+
+.dejaInscrit{
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p{
+        color : rgba(255, 255, 255, 0.3);
+    }
+    
+    p:nth-child(2){
+        color : rgb(91,201,224);
+        font-family: "PNB";
+        margin-left: 5px;
+        color : #fff;
+    }
+}
+
+ion-button{
+    text-transform: lowercase;
+}

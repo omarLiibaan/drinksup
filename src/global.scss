@@ -10,6 +10,8 @@
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
 
+@import '~animate.css/animate.min.css';
+
 
 // ion-loading.custom-loading {
 //     .loading-wrapper {
@@ -17,6 +19,21 @@
 //       width : 80%;
 //     }
 //   }
+
+.delay-500 {
+  -webkit-animation-delay: 0.5s !important;
+  animation-delay: 0.5s !important;
+}
+
+.delay-700 {
+  -webkit-animation-delay: 0.7s !important;
+  animation-delay: 0.7s !important;
+}
+
+.delay-900 {
+  -webkit-animation-delay: 0.9s !important;
+  animation-delay: 0.9s !important;
+}
 
 @font-face {
   font-family: "PNB";
@@ -26,6 +43,11 @@
 @font-face {
   font-family: "PNL";
   src: url("../src/assets/fonts/ProximaNovaLight.otf");
+}
+
+@font-face {
+  font-family: "FA";
+  src: url("../src/assets/fonts/FontAwesome.otf");
 }
 
 *{

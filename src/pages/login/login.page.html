@@ -1,28 +1,32 @@
 <ion-content color="secondary">
   <div style="padding:20px; text-align: center;">
-    <h1>Drinks up</h1>
-    <p>Profitez d'une boisson offerte dans les meilleurs bars de Genève</p>
-    <p>Bienvenue !!!</p>
+    <img src="../../assets/img/logo-text.svg" alt="">
+    <h1>Profitez d'une boisson offerte dans les meilleurs bars de Genève</h1>
   </div>
   <form [formGroup]="loginForm" (ngSubmit)="loginUsers()" style="padding:20px;">
-    <ion-input type="email" placeholder="Email" formControlName="PRO_EMAIL"></ion-input>
-    <ion-input type="password" placeholder="mot de passe" formControlName="PRO_PASSWORD"></ion-input>
-    <ion-button type="submit" color="dark" expand="full" [disabled]="!loginForm.valid">Se connecter</ion-button>
-    <ion-button (click)="loginWithFB()" expand="full">Se connecter via Facebook</ion-button>
-    <ion-button (click)="loginWithGoogle()" expand="full" color="danger">Se connecter via Google+</ion-button>
-    <a type="button" (click)="mdpOublier()" style="text-decoration: underline; float:right; font-size: 13px;">Mot de passe oublié ?</a>
-  </form>
-  <div style="padding:20px; padding-top: 0px ">
-    <p>Vous n'avez pas de compte ?</p>
-    <ion-button color="light" expand="full" (click)="formRegister()">Inscrivez-vous</ion-button>
-  </div>
-<!--  <ion-card *ngIf="userData">
-    <ion-card-header>{{ userData.username }}</ion-card-header>
-    <img [src]="userData.picture" />
-    <ion-card-content>
-      <p>Email: {{ userData.email }}</p>
-      <p>First Name: {{ userData.first_name }}</p>
 
-    </ion-card-content>
-  </ion-card>-->
+    <div class="inputWrapper">
+      <ion-label>Email :</ion-label>
+      <ion-input class="inputEmailLogin" type="email" formControlName="PRO_EMAIL"></ion-input>
+    </div>
+
+    <div class="inputWrapper">
+      <ion-label>Mot de passe :</ion-label>
+      <ion-input type="password"  formControlName="PRO_PASSWORD" ></ion-input>
+    </div>
+    
+      <!-- buttons -->
+    <ion-button type="submit" class="seConn" shape="round" expand="full">Se connecter</ion-button>
+    
+    <div class="loginAlternative">
+      <ion-button class="btnfb" (click)="loginWithFB()" shape="round"><ion-icon name="logo-facebook"></ion-icon></ion-button>
+      <ion-button class="btngoogle" (click)="loginWithGoogle()" shape="round"><ion-icon name="logo-googleplus"></ion-icon></ion-button>
+    </div>   
+    
+    <a type="button" (click)="mdpOublier()" class="mdpOublie">Mot de passe oublié ?</a>
+  </form>
+
+  <div class="pasDeCompte">
+    <p>Vous n'avez pas de compte ?</p> <p (click)="formRegister()">Inscrivez-vous</p>
+  </div>
 </ion-content>

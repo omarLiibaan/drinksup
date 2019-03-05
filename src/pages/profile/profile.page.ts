@@ -24,24 +24,6 @@ export class ProfilePage implements OnInit {
       this.loadData(val);
     });
 
-    document.addEventListener("backbutton", () => { 
-      this.storage.get('SessionInKey').then((val) => {
-        this.storage.get('SessionRoleKey').then((valRole) => {
-            this.userSessionRole = valRole;
-
-            if(val=='Yes' && this.userSessionRole == this.roleAdmin){
-                this.navCtrl.navigateBack('tabsadmin/users');
-                // this.navTabs('');
-            }else if(val=='Yes' && this.userSessionRole == this.roleProprio){
-                this.navTabs('/tabsproprio/bar');
-            }else if(val=='Yes' && this.userSessionRole == this.roleUser){
-                this.navTabs('/tabs/offers');
-            }else{
-                return null;
-            }
-        });
-    });
-    });
   }
 
   ngOnInit() {
@@ -67,9 +49,7 @@ export class ProfilePage implements OnInit {
   
 
   logout(){
-    this.storage.remove('SessionIdKey');
-    this.storage.remove('SessionInKey');
-    this.storage.remove('SessionRoleKey');
+    this.storage.clear();
     this.navCtrl.navigateBack('login');
   }
 

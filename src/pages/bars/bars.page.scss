@@ -15,13 +15,25 @@ ion-item{
         width: calc(100% - 32px);
         left: 16px;
         bottom: 0;
-        z-index: 2;
+        z-index: 3;
+    }
+
+    .curtain{
+        position: absolute;
+        background-color : #0e1016;
+        height: 100%;
+        width: calc(100% - 32px);
+        left: 16px;
+        bottom: 0;
+        z-index: 3;
     }
 
     .bar-img{
         height: 200px;
         min-width: 100%;
         object-fit: cover;
+        z-index: 2;
+        position: relative;
     }
 
     .bar-details{

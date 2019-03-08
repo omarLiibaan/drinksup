@@ -1,12 +1,4 @@
 <ion-content color="secondary">
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content
-      pullingIcon="arrow-dropdown"
-      pullingText="Pull to refresh"
-      refreshingSpinner="circles"
-      refreshingText="Refreshing...">
-    </ion-refresher-content>
-  </ion-refresher>
   <div class="img-slide">
     <ion-slides pager="true" [options]="slideOpts">
         <ion-slide>
@@ -37,16 +29,75 @@
   </div>
   <div padding class="bar-content">
     <img class="roundCorner" src="../../assets/img/round-corner.svg" alt="">
-    <!-- Map Button -->
-    <ion-button class="map-btn" shape="round"><img src="../../assets/img/map-icon.svg" alt=""></ion-button>
-    <h1>{{myBar.ENT_NOM}}</h1>
-    <p class="typeBar">{{myBar.ENT_SECTEURACTIVITES}}</p>
-    <p class="addressBar">{{myBar.ENT_ADRESSE}}, {{myBar.ENT_NPA}} - {{myBar.ENT_LOCALITE}}</p>
-    <span class="divider"></span>
-    <p class="descBar">{{myBar.ENT_DESCRIPTION}}</p>
-
-    <div class="under-btns">
-      <ion-button class="btnModif">Modifier</ion-button>
+    
+    <div class="note">
+      <div class="bar-div"></div>
+      <div class="span-div">Attention :</div> Si vous modifiez les infos de votre bar, votre statut passera en <div class="span-div">inactif</div>.
+      <br>
+      L'administrateur vous changera le statut une fois que vous modifications seront validées.
+      <br>
+      Cela ne s'applique pas aux modifications d'horaire.
     </div>
+
+    <span></span>
+    <h1>Infos du bar</h1>
+    
+    <form [formGroup]="editBarForm" (ngSubmit)="editBar()">
+      <ion-input formControlName="nomEnt" type="text" [readonly]="barInputDisabled" [ngStyle]="{'background-color': activeColor, 'border-bottom': activeBorder, 'height' : activeHeight}"></ion-input>
+      <ion-input formControlName="typeEnt" type="text" [readonly]="barInputDisabled" [ngStyle]="{'background-color': activeColor, 'border-bottom': activeBorder, 'height' : activeHeight, 'font-size' : activeFS}"></ion-input>
+      <ion-input formControlName="adresseEnt" type="text" [readonly]="barInputDisabled" [ngStyle]="{'background-color': activeColor, 'border-bottom': activeBorder, 'height' : activeHeight, 'font-size' : activeFS}"></ion-input>
+      <div class="inputRow">
+        <ion-input class="inputNpa" formControlName="NPAEnt" type="text" [readonly]="barInputDisabled" [ngStyle]="{'background-color': activeColor, 'border-bottom': activeBorder, 'height' : activeHeight, 'font-size' : activeFS}"></ion-input>
+        <ion-input formControlName="localiteEnt" type="text" [readonly]="barInputDisabled" [ngStyle]="{'background-color': activeColor, 'border-bottom': activeBorder, 'height' : activeHeight, 'font-size' : activeFS}"></ion-input>
+      </div>
+      <ion-textarea rows="6" formControlName="descEnt" type="text" [readonly]="barInputDisabled" [ngStyle]="{'background-color': activeColor, 'border-bottom': activeBorder, 'height' : activeHeightTA, 'font-size' : activeFS}"></ion-textarea>
+
+      <div class="editBtnSection">
+        <ion-button (click)="allowEdit()" [ngStyle]="{'display': dHide}" shape="round" class="animated fadeInUp btnModif">Modifier</ion-button>
+        <ion-button type="submit" shape="round" [ngStyle]="{'display': dNone}" class="animated fadeInUp btnValider">Valider</ion-button>
+        <ion-button (click)="disableEdit()" shape="round" [ngStyle]="{'display': dNone}" class="animated fadeInUp delay-200 btnAnnuler">Annuler</ion-button>
+      </div>
+    </form>
+
+    <div class="scheduleSection">
+      <span></span>
+      <h1>horaire</h1>
+
+      <ion-grid *ngFor="let schedule of mySchedule; let i = index">
+          <ion-row [ngClass]="(i % 2 == 0) ? 'odd' : 'even'">
+            <ion-col size="4" align-self-center>
+              <div>
+                {{schedule.HOR_JOURS}}
+              </div>
+            </ion-col>
+            <ion-col size="3" align-self-center>
+              <div [ngClass]="(schedule.HOR_HEUREDEBUT == '00:00:00' && schedule.HOR_HEUREFIN == '00:00:00') ? 'closed' : 'open'">
+                <ion-datetime [readonly]="true" displayFormat="HH:mm" value="{{schedule.HOR_HEUREDEBUT}}"></ion-datetime>
+              </div>
+              <div class="closedCol" [ngClass]="(schedule.HOR_HEUREDEBUT == '00:00:00' && schedule.HOR_HEUREFIN == '00:00:00') ? 'open' : 'closed'">
+                  Fermé
+              </div>
+            </ion-col>
+            <ion-col size="3" align-self-center>
+              <div [ngClass]="(schedule.HOR_HEUREDEBUT == '00:00:00' && schedule.HOR_HEUREFIN == '00:00:00') ? 'closed' : 'open'">
+                <ion-datetime [readonly]="true" displayFormat="HH:mm" value="{{schedule.HOR_HEUREFIN}}"></ion-datetime>            
+              </div>
+            </ion-col>
+            <ion-col size="2" align-self-center>
+              <div>
+                <ion-button shape="round" size="small" (click)="editSchedule(schedule.HOR_ID, schedule.HOR_JOURS, schedule.HOR_HEUREDEBUT, schedule.HOR_HEUREFIN)">Edit</ion-button>
+              </div>
+            </ion-col>
+            
+          </ion-row>
+        </ion-grid>
+
+    </div><!-- end schedule section -->
+    
+  </div><!-- end bar content-->
+  <div class="status-section">
+    <img src="../../assets/img/invalid-icon.svg" alt="" [ngClass]="(barStatus == 'Inactif') ? 'open' : 'closed'">
+    <img src="../../assets/img/valid-icon.svg" alt="" [ngClass]="(barStatus == 'Inactif') ? 'closed' : 'open'">
+    <p [ngStyle]="{'color' : invalidColor}">votre status est <span>{{barStatus}}</span> </p>
   </div>
 </ion-content>

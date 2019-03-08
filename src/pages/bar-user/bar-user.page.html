@@ -1,0 +1,29 @@
+<ion-content color="secondary">
+  <div class="img-slide">
+    <ion-slides pager="true" [options]="slideOpts">
+        <ion-slide>
+            <img [src]="imgLink1" alt="Photo n° 1">
+        </ion-slide>
+
+        <ion-slide>
+            <img [src]="imgLink2" alt="Photo n° 2">
+      </ion-slide>
+
+      <ion-slide>
+          <img [src]="imgLink3" alt="Photo n° 3">
+    </ion-slide>
+    
+    </ion-slides>
+  </div>
+
+  <div padding class="bar-content">
+    <img class="roundCorner" src="../../assets/img/round-corner.svg" alt="">
+    <!-- Map Button -->
+    <ion-button class="map-btn" shape="round"><img src="../../assets/img/map-icon.svg" alt=""></ion-button>
+    <h1>{{myBar.ENT_NOM}}</h1>
+    <p class="typeBar">{{myBar.ENT_SECTEURACTIVITES}}</p>
+    <p class="addressBar">{{myBar.ENT_ADRESSE}}, {{myBar.ENT_NPA}} - {{myBar.ENT_LOCALITE}}</p>
+    <span class="divider"></span>
+    <p class="descBar">{{myBar.ENT_DESCRIPTION}}</p>
+  </div>
+</ion-content>

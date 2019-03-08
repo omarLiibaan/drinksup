@@ -11,6 +11,8 @@ const routes: Routes = [
   { path: 'tabsadmin/users', loadChildren: '../pages/users/users.module#UsersPageModule' },
   { path: 'tabsproprio/bar', loadChildren: '../pages/bar/bar.module#BarPageModule' },
   { path: 'register', loadChildren: '../pages/register/register.module#RegisterPageModule' },
+  // { path: 'bar-user/:id', loadChildren: '../pages/bar-user/bar-user.module#BarUserPageModule' },
+
 
 
 

@@ -38,7 +38,6 @@ export class ProfilePage implements OnInit {
     this.http.post(url, JSON.stringify(options), headers).subscribe((data : any) =>
     {
       this.loggedUser = data;
-      console.log(data);
     },
     (error : any) =>
     {

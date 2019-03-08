@@ -13,12 +13,12 @@
 @import '~animate.css/animate.min.css';
 
 
-// ion-loading.custom-loading {
-//     .loading-wrapper {
-//       height : 50%;
-//       width : 80%;
-//     }
-//   }
+//disabled input opacity
+.native-input[disabled].sc-ion-input-md, .native-input[disabled].sc-ion-input-ios,
+.native-textarea[disabled].sc-ion-textarea-md, .native-textarea[disabled].sc-ion-textarea-ios{
+  opacity: 1;
+}
+
 .delay-200{
   -webkit-animation-delay: 0.2s !important;
   animation-delay: 0.2s !important;
@@ -155,3 +155,58 @@ ion-tab-bar, ion-tab-button{
   }
 
 }
+
+.item-inner {
+  padding-inline-end: 0 !important;
+}
+
+
+ion-modal.edit-schedule-modal {
+  @media (min-width: 300px) and (min-height: 500px) {
+    ion-backdrop {
+      visibility: visible;
+      opacity: .75 !important;
+    }
+  }
+
+  .modal-wrapper {
+    position: absolute;
+    overflow: hidden;
+    max-width: 310px;
+    width: 80vw;
+    height: 50vh;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 0 16px 20px rgba(0,0,0,.4);
+    background-color: transparent;
+  }
+}
+
+
+ion-modal.loading-modal {
+  @media (min-width: 300px) and (min-height: 500px) {
+    ion-backdrop {
+      visibility: visible;
+      opacity: .75 !important;
+    }
+  }
+
+  .modal-wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 0 16px 20px rgba(0,0,0,.4);
+    background-color: transparent;
+  }
+}
+

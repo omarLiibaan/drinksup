@@ -16,12 +16,13 @@ import {UsersPageModule} from '../pages/users/users.module';
 import {ModalPageModule} from '../pages/modal/modal.module';
 import { Camera } from '@ionic-native/camera/ngx';
 import {ModalbarAdminPageModule} from '../pages/modalbar-admin/modalbar-admin.module';
+import {OffersAddbarPageModule} from '../pages/offers-addbar/offers-addbar.module';
 
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, IonicStorageModule.forRoot(), HttpClientModule, UsersPageModule, ModalPageModule, ModalbarAdminPageModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, IonicStorageModule.forRoot(), HttpClientModule, UsersPageModule, ModalPageModule, ModalbarAdminPageModule, OffersAddbarPageModule],
   providers: [
     StatusBar,
     SplashScreen,

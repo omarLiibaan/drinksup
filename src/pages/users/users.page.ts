@@ -98,7 +98,6 @@ export class UsersPage implements OnInit {
         await alert.present();
   }
 
-
     async presentAlert(id, nom) {
         const alert = await this.alertController.create({
             header: 'Êtes vous sûr de supprimer cet utilisateur! ' + nom,

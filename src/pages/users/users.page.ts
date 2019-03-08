@@ -88,6 +88,7 @@ export class UsersPage implements OnInit {
                     handler: () => {
                         this.updateRole(id);
                         this.createEntreprise(id);
+                        // this.createHoraire(id);
                         this.ionViewWillEnter();
                         console.log('Confirm Okay');
                     }
@@ -174,5 +175,18 @@ export class UsersPage implements OnInit {
               this.sendNotification('Erreur!');
           });
   }
+
+  createHoraire (id: number) {
+    const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
+        options: any		= { 'key' : 'insertHoraire', 'id': id},
+        url: any      	= this.baseURI + 'aksi.php';
+
+    this.http.post(url, JSON.stringify(options), headers).subscribe((data: any) => {
+        },
+        (error: any) => {
+            console.log(error);
+            this.sendNotification('Erreur!');
+        });
+}
 
 }

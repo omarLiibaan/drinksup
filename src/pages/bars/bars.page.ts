@@ -1,23 +1,26 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonContent } from "@ionic/angular";
+import { Component, ViewChild } from '@angular/core';
+import { IonContent, NavController } from "@ionic/angular";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Storage } from '@ionic/storage';
+import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions/ngx';
+import {Router} from '@angular/router';
+
 
 @Component({
   selector: 'app-bars',
   templateUrl: './bars.page.html',
   styleUrls: ['./bars.page.scss'],
 })
-export class BarsPage implements OnInit {
+export class BarsPage{
   @ViewChild(IonContent) content: IonContent;
   baseURI = 'https://macfi.ch/serveur/aksi.php';
   uplPhotoURI = "https://www.macfi.ch/serveur/barphotos/";
   items : Array<any> = [];
   random : number;
 
-  constructor(private http : HttpClient, private storage : Storage) { 
+  constructor(private http : HttpClient, private nativePageTransitions: NativePageTransitions, private navCtrl : NavController, private router : Router) { 
     this.loadBar();
     this.random = Math.floor(Math.random() * 100);
+    this.ionViewWillEnter();
   }
   scrollToTop() {
     this.content.scrollToTop(0);
@@ -26,8 +29,20 @@ export class BarsPage implements OnInit {
     this.scrollToTop();
   }
 
+  moveToBar(id : string){
+    let options: NativeTransitionOptions = {
+      direction: 'up',
+      duration: 250,
+      slowdownfactor: -1,
+      iosdelay: 50,
+      androiddelay: 50
+     }
+    this.nativePageTransitions.slide(options); 
+    this.navCtrl.navigateRoot('/tabs/bar-user/'+id);
+  }
 
-  ngOnInit() {
+  ionViewWillEnter(){
+    this.loadBar();
   }
 
   loadBar() : void{
@@ -39,14 +54,15 @@ export class BarsPage implements OnInit {
     {
         console.log(data);
         this.items = data;
-        // for(let i=0; i<this.items.length;i++){
-        //    this.barNOMS.push(this.items[i].ENT_NOM);
-        // }   
     },
     (error : any) =>
     {
       console.log(error);
     });
+  }
+
+  async navTabs(msg: string) {
+    this.router.navigateByUrl(msg);
   }
 
 }

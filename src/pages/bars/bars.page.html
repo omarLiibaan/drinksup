@@ -6,10 +6,10 @@
 
 <ion-content color="secondary">
   <ion-list *ngFor="let bars of items; let i = index">
-      <ion-item color="secondary" lines="none" class="animated fadeInUp bar-delay-{{i}} fast"> 
+      <ion-item no-padding color="secondary" lines="none" class="animated fadeInUp bar-delay-{{i}} fast" (click)="moveToBar(bars.ENT_ID)"> 
           <div class="img-overlay"></div>
           <div class="curtain animated fadeOut bar-delay-2-{{i}} slow"></div>
-          <img class="bar-img" [src]="uplPhotoURI + bars.ENT_NOM + '_1.jpg?id=' + random" alt="">
+          <img class="bar-img" [src]="uplPhotoURI + bars.ENT_NOM + '_1.jpg?ran=' + random" alt="">
           <div class="bar-details">
             <p class="bar-nom">{{bars.ENT_NOM}}</p>
             <div class="note-sec">

@@ -6,14 +6,15 @@ ion-list{
 
 ion-item{
     position: relative;
+    --inner-padding-end : 0px !important;
 
     .img-overlay{
         position: absolute;
         background: rgb(0,0,0);
         background: linear-gradient(0deg, rgba(0,0,0,.8) 20%, rgba(0,0,0,0) 100%); 
         height: 80%;
-        width: calc(100% - 32px);
-        left: 16px;
+        width: 100%;
+        left: 0;
         bottom: 0;
         z-index: 3;
     }
@@ -22,8 +23,8 @@ ion-item{
         position: absolute;
         background-color : #0e1016;
         height: 100%;
-        width: calc(100% - 32px);
-        left: 16px;
+        width: 100%;
+        left: 0;
         bottom: 0;
         z-index: 3;
     }
@@ -33,13 +34,13 @@ ion-item{
         min-width: 100%;
         object-fit: cover;
         z-index: 2;
-        position: relative;
+        display: block;
     }
 
     .bar-details{
         position: absolute;
         bottom: 16px;
-        left: 32px;
+        left: 16px;
         z-index: 3;
 
         p{  
@@ -73,6 +74,7 @@ ion-item{
 
    
 }
+
 
 
 

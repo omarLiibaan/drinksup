@@ -41,6 +41,12 @@ const routes: Routes = [
                     { path: '', loadChildren: '../profile/profile.module#ProfilePageModule' },
                 ]
             },
+            {
+                path: 'bar-user/:id',
+                children: [
+                    { path: '', loadChildren: '../bar-user/bar-user.module#BarUserPageModule' },
+                ]
+            },
         ]
     },
     {

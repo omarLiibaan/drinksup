@@ -19,12 +19,13 @@ import { ModalbarAdminPageModule } from '../pages/modalbar-admin/modalbar-admin.
 import { ModalSchedulePageModule } from '../pages/modal-schedule/modal-schedule.module';
 import { LoadingpagePageModule } from '../pages/loadingpage/loadingpage.module';
 
+import {OffersAddbarPageModule} from '../pages/offers-addbar/offers-addbar.module';
 
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, IonicStorageModule.forRoot(), HttpClientModule, UsersPageModule, ModalPageModule, ModalbarAdminPageModule, ModalSchedulePageModule, LoadingpagePageModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, IonicStorageModule.forRoot(), HttpClientModule, UsersPageModule, ModalPageModule, ModalbarAdminPageModule, ModalSchedulePageModule, LoadingpagePageModule, OffersAddbarPageModule],
   providers: [
     StatusBar,
     SplashScreen,

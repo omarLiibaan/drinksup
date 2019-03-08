@@ -51,5 +51,8 @@ export class BarAdminPage implements OnInit {
         this.ionViewWillEnter();
 
     }
+    async search() {
+        console.log('lala');
+    }
 
 }

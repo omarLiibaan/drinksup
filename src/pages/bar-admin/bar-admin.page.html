@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content padding color="secondary">
-  <ion-searchbar animated color="primary" placeholder="Cherchez un propriétaire"></ion-searchbar>
+  <ion-searchbar animated color="primary" placeholder="Cherchez un propriétaire" (keyup)="search()"></ion-searchbar>
   <ion-card color="danger" *ngFor="let user of users" (click)="validated(user.INT_ID, user.ENT_ID)">
     <ion-card-header>
       <ion-card-title>{{user.ENT_NOM}}</ion-card-title>
@@ -16,6 +16,7 @@
       {{user.ENT_DESCRIPTION | slice:0:15}}...
     </ion-card-content>
   </ion-card>
+
  <!-- <ion-item color="secondary">
     <ion-label>
       <strong style="color:white">Propriétaires</strong>
@@ -38,4 +39,5 @@
     </ion-item-sliding>
   </ion-list>-->
   <p>{{haveBarOrNot}} </p>
+
 </ion-content>

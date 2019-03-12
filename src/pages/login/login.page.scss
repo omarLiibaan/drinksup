@@ -12,6 +12,7 @@ form{
             border-radius: 50px;
             border : 1px solid rgba(255,255,255,.8);
             --padding-start : 2rem;
+            font-family: "PNL";
         }
         ion-label{
             position: absolute;
@@ -31,7 +32,8 @@ form{
         --background: rgb(91,201,224);
         --background: linear-gradient(0deg, rgba(91,201,224,1) 0%, rgba(22,126,197,1) 100%); 
         --box-shadow: 0 5px 20px -8px rgba(108,209,241,1);
-        text-transform:lowercase;
+        text-transform:none;
+
     }
 
     .mdpOublie{

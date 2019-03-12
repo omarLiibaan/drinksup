@@ -151,18 +151,6 @@ updateBar(nomEnt: string, descEnt: string, adresseEnt: string, localiteEnt: stri
       });
 }
 
-updateBarWhenPhotoChange(idParam : string){
-  const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
-        options: any		= { 'key' : 'updateBarWhenPhotoChange', 'idEnt' : idParam},
-        url: any      	= this.baseURI;
-  this.http.post(url, JSON.stringify(options), headers).subscribe((data: any) => {
-        console.log(data);
-      },
-      (error: any) => {
-          console.log(error);
-  });
-}
-
 updateImageName(oldNameParam : string, newNameParam : string){
   const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
         options: any		= { 'key' : 'updateImageName', 'oldName' : oldNameParam, 'newName' : newNameParam},
@@ -283,7 +271,6 @@ async editSchedule(jourIdParam : string, jourParam : string, hDebParam : string,
       postData.append("file",imageData);
       let data:Observable<any> = this.http.post(this.uplPhotoURI+"uploadPhoto.php"+barName, postData);
       this.loadingModal();//open loadung modal
-      this.updateBarWhenPhotoChange(this.ID_ENT);
       data.subscribe((res)=>{
       console.log(res);
       console.log("Upload Successful");
@@ -317,7 +304,6 @@ async editSchedule(jourIdParam : string, jourParam : string, hDebParam : string,
       postData.append("file",imageData);
       let data:Observable<any> = this.http.post(this.uplPhotoURI+"uploadPhoto.php"+barName, postData);
       this.loadingModal();//open loadung modal
-      this.updateBarWhenPhotoChange(this.ID_ENT);
       data.subscribe((res)=>{
       console.log(res);
       console.log("Upload Successful");

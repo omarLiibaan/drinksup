@@ -31,24 +31,6 @@ export class LoginPage implements OnInit {
             PRO_PASSWORD: new FormControl(),
         });
         this.validationForm();
-
-        
-
-        this.storage.get('SessionInKey').then((val) => {
-            this.storage.get('SessionRoleKey').then((valRole) => {
-                this.userSessionRole = valRole;
-
-                if(val=='Yes' && this.userSessionRole == this.roleAdmin){
-                    this.navTabs('/tabsadmin/users');
-                }else if(val=='Yes' && this.userSessionRole == this.roleProprio){
-                    this.navTabs('/tabsproprio/bar');
-                }else if(val=='Yes' && this.userSessionRole == this.roleUser){
-                    this.navTabs('/tabs/offers');
-                }else{
-                    return null;
-                }
-            });
-        });
     }
     
     validationForm() {
@@ -92,17 +74,17 @@ export class LoginPage implements OnInit {
                 this.storage.set('SessionIdKey', this.userDetails.ID);
                 this.storage.set('SessionInKey', 'Yes');
                 if (this.userDetails.ROLE === this.roleAdmin) {
-                    this.navTabs('/tabsadmin/users');
+                    this.navCtrl.navigateRoot('/tabsadmin/users');
                     this.storage.set('SessionRoleKey', this.roleAdmin);
                     this.sendNotification('Bienvenue !');
                     setTimeout( () => {this.loginForm.reset();}, 1000);  
                 } else if (this.userDetails.ROLE === this.roleProprio) {
-                    this.navTabs('/tabsproprio/bar');
+                    this.navCtrl.navigateRoot('/tabsproprio/bar');
                     this.storage.set('SessionRoleKey', this.roleProprio);
                     this.sendNotification('Bienvenue !');
                     setTimeout( () => {this.loginForm.reset();}, 1000);  
                 } else if (this.userDetails.ROLE === this.roleUser) {
-                    this.navTabs('/tabs/offers');
+                    this.navCtrl.navigateRoot('/tabs/offers');
                     this.storage.set('SessionRoleKey', this.roleUser);
                     this.sendNotification('Bienvenue !');
                     setTimeout( () => {this.loginForm.reset();}, 1000);  

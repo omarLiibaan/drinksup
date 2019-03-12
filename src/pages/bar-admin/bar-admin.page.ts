@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {ModalController, NavController, ToastController} from '@ionic/angular';
 import {ModalbarAdminPage} from '../modalbar-admin/modalbar-admin.page';
@@ -13,6 +13,8 @@ export class BarAdminPage implements OnInit {
   proprio = 0;
   bar: any = {};
   haveBarOrNot = '';
+  user = null;
+  usersFilter = [];
   // public baseURI = 'http://localhost/drinksupProject/serveur/';
   public baseURI = 'https://macfi.ch/serveur/';
   constructor(private navCtrl: NavController, private toastCtrl: ToastController, public http: HttpClient, public modalController: ModalController) { }
@@ -21,8 +23,8 @@ export class BarAdminPage implements OnInit {
       this.ionViewWillEnter();
   }
     public ionViewWillEnter(): void {
-        this.users = [];
         this.getProprio();
+
     }
   public getProprio() {
         const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -30,6 +32,7 @@ export class BarAdminPage implements OnInit {
             url: any      	= this.baseURI + 'aksi.php';
         this.http.post(url, JSON.stringify(options), headers).subscribe((data: any) => {
             this.users = data;
+            this.usersFilter = this.users;
            // if (this.users == null ) {this.haveUserOrNot = 'Aucun Internaute ayant le role USERS'; } else {this.haveUserOrNot = ''; }
         });
 
@@ -51,8 +54,14 @@ export class BarAdminPage implements OnInit {
         this.ionViewWillEnter();
 
     }
-    async search() {
-        console.log('lala');
+    async search(ev: any) {
+        const val = ev.target.value;
+        if (val && val.trim() !== '') {
+            this.usersFilter = this.users.filter((users) => {
+                return (users.INT_NOM.toLowerCase().indexOf(val.toLowerCase()) > -1);
+            });
+        } else {
+          this.getProprio();
+        }
     }
-
 }

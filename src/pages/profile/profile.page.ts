@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import {Router} from '@angular/router';
 
 
@@ -19,13 +19,29 @@ export class ProfilePage implements OnInit {
   roleProprio = 'proprio';
   userSessionRole : string;
 
-  constructor(private route: Router, public navCtrl : NavController, public storage: Storage, private http : HttpClient) { 
+  constructor(private route: Router, public navCtrl : NavController, public storage: Storage, private http : HttpClient, private platform : Platform) { 
     this.storage.get('SessionIdKey').then((val) => {
       this.loadData(val);
     });
 
+    this.platform.backButton.subscribe(()=>{
+      this.storage.get('SessionInKey').then((val) => {
+        this.storage.get('SessionRoleKey').then((valRole) => {
+            this.userSessionRole = valRole;
+            if(val=='Yes' && this.userSessionRole == this.roleAdmin){
+                this.navCtrl.navigateRoot('/tabsadmin/users');
+            }else if(val=='Yes' && this.userSessionRole == this.roleProprio){
+                this.navCtrl.navigateRoot('/tabsproprio/bar');
+            }else if(val=='Yes' && this.userSessionRole == this.roleUser){
+                this.navCtrl.navigateRoot('/tabs/offers');
+            }else{
+                return null;
+            }
+        });
+      });
+    });
   }
-
+  
   ngOnInit() {
     
   }
@@ -45,11 +61,9 @@ export class ProfilePage implements OnInit {
     });
   }
 
-  
-
-  logout(){
+  logoutFromApp(){
     this.storage.clear();
-    this.navCtrl.navigateBack('login');
+    this.navCtrl.navigateForward('login');
   }
 
   async navTabs(msg: string) {

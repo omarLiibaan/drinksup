@@ -21,7 +21,6 @@ import { LoadingpagePageModule } from '../pages/loadingpage/loadingpage.module';
 
 import {OffersAddbarPageModule} from '../pages/offers-addbar/offers-addbar.module';
 
-
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],

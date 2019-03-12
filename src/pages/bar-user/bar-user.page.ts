@@ -1,8 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Platform } from '@ionic/angular';
-import { NativePageTransitions } from '@ionic-native/native-page-transitions/ngx';
-import { Router, ActivatedRoute } from '@angular/router';
+import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions/ngx';
+import { ActivatedRoute } from '@angular/router';
 import { NavController } from "@ionic/angular";
 
 
@@ -15,20 +14,19 @@ export class BarUserPage implements OnInit {
   baseURI = 'https://macfi.ch/serveur/aksi.php';
   uplPhotoURI = 'https://www.macfi.ch/serveur/barphotos/';
   myBar : any = {};
+  mySchedule : Array<any> = [];
   barName : string;
   imgLink1 : string;
   imgLink2 : string;
   imgLink3 : string;
 
-  constructor(private http : HttpClient, private platform : Platform, private aRoute : ActivatedRoute, private nativePageTransitions: NativePageTransitions, private route : Router, private navCtrl : NavController) { 
-    // this.backButtonEvent();
-    // this.platform.backButton.subscribe(() => {
-    //   alert("hello");
-    // });
+  constructor(private http : HttpClient, private aRoute : ActivatedRoute, private nativePageTransitions: NativePageTransitions, private navCtrl : NavController) { 
+
   }
 
   ngOnInit() {
-    this.loadBar(this.aRoute.snapshot.paramMap.get('id'))
+    this.loadBar(this.aRoute.snapshot.paramMap.get('id'));
+    this.loadSchedule(this.aRoute.snapshot.paramMap.get('id'));
   }
 
   loadBar(idBarParam : string) : void{
@@ -53,19 +51,28 @@ export class BarUserPage implements OnInit {
     });
   }
 
-  backButtonEvent(){
-      document.addEventListener("backbutton", () => { 
-        // code that is executed when the user pressed the back button
-        this.nativePageTransitions.fade(null);  
-      // this.navTabs('/tabs/bars');
-      // this.navCtrl.navigateRoot('/tabs/bars');
-      alert("hello");
+  loadSchedule(idBarParam : string){
+    let headers 	: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
+          options 	: any		= { "key" : "fetchHoraireByBar", "idBar" : idBarParam},
+          url       : any      	= this.baseURI;
+  
+      this.http.post(url, JSON.stringify(options), headers).subscribe((data : any) =>
+      {
+        this.mySchedule = data;
+      },
+      (error : any) =>
+      {
+        console.log(error);
       });
   }
 
-  async navTabs(msg: string) {
-    this.route.navigateByUrl(msg);
+  goBack(){
+    let options: NativeTransitionOptions = {
+      duration: 250,
+     }
+    this.nativePageTransitions.fade(options); 
+    this.navCtrl.back();
+      
   }
-
 
 }

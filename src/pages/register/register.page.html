@@ -8,12 +8,12 @@
   <form [formGroup]="enregistrerForm" (ngSubmit)="addProprio()" style="padding:20px;">
     <div class="inputWrapper">
       <ion-label>Nom :</ion-label>
-      <ion-input type="text" formControlName="PRO_NOM"></ion-input>
+      <ion-input type="text" formControlName="PRO_NOM" class="inputFirstLetter"></ion-input>
     </div>
 
     <div class="inputWrapper">
       <ion-label>Prénom :</ion-label>
-      <ion-input type="text" formControlName="PRO_PRENOM"></ion-input>
+      <ion-input type="text" formControlName="PRO_PRENOM" class="inputFirstLetter"></ion-input>
     </div>
 
     <div class="inputWrapper">

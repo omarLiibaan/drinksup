@@ -1,14 +1,43 @@
-@font-face {
-    font-family: "PNB";
-    src: url("../../assets/fonts/ProximaNovaBold.otf");
-  }
-  
-  @font-face {
-    font-family: "PNL";
-    src: url("../../assets/fonts/ProximaNovaLight.otf");
-  }
-  
-
 ion-list{
-    background-color: #08090c;
+  background-color: #12141b
+}
+
+ion-item{
+  margin-bottom: 6px;
+  margin-top: 6px;
+}
+
+ion-icon{
+  color : #fff;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+
+ion-item-option{
+  margin-top: 10px;
+  margin-left: 5px;
+  border-radius: 5px;
+  height: 50px;
+  width: 50px;
+ 
+  ion-icon{
+    font-size: 1.1rem;
+  }
+ }
+
+
+
+
+.ion-edit{
+  color : #10dc60
+ 
+}
+
+.ion-delete{
+ color : #f04141;
+}
+
+.ion-role{
+  color : #3880ff
 }

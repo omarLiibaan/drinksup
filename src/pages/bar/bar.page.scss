@@ -192,7 +192,7 @@ ion-datetime{
     display : none;
 }
 
-.opend{
+.open{
     display : block;
 }
 
@@ -208,7 +208,7 @@ ion-datetime{
 .note{
     position: relative;
     color : rgba(255, 255, 255, 0.5);
-    background-color:rgba(220,20,60, .25);
+    background-color:rgba(0,0,0, .15);
     font-size: .7rem;
     padding :5px 16px 5px 16px;
     box-sizing: border-box;
@@ -222,7 +222,7 @@ ion-datetime{
         width: 3px;
         left: 0;
         top :0 ;
-        background-color:rgba(220,20,60, .7);
+        background-color:rgba(0,0,0, .5);
     }
     .span-div{
         display: inline-block;

@@ -8,27 +8,27 @@
 
   <form [formGroup]="modifierForm" (ngSubmit)="editBar()" >
     <ion-item color="secondary">
-      <ion-label position="floating" id="entNom" style="font-weight: bold;">Nom de l'entreprise :</ion-label>
+      <ion-label position="stacked" id="entNom" style="font-weight: bold;">Nom de l'entreprise</ion-label>
       <ion-input type="text" for="entNom"  formControlName="nomEnt"  class="form-control form-control-sm" [(ngModel)]="nomEnt"></ion-input>
     </ion-item>
     <ion-item color="secondary">
-      <ion-label position="floating" style="font-weight: bold;">Secteur d'activités</ion-label>
+      <ion-label position="stacked" style="font-weight: bold;">Secteur d'activités</ion-label>
       <ion-input type="text"  formControlName="secteurEnt" class="form-control form-control-sm"  [(ngModel)]="secteurEnt"></ion-input>
     </ion-item>
     <ion-item color="secondary">
-      <ion-label position="floating" style="font-weight: bold;">Description</ion-label>
+      <ion-label position="stacked" style="font-weight: bold;">Description</ion-label>
       <ion-textarea type="text" rows="4" formControlName="descEnt" class="form-control form-control-sm" [(ngModel)]="descEnt"></ion-textarea>
     </ion-item>
     <ion-item color="secondary">
-      <ion-label position="floating" style="font-weight: bold;">Adresse</ion-label>
+      <ion-label position="stacked" style="font-weight: bold;">Adresse</ion-label>
       <ion-input type="text"  formControlName="adresseEnt" class="form-control form-control-sm" [(ngModel)]="adresseEnt"></ion-input>
     </ion-item>
     <ion-item color="secondary">
-      <ion-label position="floating" style="font-weight: bold;">NPA</ion-label>
+      <ion-label position="stacked" style="font-weight: bold;">NPA</ion-label>
       <ion-input type="text"  formControlName="npaEnt" class="form-control form-control-sm"  [(ngModel)]="npaEnt" min="4" max="4"></ion-input>
     </ion-item>
     <ion-item color="secondary">
-      <ion-label position="floating" style="font-weight: bold;">Localite</ion-label>
+      <ion-label position="stacked" style="font-weight: bold;">Localite</ion-label>
       <ion-input type="text"  formControlName="localiteEnt" class="form-control form-control-sm" [(ngModel)]="localiteEnt"></ion-input>
     </ion-item>
     <ion-input type="text" hidden  formControlName="idEnt" [(ngModel)]="idEnt"></ion-input>

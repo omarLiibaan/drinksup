@@ -69,9 +69,9 @@ ion-slides{
     }
     
     .map-btn{
-        --background: rgb(48,107,179);
-        --background: linear-gradient(20deg, rgba(48,107,179,1) 0%, rgba(108,209,241,1) 100%); 
-        box-shadow: 0 0 10px rgba(108,209,241,.4);
+        --background: #f80638;
+        // --background: linear-gradient(20deg, rgba(48,107,179,1) 0%, rgba(108,209,241,1) 100%); 
+        box-shadow: 0 0 10px rgba(248, 6, 56,.6);
         height: 50px;
         width: 50px;
         position: absolute;
@@ -82,37 +82,129 @@ ion-slides{
 
         img{
             position: absolute;
-            width: 25px;
+            width: 18px;
             display: block
         }
-    }
-
-    .divider{
-        margin: 15px 0 10px 0;
-        border-radius: 2px;
-        display: block;
-        height: 3px;
-        width: 25px;
-        background-color:  rgba(108,209,241,1);
     }
 }
 p, h1{
     margin: 0;
 }
+
 h1{
-    margin-top: 30px;
+    font-size: 1rem;
+    font-family: "PNB";
 }
 
 p{
-
-    font-size: 1rem
+    font-size: .85rem
 }
 
 .typeBar{
-    color : rgba(108,209,241,1);
+    color : #f80638;
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
+.img-slide{
+    position: relative;
+
+    .backbutton{
+        position: fixed;
+        left: 16px;
+        top : 16px;
+        z-index: 10;
+        width: 15px;
+    }
+}
+
+.padding{
+   padding: 30px;
+}
+
+.first-section{
+    background-color: #0e1015;
+    width: 100%;
+    position: relative;
+
+    .roundCornerLeft{
+        position: absolute;
+        bottom : 0;
+        left: 0;
+        height: 25px;
+        width: 25px;
+    }
+
+    .roundCornerRight{
+        position: absolute;
+        bottom : -25px;
+        right: 0;
+        height: 25px;
+        width: 25px;
+    }
+}
+
+ion-grid{
+    padding: 0;
+    font-size: .8rem;
+}
+
+ion-row {
+    padding: 0 30px 0 30px;
+}
+
+ion-datetime{
+    padding: 0 !important;
+}
+
+h4{
+    margin : 0;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    color : rgba(255,255,255,.4);
+    font-size: .7rem;
+    letter-spacing: 2px;
+}
+
+.horaire{
+    margin : 0;
+    margin-bottom: 10px;
+    margin-left: 30px;
+}
+
+.commentButton{
+    margin : 50px 15% 50px 15%;
+    width: 70%;
+    text-transform: none;
+    font-size: .9rem;
+    --background : transparent;
+    --border-width : 1px;
+    --border-color : #fff;
+    --border-style : solid; 
+    color : #fff; 
+
+}
+
+
+.odd{
+    background-color: #1b1e27;
+}
+
+.closed{
+    display : none;
+}
+
+.open{
+    display : block;
+}
+
+.closedCol{
+    font-size: .7rem;
+    color : rgba(255,255,255,.4);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
 
 
 

@@ -1,5 +1,6 @@
 <ion-content color="secondary">
   <div class="img-slide">
+    <img src="../../assets/img/back-arrow-icon.svg" alt="" class="backbutton" (click)="goBack()">
     <ion-slides pager="true" [options]="slideOpts">
         <ion-slide>
             <img [src]="imgLink1" alt="Photo n° 1">
@@ -16,14 +17,54 @@
     </ion-slides>
   </div>
 
-  <div padding class="bar-content">
+  <div class="bar-content">
+
     <img class="roundCorner" src="../../assets/img/round-corner.svg" alt="">
     <!-- Map Button -->
     <ion-button class="map-btn" shape="round"><img src="../../assets/img/map-icon.svg" alt=""></ion-button>
-    <h1>{{myBar.ENT_NOM}}</h1>
-    <p class="typeBar">{{myBar.ENT_SECTEURACTIVITES}}</p>
-    <p class="addressBar">{{myBar.ENT_ADRESSE}}, {{myBar.ENT_NPA}} - {{myBar.ENT_LOCALITE}}</p>
-    <span class="divider"></span>
-    <p class="descBar">{{myBar.ENT_DESCRIPTION}}</p>
+    <div class="first-section padding"> 
+        <h1>{{myBar.ENT_NOM}}</h1>     
+        <p class="typeBar">{{myBar.ENT_SECTEURACTIVITES}}</p>
+        <p class="addressBar">{{myBar.ENT_ADRESSE}}, {{myBar.ENT_NPA}} - {{myBar.ENT_LOCALITE}}</p>
+        <img class="roundCornerLeft" src="../../assets/img/round-corner-light-small.svg" alt="">
+        <img class="roundCornerRight" src="../../assets/img/round-corner-small.svg" alt="">
+    </div>
+    <div class="padding">
+      <h4>Description :</h4>
+      <p class="descBar">{{myBar.ENT_DESCRIPTION}}</p>
+    </div>
   </div>
+
+  <div class="bar-schedule">
+    <h4 class="horaire">Horaire :</h4>
+    <ion-grid *ngFor="let schedule of mySchedule; let i = index">
+      <ion-row [ngClass]="(i % 2 == 0) ? 'odd' : 'even'">
+        <ion-col size="4" align-self-center>
+          <div>
+            {{schedule.HOR_JOURS}}
+          </div>
+        </ion-col>
+        <ion-col size="4" align-self-center [ngClass]="(schedule.HOR_HEUREDEBUT == '00:00:00' && schedule.HOR_HEUREFIN == '00:00:00') ? 'closed' : 'open'">
+          <div>
+            <ion-datetime [readonly]="true" displayFormat="HH:mm" value="{{schedule.HOR_HEUREDEBUT}}"></ion-datetime>
+          </div>
+          
+        </ion-col>
+        <ion-col size="4" align-self-center [ngClass]="(schedule.HOR_HEUREDEBUT == '00:00:00' && schedule.HOR_HEUREFIN == '00:00:00') ? 'closed' : 'open'">
+          <div >
+            <ion-datetime [readonly]="true" displayFormat="HH:mm" value="{{schedule.HOR_HEUREFIN}}"></ion-datetime>            
+          </div>
+        </ion-col>
+
+        <ion-col size="8" align-self-center [ngClass]="(schedule.HOR_HEUREDEBUT == '00:00:00' && schedule.HOR_HEUREFIN == '00:00:00') ? 'open' : 'closed'">
+          <div class="closedCol" >
+            Fermé
+          </div>
+        </ion-col>
+       
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <ion-button class="commentButton" shape="round"><ion-icon name="paper"></ion-icon>&nbsp;Voir les avis des clients</ion-button>
 </ion-content>

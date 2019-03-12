@@ -5,15 +5,18 @@
 </ion-header>
 
 <ion-content padding color="secondary">
-  <ion-list color="secondary" >
+  <ion-searchbar animated></ion-searchbar>
+  
+  <ion-list color="secondary">
     <ion-item-sliding *ngFor="let user of users" color="secondary" #slidingItem>
-      <ion-item color="secondary">
-        <p>{{user.INT_PRENOM}} {{user.INT_NOM}} </p>
+      <ion-item color="secondary" no-padding>
+        <ion-icon name="contact"></ion-icon>
+        <p>{{user.INT_PRENOM}} {{user.INT_NOM}}</p>
       </ion-item>
       <ion-item-options side="start" color="secondary">
-        <ion-item-option color="success" (click)="edit(slidingItem,user.INT_ID, user.INT_PRENOM, user.INT_NOM, user.INT_EMAIL, user.ROL_TYPES)">Edit</ion-item-option>
-        <ion-item-option color="danger" (click)="delete(slidingItem,user.INT_ID, user.INT_NOM)">Delete</ion-item-option>
-        <ion-item-option color="success" (click)="editRole(slidingItem,user.INT_ID, user.INT_NOM)">Roles ?</ion-item-option>
+        <ion-item-option  (click)="edit(slidingItem,user.INT_ID, user.INT_PRENOM, user.INT_NOM, user.INT_EMAIL, user.ROL_TYPES)"><ion-icon class="ion-edit" name="settings"></ion-icon></ion-item-option>
+        <ion-item-option  (click)="delete(slidingItem,user.INT_ID, user.INT_NOM)"><ion-icon class="ion-delete" name="trash"></ion-icon></ion-item-option>
+        <ion-item-option  (click)="editRole(slidingItem,user.INT_ID, user.INT_NOM)"><ion-icon class="ion-role" name="contacts"></ion-icon></ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>

@@ -18,7 +18,7 @@
 
     <div class="inputWrapper">
       <ion-label>Email :</ion-label>
-      <ion-input type="email" formControlName="PRO_EMAIL"></ion-input>
+      <ion-input type="email" formControlName="PRO_EMAIL" (focusout)="checkEmailIfExist()"></ion-input>
       <span *ngIf="!enregistrerForm .controls.PRO_EMAIL.valid && (enregistrerForm .controls.PRO_EMAIL.dirty)">format email invalid !</span>
     </div>
 

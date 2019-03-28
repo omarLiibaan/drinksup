@@ -10,8 +10,9 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 })
 export class RegisterPage implements OnInit {
   public enregistrerForm: FormGroup;
-  // public baseURI = 'http://localhost/drinksupProject/serveur/';
+  public users = [];  
   public baseURI = 'https://macfi.ch/serveur/';
+  public emailExist : boolean = false;
   constructor(private formBuilder: FormBuilder, private navCtrl: NavController, private toastCtrl: ToastController, public http: HttpClient) {
     this.enregistrerForm = new FormGroup({
         PRO_NOM: new FormControl(),
@@ -42,14 +43,8 @@ export class RegisterPage implements OnInit {
             AC.get('CONFIRM_PRO_PASSWORD').setErrors(null);
         }
     }
-    addProprio() {
-        const PRO_NOM: string = this.enregistrerForm.controls['PRO_NOM'].value;
-        const PRO_PRENOM: string = this.enregistrerForm.controls['PRO_PRENOM'].value;
-        const PRO_EMAIL: string = this.enregistrerForm.controls['PRO_EMAIL'].value;
-        const PRO_PASSWORD: string = this.enregistrerForm.controls['PRO_PASSWORD'].value;
-        // sign up
-        this.signUpOwners(PRO_NOM, PRO_PRENOM, PRO_EMAIL, PRO_PASSWORD);
-    }
+    
+
     signUpOwners(nom: string, prenom: string, email: string, mdp: string) {
         const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
               options: any		= { 'key' : 'enregistrerUser', 'PRO_NOM': nom, 'PRO_PRENOM': prenom, 'PRO_EMAIL': email, 'PRO_PASSWORD': mdp},
@@ -65,8 +60,56 @@ export class RegisterPage implements OnInit {
             });
     }
 
-  ngOnInit() {
-  }
+    //
+        getUsers() {
+            const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
+                options: any		= { 'key' : 'get_all_users'},
+                url: any      	= this.baseURI + 'aksi.php';
+            this.http.post(url, JSON.stringify(options), headers).subscribe((data: any) => {
+                this.users = data;
+                
+                for(var i = 0; i < data.length; i++) {
+                    if (data[i].INT_EMAIL == "tomas@gmail.com") {
+                        this.emailExist = true;
+                    }
+                }
+                
+            });
+        }
+
+        ngOnInit() {
+            this.getUsers();
+        }
+
+        addProprio() {
+            const PRO_NOM: string = this.enregistrerForm.controls['PRO_NOM'].value;
+            const PRO_PRENOM: string = this.enregistrerForm.controls['PRO_PRENOM'].value;
+            const PRO_EMAIL: string = this.enregistrerForm.controls['PRO_EMAIL'].value;
+            const PRO_PASSWORD: string = this.enregistrerForm.controls['PRO_PASSWORD'].value;
+            // sign up
+            if(this.emailExist){
+                this.sendNotification("L'adresse e-mail existe déjà");
+            }else{
+                this.signUpOwners(PRO_NOM, PRO_PRENOM, PRO_EMAIL, PRO_PASSWORD);
+            }
+        }
+
+        checkEmailIfExist(){
+            const PRO_EMAIL: string = this.enregistrerForm.controls['PRO_EMAIL'].value;
+
+            for(var i = 0; i < this.users.length; i++) {
+                if (this.users[i].INT_EMAIL == PRO_EMAIL) {
+                    this.emailExist = true;
+                    console.log("address mail exist already!");
+                }else{
+                    this.emailExist = false;
+                    console.log("address mail ready!");
+                }
+            }
+        }
+
+
+    //
     formLogin() {this.navCtrl.navigateForward('login'); }
     mdpOublier(){this.navCtrl.navigateForward('login'); }
     async sendNotification(msg: string) {

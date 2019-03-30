@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', loadChildren: '../pages/login/login.module#LoginPageModule' },
-  { path: 'register', loadChildren: '../pages/register/register.module#RegisterPageModule' },
+  { path: 'register/:email', loadChildren: '../pages/register/register.module#RegisterPageModule' },
   { path: 'tabs', loadChildren: '../pages/tabs/tabs.module#TabsPageModule' },
   { path: 'tabsadmin', loadChildren: '../pages/tabsadmin/tabsadmin.module#TabsadminPageModule' },
   { path: 'tabsproprio', loadChildren: '../pages/tabsproprio/tabsproprio.module#TabsproprioPageModule' },

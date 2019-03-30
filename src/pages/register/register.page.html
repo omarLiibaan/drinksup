@@ -6,33 +6,33 @@
     <p>Inscrivez-vous pour profiter de boissons offertes</p>
   </div>
   <form [formGroup]="enregistrerForm" (ngSubmit)="addProprio()" style="padding:20px;">
-    <div class="inputWrapper">
+    <!-- <div class="inputWrapper">
       <ion-label>Nom :</ion-label>
       <ion-input type="text" formControlName="PRO_NOM" class="inputFirstLetter"></ion-input>
-    </div>
+    </div> -->
 
     <div class="inputWrapper">
-      <ion-label>Prénom :</ion-label>
-      <ion-input type="text" formControlName="PRO_PRENOM" class="inputFirstLetter"></ion-input>
+      <ion-label>Fullname :</ion-label>
+      <ion-input type="text" formControlName="PRO_PRENOM" class="inputFirstLetter" (focusout)="checkOnFocusOut()"></ion-input>
     </div>
 
-    <div class="inputWrapper">
+    <!-- <div class="inputWrapper">
       <ion-label>Email :</ion-label>
-      <ion-input type="email" formControlName="PRO_EMAIL" (focusout)="checkEmailIfExist()"></ion-input>
+      <ion-input type="email" formControlName="PRO_EMAIL"></ion-input>
       <span *ngIf="!enregistrerForm .controls.PRO_EMAIL.valid && (enregistrerForm .controls.PRO_EMAIL.dirty)">format email invalid !</span>
-    </div>
+    </div> -->
 
     <div class="inputWrapper">
-      <ion-label>Mot de passe :</ion-label>
-      <ion-input type="password" formControlName="PRO_PASSWORD"></ion-input>
+      <ion-label>Password :</ion-label>
+      <ion-input type="password" formControlName="PRO_PASSWORD" (focusout)="checkOnFocusOut()"></ion-input>
     </div>
 
-    <div class="inputWrapper">
+    <!-- <div class="inputWrapper">
       <ion-label>Confirmer mot de passe :</ion-label>
       <ion-input type="password" formControlName="CONFIRM_PRO_PASSWORD"></ion-input>      
-    </div>
+    </div> -->
     
-    <ion-button type="submit" color="dark" shape="round" expand="full" [disabled]="!enregistrerForm.valid">Enregistrer</ion-button>
+    <ion-button type="submit" color="dark" shape="round" expand="full" [disabled]="!enregistrerForm.valid">Register</ion-button>
     
     <div class="dejaInscrit">
       <p> Déjà inscrit ?</p> <p (click)="formLogin()">se connecter</p>

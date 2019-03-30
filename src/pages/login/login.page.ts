@@ -15,31 +15,52 @@ import { Storage } from '@ionic/storage';
 export class LoginPage implements OnInit {
     userData: any;
     loginForm: FormGroup;
+    registerEmail: FormGroup;
     baseURI = 'https://macfi.ch/serveur/';
+    regURL = 'https://www.futurae-ge.ch/ionic-phpmailer.php';
     userDetails : any;
     users = [];  
     emailExist : boolean = false;
+    emailExistReg : boolean = false;
+
     //---------------------------
     roleUser = 'user';
     roleAdmin = 'admin';
     roleProprio = 'proprio';
+
+    //----------------------------
+    activeSignUp = "none";
+    activeSignIn = "block";
 
     constructor(private route: Router, private formBuilder: FormBuilder, private navCtrl: NavController, private fb: Facebook, private googlePlus : GooglePlus, private toastCtrl: ToastController, public http: HttpClient, private storage: Storage) {
         this.loginForm = new FormGroup({
             PRO_EMAIL: new FormControl(),
             PRO_PASSWORD: new FormControl(),
         });
+
+        this.registerEmail = new FormGroup({
+            REG_EMAIL : new FormControl()
+        });
+
         this.validationForm();
     }
 
     ngOnInit() {
         this.getUsers();
+        this.activeSignUp = "none";
+        this.activeSignIn = "block";
+        document.getElementById("siId").className = "signin active"
+        document.getElementById("suId").className = "signup"
     }
     
     validationForm() {
         this.loginForm = this.formBuilder.group({
             'PRO_EMAIL': ['', Validators.compose([Validators.maxLength(70), Validators.pattern('^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$'), Validators.required])],
             'PRO_PASSWORD': ['', Validators.compose([Validators.minLength(6), Validators.required])]
+        });
+
+        this.registerEmail = this.formBuilder.group({
+            'REG_EMAIL': ['', Validators.compose([Validators.maxLength(70), Validators.pattern('^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$'), Validators.required])]
         });
     }
 
@@ -165,7 +186,7 @@ export class LoginPage implements OnInit {
                     this.sendNotification('Bienvenue !'); 
                 } else {
                     // console.log(JSON.stringify(options));
-                    this.sendNotification('Email ou mot de passe erroné');
+                    this.sendNotification('Votre adresse Google+ a été déjà utilisé via inscription native de Drinks Up. Si vous ne vous souvenez plus de votre mot de passe. Veuillez cliquer sur "Mot de passe oublié"');
                 }
             },
             (error: any) => {
@@ -187,6 +208,66 @@ export class LoginPage implements OnInit {
                 console.log(error);
             });
     }
+
+    proceedReg(){
+        if(this.emailExistReg){
+            this.sendNotification("L'adresse e-mail existe déjà");
+        }else{
+            this.confirmThenRegister();
+            this.sendNotification("Un mail de confirmation vous a été envoyé");
+        }
+    }
+
+    confirmThenRegister() {
+        const email : string = this.registerEmail.controls['REG_EMAIL'].value;
+        const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
+              options: any		= { 'email' : email},
+              url: any      	= this.regURL;
+
+        this.http.post(url, JSON.stringify(options), headers).subscribe((data: any) =>
+            {
+                console.log(data);
+            },
+            (error: any) => {
+                console.log(error);
+            });
+    }
+
+    ionViewWillEnter(){
+        this.activeSignUp = "none";
+        this.activeSignIn = "block";
+        document.getElementById("siId").className = "signin active"
+        document.getElementById("suId").className = "signup"
+    }
+
+    checkEmailIfExist(){
+        const REG_EMAIL: string = this.registerEmail.controls['REG_EMAIL'].value;
+
+        for(var i = 0; i < this.users.length; i++) {
+            if (this.users[i].INT_EMAIL == REG_EMAIL) {
+                this.emailExistReg = true;
+                console.log("address mail exist already!");
+            }else{
+                this.emailExistReg = false;
+                console.log("address mail ready!");
+            }
+        }
+    }
+
+    activeSI(){
+        this.activeSignUp = "none";
+        this.activeSignIn = "block";
+        document.getElementById("siId").className = "signin active"
+        document.getElementById("suId").className = "signup"
+    }
+
+    activeSU(){
+        this.activeSignUp = "block";
+        this.activeSignIn = "none";
+        document.getElementById("suId").className = "signup active"
+        document.getElementById("siId").className = "signin"
+    }
+
 
 
     async sendNotification(msg: string) {

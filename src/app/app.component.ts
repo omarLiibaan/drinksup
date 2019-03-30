@@ -65,8 +65,10 @@ export class AppComponent {
             }else if(val=='Yes' && this.userSessionRole == this.roleUser){
                 this.navCtrl.navigateRoot('/tabs/offers');
                 // this.router.navigateByUrl('/tabs/offers');
+            }else if(val == undefined || val == null || val == "" || this.userSessionRole == "" || this.userSessionRole == null || this.userSessionRole == undefined){
+              this.navCtrl.navigateRoot('/login');
             }else{
-                return null;
+              this.navCtrl.navigateRoot('/login');
             }
         });
       });

@@ -58,7 +58,7 @@ export class BarAdminPage implements OnInit {
         const val = ev.target.value;
         if (val && val.trim() !== '') {
             this.usersFilter = this.users.filter((users) => {
-                return (users.INT_NOM.toLowerCase().indexOf(val.toLowerCase()) > -1);
+                return (users.ENT_NOM.toLowerCase().indexOf(val.toLowerCase()) > -1);
             });
         } else {
           this.getProprio();

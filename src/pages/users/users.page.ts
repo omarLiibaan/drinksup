@@ -21,6 +21,8 @@ export class UsersPage implements OnInit {
   users = [];
   value = 0;
   haveUserOrNot = '';
+  usersFilter = [];
+  user = null;
   constructor(private navCtrl: NavController, private toastCtrl: ToastController, public http: HttpClient, public modalController: ModalController, public alertController: AlertController) { }
 
   ngOnInit() {
@@ -28,9 +30,7 @@ export class UsersPage implements OnInit {
   }
 
     public ionViewWillEnter(): void {
-        this.users = [];
         this.getUsers();
-        console.log(this.users.length.valueOf());
     }
   public getUsers() {
       const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -38,6 +38,7 @@ export class UsersPage implements OnInit {
           url: any      	= this.baseURI + 'aksi.php';
       this.http.post(url, JSON.stringify(options), headers).subscribe((data: any) => {
           this.users = data;
+          this.usersFilter = this.users;
           if (this.users == null ) {this.haveUserOrNot = 'Aucun Internaute ayant le role USERS'; } else {this.haveUserOrNot = ''; }
       });
 
@@ -175,17 +176,17 @@ export class UsersPage implements OnInit {
           });
   }
 
-  createHoraire (id: number) {
-    const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
-        options: any		= { 'key' : 'insertHoraire', 'id': id},
-        url: any      	= this.baseURI + 'aksi.php';
-
-    this.http.post(url, JSON.stringify(options), headers).subscribe((data: any) => {
-        },
-        (error: any) => {
-            console.log(error);
-            this.sendNotification('Erreur!');
-        });
-}
+    async search(ev: any) {
+        const val = ev.target.value;
+        console.log(val);
+        if (val && val.trim() !== '') {
+            this.usersFilter = this.users.filter((users) => {
+                console.log(users.INT_NOM.toLowerCase().indexOf(val.toLowerCase()));
+                return (users.INT_NOM.toLowerCase().indexOf(val.toLowerCase()) > -1);
+            });
+        } else {
+            this.getUsers();
+        }
+    }
 
 }

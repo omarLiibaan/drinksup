@@ -5,10 +5,10 @@
 </ion-header>
 
 <ion-content padding color="secondary">
-  <ion-searchbar animated></ion-searchbar>
+  <ion-searchbar animated color="primary" placeholder="Cherchez un utilisateur" (ionInput)="search($event)"></ion-searchbar>
   
   <ion-list color="secondary">
-    <ion-item-sliding *ngFor="let user of users" color="secondary" #slidingItem>
+    <ion-item-sliding *ngFor="let user of usersFilter" color="secondary" #slidingItem>
       <ion-item color="secondary" no-padding>
         <ion-icon name="contact"></ion-icon>
         <p>{{user.INT_PRENOM}} {{user.INT_NOM}}</p>

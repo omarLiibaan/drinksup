@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, LOCALE_ID, OnInit, ViewChild} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AlertController, IonItemSliding, ModalController, ToastController} from '@ionic/angular';
 import {OffersAddbarPage} from '../offers-addbar/offers-addbar.page';
+import {CalendarComponent} from 'ionic2-calendar/calendar';
+import {formatDate} from "@angular/common";
 
 @Component({
   selector: 'app-offers-management',
@@ -9,6 +11,103 @@ import {OffersAddbarPage} from '../offers-addbar/offers-addbar.page';
   styleUrls: ['./offers-management.page.scss'],
 })
 export class OffersManagementPage implements OnInit {
+    event = {
+        title: '',
+        desc: '',
+        startTime: '',
+        endTime: '',
+        allDay: false
+    };
+    minDate = new Date().toISOString();
+    eventSource = [];
+    calendar = {
+        mode: 'month',
+        currentDate: new Date()
+    }
+    viewTitle = '';
+    @ViewChild(CalendarComponent) myCal: CalendarComponent;
+    constructor(public alertCtrl: AlertController, @Inject(LOCALE_ID)private locale: string) { }
+    ngOnInit() {
+        this.resetEvents();
+    }
+
+    resetEvents() {
+        this.event = {
+            title: '',
+            desc: '',
+            startTime: new Date().toISOString(),
+            endTime: new Date().toISOString(),
+            allDay: false
+        };
+    }
+
+    addEvent() {
+        const eventCopy = {
+            title: this.event.title,
+            desc: this.event.desc,
+            startTime: new Date(this.event.startTime),
+            endTime: new Date(this.event.endTime),
+            allDay: this.event.allDay
+        }
+        if (eventCopy.allDay) {
+           const start = eventCopy.startTime;
+           const end = eventCopy.endTime;
+           eventCopy.startTime = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth(), start.getUTCDate()));
+           eventCopy.endTime = new Date(Date.UTC(end.getUTCFullYear(), end.getUTCMonth(), end.getUTCDate() + 1 ));
+        }
+
+        this.eventSource.push(eventCopy);
+        this.myCal.loadEvents();
+        this.resetEvents();
+    }
+    changeMode(mode) {
+        this.calendar.mode = mode;
+    }
+
+    back() {
+        const swiper = document.querySelector('.swiper-container')['swiper'];
+        swiper.slidePrev();
+    }
+
+    next() {
+        const swiper = document.querySelector('.swiper-container')['swiper'];
+        swiper.slideNext();
+    }
+    today() {
+        this.calendar.currentDate = new Date();
+    }
+    async onEventSelected(event) {
+        const start = formatDate(event.startTime, 'medium', this.locale);
+        const end = formatDate(event.endTime, 'medium', this.locale);
+        const alert = await this.alertCtrl.create({
+            header: event.title,
+            subHeader: event.desc,
+            message: 'De : ' + start + '<br><br> à ' + end,
+            buttons: ['OK']
+        });
+        alert.present();
+    }
+    onViewTitleChanged(title) {
+        this.viewTitle = title;
+    }
+
+    onTimeSelected(ev) {
+        const selected = new Date(ev.selectedTime);
+        this.event.startTime = selected.toISOString();
+        selected.setHours(selected.getHours() + 1);
+        this.event.endTime = (selected.toISOString());
+
+    }
+
+
+
+
+
+
+
+
+
+/*
 
   constructor(private http: HttpClient, private modalController: ModalController,  public alertController: AlertController, private toastCtrl: ToastController) { }
   days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche']
@@ -116,5 +215,6 @@ export class OffersManagementPage implements OnInit {
         });
         toast.present();
     }
+*/
 
 }

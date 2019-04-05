@@ -53,6 +53,7 @@
     "core-js": "^2.5.4",
     "global": "^4.3.2",
     "ionic-select-searchable": "^2.10.0",
+    "ionic2-calendar": "^0.5.2",
     "phonegap": "^8.2.2",
     "rxjs": "^6.4.0",
     "rxjs-compat": "^6.4.0",

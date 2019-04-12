@@ -58,7 +58,6 @@ export class BarPage implements OnInit {
       localiteEnt: new FormControl(),
       descEnt : new FormControl()
     });
-    this.ionViewWillEnter();
     this.validationForm();
   }
 

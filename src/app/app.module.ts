@@ -19,6 +19,7 @@ import { ModalbarAdminPageModule } from '../pages/modalbar-admin/modalbar-admin.
 import { ModalSchedulePageModule } from '../pages/modal-schedule/modal-schedule.module';
 import { LoadingpagePageModule } from '../pages/loadingpage/loadingpage.module';
 import { OffersAddbarPageModule } from '../pages/offers-addbar/offers-addbar.module';
+import { Calendar } from '@ionic-native/calendar/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,6 +32,7 @@ import { OffersAddbarPageModule } from '../pages/offers-addbar/offers-addbar.mod
     GooglePlus,
     Camera,
     Deeplinks,
+    Calendar,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

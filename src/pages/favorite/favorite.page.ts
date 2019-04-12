@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { NativePageTransitions } from '@ionic-native/native-page-transitions/ngx';
+import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions/ngx';
 import { NavController, ModalController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { LoadingpagePage } from '../loadingpage/loadingpage.page';
@@ -73,6 +73,14 @@ export class FavoritePage implements OnInit{
     setTimeout(() => {
       this.ionViewWillEnter();
     }, 200);
+  }
+
+  moveToBar(id : string){
+    let options: NativeTransitionOptions = {
+      duration: 250,
+     }
+    this.nativePageTransitions.fade(options); 
+    this.navCtrl.navigateRoot('/tabs/bar-user/'+id);
   }
 
   async loadingModal() {

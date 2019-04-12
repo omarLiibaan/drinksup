@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "^7.2.2",
     "@angular/router": "^7.2.2",
     "@ionic-native/android-permissions": "^5.0.0-beta.14",
+    "@ionic-native/calendar": "^5.3.0",
     "@ionic-native/camera": "^5.2.0",
     "@ionic-native/core": "5.0.0-beta.14",
     "@ionic-native/deeplinks": "^5.3.0",
@@ -39,6 +40,7 @@
     "cordova-browser": "5.0.4",
     "cordova-ios": "4.5.5",
     "cordova-plugin-advanced-http": "^2.0.4",
+    "cordova-plugin-calendar": "5.1.4",
     "cordova-plugin-camera": "4.0.3",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-facebook4": "^4.2.1",
@@ -54,6 +56,7 @@
     "core-js": "^2.5.4",
     "global": "^4.3.2",
     "ionic-plugin-deeplinks": "1.0.17",
+    "ionic2-calendar": "^0.5.2",
     "phonegap": "^8.2.2",
     "rxjs": "^6.4.0",
     "rxjs-compat": "^6.4.0",
@@ -129,7 +132,8 @@
         "DEEPLINK_4_HOST": " ",
         "DEEPLINK_5_SCHEME": " ",
         "DEEPLINK_5_HOST": " "
-      }
+      },
+      "cordova-plugin-calendar": {}
     },
     "platforms": [
       "android",

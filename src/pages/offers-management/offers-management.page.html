@@ -23,24 +23,25 @@
     </ion-card-header>
     <ion-card-content *ngIf="!collapseCard">
       <ion-item>
-        <ion-input type="text" placeholder="Nom entreprise" [(ngModel)]="event.title"></ion-input>
+        <ion-label>
+          <strong >Liste des Bars</strong>
+        </ion-label>
+        <ion-select value="" [(ngModel)]="event.title">
+          <ion-select-option  *ngFor="let user of usersFilter" value="{{user.ENT_ID}}" >{{user.ENT_NOM}}</ion-select-option>
+        </ion-select>
       </ion-item>
       <ion-item>
-        <ion-input type="text" placeholder="Description" [(ngModel)]="event.desc"></ion-input>
+        <ion-input type="text" placeholder="Description" [(ngModel)]="event.description"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label>Start</ion-label>
-        <ion-datetime displayFormat="DD/MM/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="event.startTime" [min]="minDate"></ion-datetime>
+        <ion-datetime displayFormat="DD/MM/YYYY HH:mm" pickerFormat="DD/MM/YYYY HH:mm" minuteValues="00,15,30,45" [(ngModel)]="event.startTime" [min]="minDate"></ion-datetime>
       </ion-item>
       <ion-item>
         <ion-label>End</ion-label>
-        <ion-datetime displayFormat="DD/MM/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="event.endTime" [min]="minDate"></ion-datetime>
+        <ion-datetime displayFormat="DD/MM/YYYY HH:mm" pickerFormat="DD/MM/YYYY HH:mm" minuteValues="00,15,30,45"[(ngModel)]="event.endTime" [min]="minDate"></ion-datetime>
       </ion-item>
-      <ion-item>
-        <ion-label>All Day ?</ion-label>
-        <ion-checkbox [(ngModel)]="event.allDay"></ion-checkbox>
-      </ion-item>
-      <ion-button fill="outline" expand="block" (click)="addEvent()" [disabled]="event.title == ''">Ajouter l'offre</ion-button>
+      <ion-button fill="outline" expand="block" (click)="addEvent()" [disabled]="event.title == '' || event.description =='' || event.endTime < event.startTime">Ajouter l'offre</ion-button>
     </ion-card-content>
   </ion-card>
   <ion-row>
@@ -65,12 +66,27 @@
       </ion-button>
     </ion-col>
   </ion-row>
+  <ng-template #template let-showEventDetail="showEventDetail" let-selectedDate="selectedDate" let-noEventsLabel="noEventsLabel">
+    <ion-list >
+      <ion-item-sliding *ngFor="let event of selectedDate?.events" #slidingItem>
+        <ion-item  (click)="eventSelected(event)">
+                        {{event.startTime|date: 'HH:mm'}} - {{event.endTime|date: 'HH:mm'}} | {{event.entreprise}}
+        </ion-item>
+        <ion-item *ngIf="selectedDate?.events.length==0">
+          <div class="no-events-label">{{noEventsLabel}}</div>
+        </ion-item>
+        <ion-item-options side="start">
+          <ion-item-option  (click)="delete(slidingItem, event.idOffre, event.entreprise)"><ion-icon name="trash"></ion-icon></ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
 
+  </ng-template>
   <calendar [eventSource]="eventSource"
             [calendarMode]="calendar.mode"
             [currentDate]="calendar.currentDate"
+            [monthviewEventDetailTemplate]="template"
             (onRangeChanged)="reloadSource(startTime, endTime)"
-            (onEventSelected)="onEventSelected($event)"
             (onTitleChanged)="onViewTitleChanged($event)"
             (onTimeSelected)="onTimeSelected($event)"
             startHour="8"

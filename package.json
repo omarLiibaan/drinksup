@@ -23,6 +23,7 @@
     "@ionic-native/android-permissions": "^5.0.0-beta.14",
     "@ionic-native/camera": "^5.2.0",
     "@ionic-native/core": "5.0.0-beta.14",
+    "@ionic-native/deeplinks": "^5.3.0",
     "@ionic-native/facebook": "5.0.0-beta.14",
     "@ionic-native/google-plus": "^5.0.0-beta.0",
     "@ionic-native/http": "^5.0.0",
@@ -52,8 +53,7 @@
     "cordova-sqlite-storage": "3.1.0",
     "core-js": "^2.5.4",
     "global": "^4.3.2",
-    "ionic-select-searchable": "^2.10.0",
-    "ionic2-calendar": "^0.5.2",
+    "ionic-plugin-deeplinks": "1.0.17",
     "phonegap": "^8.2.2",
     "rxjs": "^6.4.0",
     "rxjs-compat": "^6.4.0",
@@ -62,7 +62,7 @@
   },
   "devDependencies": {
     "@angular-devkit/architect": "~0.12.3",
-    "@angular-devkit/build-angular": "~0.12.3",
+    "@angular-devkit/build-angular": "^0.13.7",
     "@angular-devkit/core": "~7.2.3",
     "@angular-devkit/schematics": "~7.2.3",
     "@angular/cli": "~7.2.3",
@@ -111,7 +111,25 @@
       "cordova-plugin-ionic-keyboard": {},
       "cordova-sqlite-storage": {},
       "cordova-plugin-camera": {},
-      "com.telerik.plugins.nativepagetransitions": {}
+      "com.telerik.plugins.nativepagetransitions": {},
+      "ionic-plugin-deeplinks": {
+        "URL_SCHEME": "drinksupapp",
+        "DEEPLINK_HOST": "drinksup.ch",
+        "DEEPLINK_SCHEME": "https",
+        "ANDROID_PATH_PREFIX": "/",
+        "ANDROID_2_PATH_PREFIX": "/",
+        "ANDROID_3_PATH_PREFIX": "/",
+        "ANDROID_4_PATH_PREFIX": "/",
+        "ANDROID_5_PATH_PREFIX": "/",
+        "DEEPLINK_2_SCHEME": " ",
+        "DEEPLINK_2_HOST": " ",
+        "DEEPLINK_3_SCHEME": " ",
+        "DEEPLINK_3_HOST": " ",
+        "DEEPLINK_4_SCHEME": " ",
+        "DEEPLINK_4_HOST": " ",
+        "DEEPLINK_5_SCHEME": " ",
+        "DEEPLINK_5_HOST": " "
+      }
     },
     "platforms": [
       "android",

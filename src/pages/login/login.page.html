@@ -1,9 +1,12 @@
 <ion-content color="secondary">
-  <div style="padding:20px; text-align: center;">
+  <div style="text-align: center;">
     <img src="../../assets/img/logo-text.svg" alt="">
-    <h1>Profitez d'une boisson offerte dans les meilleurs bars de Genève</h1>
   </div>
-  <form [formGroup]="loginForm" (ngSubmit)="loginUsers()" style="padding:20px;">
+  <div class="header-btn">
+    <div class="signin active" (click)="activeSI()" id="siId">SIGN IN</div>
+    <div class="signup" (click)="activeSU()" id="suId">SIGN UP</div>
+  </div>
+  <form [formGroup]="loginForm" (ngSubmit)="loginUsers()" style="padding:20px;" [ngStyle]="{display : activeSignIn}">
 
     <div class="inputWrapper">
       <ion-label>Email :</ion-label>
@@ -11,22 +14,33 @@
     </div>
 
     <div class="inputWrapper">
-      <ion-label>Mot de passe :</ion-label>
+      <ion-label>Password :</ion-label>
       <ion-input type="password"  formControlName="PRO_PASSWORD" ></ion-input>
     </div>
     
       <!-- buttons -->
-    <ion-button type="submit" class="seConn" shape="round" expand="full">Se connecter</ion-button>
+    <ion-button type="submit" class="seConn" shape="round" expand="full">Login</ion-button>
     
     <div class="loginAlternative">
-      <ion-button class="btnfb" (click)="loginWithFB()" shape="round"><ion-icon name="logo-facebook"></ion-icon></ion-button>
       <ion-button class="btngoogle" (click)="loginWithGoogle()" shape="round"><ion-icon name="logo-googleplus"></ion-icon></ion-button>
     </div>   
     
-    <a type="button" (click)="mdpOublier()" class="mdpOublie">Mot de passe oublié ?</a>
   </form>
+
+<form [formGroup]="registerEmail" (ngSubmit)="proceedReg()" style="padding:20px;" [ngStyle]="{display : activeSignUp}">
+
+    <div class="inputWrapper">
+      <ion-label>Email :</ion-label>
+      <ion-input type="email"  formControlName="REG_EMAIL" (focusout)="checkEmailIfExist()"></ion-input>
+    </div>
   
-  <div class="pasDeCompte">
+  <ion-button type="submit" shape="round" expand="full" class="regBtn" [disabled]="!registerEmail.valid">Register</ion-button>
+</form>
+
+<a type="button" (click)="mdpOublier()" class="mdpOublie">Forgot password ?</a>
+    
+  
+  <!-- <div class="pasDeCompte">
     <p>Vous n'avez pas de compte ?</p> <p (click)="formRegister()">Inscrivez-vous</p>
-  </div>
+  </div> -->
 </ion-content>

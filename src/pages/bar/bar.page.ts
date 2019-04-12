@@ -43,6 +43,8 @@ export class BarPage implements OnInit {
   //form
   editBarForm : FormGroup;
 
+
+
   constructor(private modalCtrl : ModalController, private formBuilder : FormBuilder, private http : HttpClient, private storage : Storage, private camera : Camera, private toastCtrl : ToastController) { 
     this.storage.get('SessionIdKey').then((val) => {
       this.loadBar(val);
@@ -270,13 +272,13 @@ async editSchedule(jourIdParam : string, jourParam : string, hDebParam : string,
       let postData = new FormData();
       postData.append("file",imageData);
       let data:Observable<any> = this.http.post(this.uplPhotoURI+"uploadPhoto.php"+barName, postData);
-      this.loadingModal();//open loadung modal
+      this.loadingModal();//open loading modal
       data.subscribe((res)=>{
       console.log(res);
       console.log("Upload Successful");
       setTimeout(() => {
         this.modalCtrl.dismiss();
-      }, 2000);
+      }, 5000);
       
       });
     }, (err) => {
@@ -309,7 +311,7 @@ async editSchedule(jourIdParam : string, jourParam : string, hDebParam : string,
       console.log("Upload Successful");
       setTimeout(() => {
         this.modalCtrl.dismiss();
-      }, 2000);
+      }, 5000);
       
       });
     }, (err) => {

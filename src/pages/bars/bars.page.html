@@ -17,7 +17,10 @@
             <div class="bubbles-wrapper" [class.displayBubbles]="disBub" [ngStyle]="{'z-index' : zindex}">
               <div class="bubbles"><div></div><div></div><div></div><div></div></div>
             </div>
-            <img src="../../assets/img/star-icon-empty.svg" class="star" alt="" (click)="addToFave()">
+            
+            <img *ngIf="!ifFave(bars.ENT_ID)" src="../../assets/img/star-icon-empty.svg" class="star" (click)="addRemoveFave(i, bars.ENT_ID)" id="starIconId1_{{i}}">
+            <img *ngIf="ifFave(bars.ENT_ID)" src="../../assets/img/star-icon-filled.svg" class="star" (click)="addRemoveFave(i, bars.ENT_ID)" id="starIconId1_{{i}}">
+
             <div (click)="moveToBar(bars.ENT_ID)" class="img-overlay"></div>
             <img (click)="moveToBar(bars.ENT_ID)" class="bar-img zmImg" [src]="uplPhotoURI + bars.ENT_NOM + '_1.jpg?ran=' + random" alt="" (load)="imgLoad()" [class.zoomOut]="zoomOut">
             <div (click)="moveToBar(bars.ENT_ID)" class="bar-details">
@@ -39,7 +42,10 @@
             <div class="bubbles-wrapper" [class.displayBubbles]="disBub" [ngStyle]="{'z-index' : zindex}">
               <div class="bubbles"><div></div><div></div><div></div><div></div></div>
             </div>
-            <img src="../../assets/img/star-icon-empty.svg" class="star" alt="" (click)="addToFave()">
+            
+            <img *ngIf="!ifFave(bars.ENT_ID)" src="../../assets/img/star-icon-empty.svg" class="star" (click)="addRemoveFave(i, bars.ENT_ID)" id="starIconId2_{{i}}">
+            <img *ngIf="ifFave(bars.ENT_ID)" src="../../assets/img/star-icon-filled.svg" class="star" (click)="addRemoveFave(i, bars.ENT_ID)" id="starIconId2_{{i}}">
+
             <div (click)="moveToBar(bars.ENT_ID)" class="img-overlay"></div>
             <img (click)="moveToBar(bars.ENT_ID)" class="bar-img zmImg" [src]="uplPhotoURI + bars.ENT_NOM + '_1.jpg?ran=' + random" alt="" (load)="imgLoad()" [class.zoomOut]="zoomOut">
             <div (click)="moveToBar(bars.ENT_ID)" class="bar-details">
@@ -60,11 +66,13 @@
           <div class="bubbles-wrapper" [class.displayBubbles]="disBub" [ngStyle]="{'z-index' : zindex}">
             <div class="bubbles"><div></div><div></div><div></div><div></div></div>
           </div>
-          <img src="../../assets/img/star-icon-empty.svg" class="star" alt="" (click)="addToFave()">
+
+          <img *ngIf="!ifFave(bars.ENT_ID)" src="../../assets/img/star-icon-empty.svg" class="star" (click)="addRemoveFave(i, bars.ENT_ID)" id="starIconId3_{{i}}">
+          <img *ngIf="ifFave(bars.ENT_ID)" src="../../assets/img/star-icon-filled.svg" class="star" (click)="addRemoveFave(i, bars.ENT_ID)" id="starIconId3_{{i}}">
+          
           <div (click)="moveToBar(bars.ENT_ID)" class="img-overlay"></div>
           <img (click)="moveToBar(bars.ENT_ID)" class="bar-img" [src]="uplPhotoURI + bars.ENT_NOM + '_1.jpg?ran=' + random" alt="" (load)="imgLoad()" [id]="'offset_'+i">
           <div (click)="moveToBar(bars.ENT_ID)" class="bar-details">
-            <ion-ripple-effect></ion-ripple-effect>
             <p class="bar-nom">{{bars.ENT_NOM}}</p>
             <div class="note-sec">
                 <img class="bar-note" src="../../assets/img/grade-5.svg" alt="">

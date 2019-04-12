@@ -55,7 +55,7 @@ export class AppComponent {
       this.storage.get('SessionInKey').then((val) => {
         this.storage.get('SessionRoleKey').then((valRole) => {
             this.userSessionRole = valRole;
-
+            console.log('val '  + val + ' valRole ' + valRole);
             if(val=='Yes' && this.userSessionRole == this.roleAdmin){
                 this.navCtrl.navigateRoot('/tabsadmin/users');
                 // this.router.navigateByUrl('/tabsadmin/users');

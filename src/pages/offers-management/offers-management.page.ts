@@ -42,13 +42,11 @@ export class OffersManagementPage implements OnInit {
         idOffre: '',
         allDay: false
     };
-    noEventsLabel = '';
+
     @ViewChild(CalendarComponent) myCal: CalendarComponent;
     constructor(public dp: DatePipe, public alertCtrl: AlertController, @Inject(LOCALE_ID)private locale: string, public http: HttpClient, public toastCtrl: ToastController, public alertController: AlertController) { }
     ngOnInit() {
-        // this.ionViewWillEnter();
-        this.myCal.loadEvents();
-        this.noEventsLabel = 'Pas d\'offre ';
+
     }
 
     public ionViewWillEnter(): void {
@@ -56,7 +54,6 @@ export class OffersManagementPage implements OnInit {
         this.eventSource = [];
         this.getOffres();
         this.getProprio();
-        this.myCal.loadEvents();
     }
 
     resetEvents() {
@@ -92,15 +89,13 @@ export class OffersManagementPage implements OnInit {
                     title: this.listeOffres[i].title.toString(),
                     description: this.listeOffres[i].description.toString(),
                     startTime: new Date(this.listeOffres[i].startTime),
-                    endTime: new Date(this.listeOffres[i].startTime),
+                    endTime: new Date(this.listeOffres[i].endTime),
                     entreprise: this.listeOffres[i].entreprise,
                     idOffre: this.listeOffres[i].idOffre,
                     allDay: false
                 }
                 this.eventSource.push(this.offres);
             }
-
-            this.resetEvents();
             this.myCal.loadEvents();
         });
     }
@@ -115,18 +110,12 @@ export class OffersManagementPage implements OnInit {
             idOffre: this.event.idOffre,
             allDay: this.event.allDay
         }
-        if (eventCopy.allDay) {
-           const start = eventCopy.startTime;
-           const end = eventCopy.endTime;
-           eventCopy.startTime = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth(), start.getUTCDate()));
-           eventCopy.endTime = new Date(Date.UTC(end.getUTCFullYear(), end.getUTCMonth(), end.getUTCDate() + 1 ));
-        }
-        const dateDebut = this.dp.transform(eventCopy.startTime, 'yyyy-MM-dd HH:mm');
-        const dateFin = this.dp.transform(eventCopy.endTime, 'yyyy-MM-dd  HH:mm');
+        const dateDebut = this.dp.transform(eventCopy.startTime, 'yyyy-MM-dd HH:mm', 'GMT+0000');
+        const dateFin = this.dp.transform(eventCopy.endTime, 'yyyy-MM-dd  HH:mm', 'GMT+0000');
         this.addOffer(eventCopy.description, dateDebut, dateFin, eventCopy.title);
         this.eventSource.push(eventCopy);
-        this.myCal.loadEvents();
-        this.resetEvents();
+        this.ionViewWillEnter();
+
     }
 
     addOffer(description: String, dateDebut: String, dateFin: String, idEnt: String) {
@@ -233,122 +222,4 @@ export class OffersManagementPage implements OnInit {
         });
         toast.present();
     }
-
-
-
-
-
-
-
-
-/*
-
-  constructor(private http: HttpClient, private modalController: ModalController,  public alertController: AlertController, private toastCtrl: ToastController) { }
-  days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche']
-  jours = 'Lundi';
-  // public baseURI = 'http://localhost/drinksupProject/serveur/';
-  public baseURI = 'https://macfi.ch/serveur/';
-  barJour = [];
-  haveBarOrNot = '';
-  idJour: number;
-  ngOnInit() {
-    this.days;
-      this.barJour = [];
-      this.getBarJour('Lundi');
-  }
-    public ionViewWillEnter(): void {
-        this.barJour = [];
-        this.getBarJour(this.jours);
-
-    }
-  async showList() {
-    console.log(this.jours);
-    this.getBarJour(this.jours);
-
-  }
-  public getBarJour(jour: string) {
-        const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
-            options: any		= { 'key' : 'getBarJour', 'jour': jour},
-            url: any      	= this.baseURI + 'aksi.php';
-        this.http.post(url, JSON.stringify(options), headers).subscribe((data: any) => {
-            this.barJour = data;
-            if (this.barJour == null ) {this.haveBarOrNot = 'Aucun Bar ne fait d\'offres le ' + jour; } else {this.haveBarOrNot = ''; }
-        });
-
-  }
-  async addBar() {
-    const modal = await this.modalController.create({
-        component: OffersAddbarPage,
-        componentProps: {
-          jours: this.jours
-        },
-    });
-      modal.onDidDismiss().then(() => {
-          this.getBarJour(this.jours);
-      })
-    modal.present();
-  }
-    async delete(slidingItem: IonItemSliding, id, nom) {
-        await slidingItem.close();
-        this.idJour = this.jours === 'Lundi' ? 1 :
-        this.idJour = this.jours === 'Mardi' ? 2 :
-        this.idJour = this.jours === 'Mercredi' ? 3 :
-        this.idJour = this.jours === 'Jeudi' ? 4 :
-        this.idJour = this.jours === 'Vendredi' ? 5 :
-        this.idJour = this.jours === 'Samedi' ? 6 : 7;
-        this.alertDeleteBarOffers(id, nom, this.idJour, this.jours);
-        // this.closeModal();
-    }
-    async alertDeleteBarOffers(id, nom, idJour , jour) {
-        const alert = await this.alertController.create({
-            header: 'Êtes vous sûr de supprimer l\'entreprise ' + nom + ' pour l\'offre de ' + jour,
-            buttons: [
-                {
-                    text: 'Non',
-                    role: 'cancel',
-                    cssClass: 'secondary',
-                    handler: (blah) => {
-                        console.log('Confirm Cancel: blah');
-                    }
-                }, {
-                    text: 'Oui',
-                    handler: () => {
-                        // this.updateRole(id);
-                        // this.createEntreprise(id);
-                         this.deleteOffer(id, idJour);
-                        this.ionViewWillEnter();
-                        console.log('Confirm Okay');
-                    }
-                }
-            ]
-        });
-
-        await alert.present();
-    }
-
-    deleteOffer(id: number, idJour: number) {
-        const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
-            options: any		= { 'key' : 'deleteOffer', 'id': id, 'idJour': idJour},
-            url: any      	= this.baseURI + 'aksi.php';
-
-        this.http.post(url, JSON.stringify(options), headers).subscribe((data: any) => {
-                this.sendNotification('La suppression de l\'offre a bien été pris en compte!');
-
-            },
-            (error: any) => {
-                console.log(error);
-                this.sendNotification('Erreur!');
-            });
-    }
-
-    async sendNotification(msg: string) {
-        const toast = await this.toastCtrl.create({
-            message: msg,
-            duration: 3000,
-            position: 'bottom'
-        });
-        toast.present();
-    }
-*/
-
 }

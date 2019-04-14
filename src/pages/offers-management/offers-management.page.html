@@ -12,7 +12,7 @@
   <ion-toolbar color="primary">
     <ion-title>{{viewTitle}}</ion-title>
     <ion-buttons slot="start">
-      <ion-button (click)="today()">Today</ion-button>
+      <ion-button (click)="today()">Aujourd'hui</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -34,11 +34,11 @@
         <ion-input type="text" placeholder="Description" [(ngModel)]="event.description"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label>Start</ion-label>
+        <ion-label>Date de début</ion-label>
         <ion-datetime displayFormat="DD/MM/YYYY HH:mm" pickerFormat="DD/MM/YYYY HH:mm" minuteValues="00,15,30,45" [(ngModel)]="event.startTime" [min]="minDate"></ion-datetime>
       </ion-item>
       <ion-item>
-        <ion-label>End</ion-label>
+        <ion-label>Date de fin</ion-label>
         <ion-datetime displayFormat="DD/MM/YYYY HH:mm" pickerFormat="DD/MM/YYYY HH:mm" minuteValues="00,15,30,45"[(ngModel)]="event.endTime" [min]="minDate"></ion-datetime>
       </ion-item>
       <ion-button fill="outline" expand="block" (click)="addEvent()" [disabled]="event.title == '' || event.description =='' || event.endTime < event.startTime">Ajouter l'offre</ion-button>
@@ -46,13 +46,13 @@
   </ion-card>
   <ion-row>
     <ion-col size="4">
-      <ion-button expand="block" [color]="calendar.mode == 'month' ? 'success' : 'danger'" (click)="changeMode('month')">MONTH</ion-button>
+      <ion-button expand="block" [color]="calendar.mode == 'month' ? 'success' : 'danger'" (click)="changeMode('month')">MOIS</ion-button>
     </ion-col>
     <ion-col size="4">
-      <ion-button expand="block" [color]="calendar.mode == 'week' ? 'success' : 'danger'" (click)="changeMode('week')">WEEK</ion-button>
+      <ion-button expand="block" [color]="calendar.mode == 'week' ? 'success' : 'danger'" (click)="changeMode('week')">SEMAINE</ion-button>
     </ion-col>
     <ion-col size="4">
-      <ion-button expand="block" [color]="calendar.mode == 'day' ? 'success' : 'danger'" (click)="changeMode('day')">DAY</ion-button>
+      <ion-button expand="block" [color]="calendar.mode == 'day' ? 'success' : 'danger'" (click)="changeMode('day')">JOUR</ion-button>
     </ion-col>
 
     <ion-col size="6" text-left>
@@ -89,8 +89,6 @@
             (onRangeChanged)="reloadSource(startTime, endTime)"
             (onTitleChanged)="onViewTitleChanged($event)"
             (onTimeSelected)="onTimeSelected($event)"
-            startHour="8"
-            endHour="23"
             step="30"
             startingDayWeek="1">
   </calendar>

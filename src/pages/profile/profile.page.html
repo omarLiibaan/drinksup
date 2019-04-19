@@ -1,15 +1,19 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>Profil</ion-title>
+    <ion-buttons slot="end" (click)="goSetting()">
+      <ion-icon slot="icon-only" name="settings"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding color="secondary">
   <div class="profile-section">
-    <img src="../../assets/img/user-icon.svg" alt="" class="animated fadeIn delay-200 fast"> 
+    <img src="../../assets/img/user-icon.svg" alt="" class="animated fadeIn delay-200 fast">
     <p [innerHTML]="loggedUser.INT_PRENOM" class="animated fadeInUp delay-400 fast"></p>
     <p [innerHTML]="loggedUser.INT_EMAIL" class="animated fadeInUp delay-600 fast"></p>
+    <p class="animated fadeInUp delay-600 fast">Membre  {{dateInscription}} </p>
     <ion-button (click)="logoutFromApp()" class="animated fadeInUp delay-800 fast">Se déloguer</ion-button>
   </div>
-  
+
 </ion-content>

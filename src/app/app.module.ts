@@ -20,21 +20,25 @@ import { ModalSchedulePageModule } from '../pages/modal-schedule/modal-schedule.
 import { LoadingpagePageModule } from '../pages/loadingpage/loadingpage.module';
 import { OffersAddbarPageModule } from '../pages/offers-addbar/offers-addbar.module';
 import { Calendar } from '@ionic-native/calendar/ngx';
+import {EmailComposer} from '@ionic-native/email-composer/ngx';
+import {Stripe} from '@ionic-native/stripe/ngx';
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, UsersPageModule, ModalPageModule, ModalbarAdminPageModule, ModalSchedulePageModule, LoadingpagePageModule, OffersAddbarPageModule, IonicStorageModule.forRoot()],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    Facebook,
-    GooglePlus,
-    Camera,
-    Deeplinks,
-    Calendar,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
-  ],
-  bootstrap: [AppComponent]
+    declarations: [AppComponent],
+    entryComponents: [],
+    imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, UsersPageModule, ModalPageModule, ModalbarAdminPageModule, ModalSchedulePageModule, LoadingpagePageModule, OffersAddbarPageModule, IonicStorageModule.forRoot()],
+    providers: [
+        StatusBar,
+        SplashScreen,
+        Facebook,
+        GooglePlus,
+        Camera,
+        Deeplinks,
+        Calendar,
+        EmailComposer,
+        Stripe,
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}

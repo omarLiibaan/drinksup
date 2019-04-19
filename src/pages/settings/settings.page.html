@@ -1,9 +1,32 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>settings</ion-title>
+    <ion-back-button text="" style="color: white"></ion-back-button>
+    <ion-title>Réglages</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-
+<ion-content padding color="secondary">
+  <ion-list color="secondary" no-padding>
+    <ion-item color="secondary"></ion-item>
+    <ion-item color="secondary" (click)="goFaq()">
+      <ion-icon name="help" item-left style="color: white; margin-right: 5px;" ></ion-icon>
+      Foire aux questions
+      <ion-icon name="arrow-round-forward" slot="end" style="color: white" ></ion-icon>
+    </ion-item>
+    <ion-item color="secondary" (click)="sendEmail()">
+      <ion-icon name="send" item-left style="color: white; margin-right: 5px;" ></ion-icon>
+      Ecrivez-nous un mail
+      <ion-icon name="arrow-round-forward" slot="end" style="color: white" ></ion-icon>
+    </ion-item>
+    <ion-item color="secondary">
+      <ion-icon name="document" item-left style="color: white; margin-right: 5px;" ></ion-icon>
+      Conditions Générales d'Utilisation
+      <ion-icon name="arrow-round-forward" slot="end" style="color: white" ></ion-icon>
+    </ion-item>
+    <ion-item color="secondary" (click)="goAbonnement()">
+      <ion-icon name="wine" item-left style="color: white; margin-right: 5px;" ></ion-icon>
+      S'abonner
+      <ion-icon name="arrow-round-forward" slot="end" style="color: white" ></ion-icon>
+    </ion-item>
+  </ion-list>
 </ion-content>

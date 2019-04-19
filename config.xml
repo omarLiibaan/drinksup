@@ -116,6 +116,10 @@
         <variable name="DEEPLINK_5_HOST" value=" " />
     </plugin>
     <plugin name="cordova-plugin-calendar" spec="5.1.4" />
+    <plugin name="cordova-plugin-email-composer" spec="0.9.2">
+        <variable name="ANDROID_SUPPORT_V4_VERSION" value="27.+" />
+    </plugin>
+    <plugin name="cordova-plugin-stripe" spec="1.5.3" />
     <engine name="android" spec="7.1.4" />
     <engine name="ios" spec="4.5.5" />
 </widget>

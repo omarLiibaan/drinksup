@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar  color="primary">
+    <ion-title>abonnement</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding color="secondary">
+  <ion-list color="secondary">
+
+    <ion-item>
+      <ion-label color="primary" stacked>Card Number</ion-label>
+      <ion-input type="text" placeholder="Enter your 16 digit card number"
+                 [(ngModel)]="cardNumber"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="primary" stacked>Expiration Month</ion-label>
+      <ion-input type="number" placeholder="Enter your card expiration month"
+                 [(ngModel)]="cardMonth"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="primary" stacked>Expiration Year</ion-label>
+      <ion-input type="number" placeholder="Enter your card expiration year"
+                 [(ngModel)]="cardYear"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="primary" stacked>CVV</ion-label>
+      <ion-input type="number" placeholder="Enter your CVV"
+                 [(ngModel)]="cardCVV"></ion-input>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-button color="dark" shape="round" expand="full" (click)="validateCard()">Valider</ion-button>
+</ion-content>

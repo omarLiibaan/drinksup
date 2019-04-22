@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>modal-qrcode</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-card *ngIf="codeContent">
+      <ngx-qrcode [(qrc-value)]="codeContent" ></ngx-qrcode>
+    </ion-card>
+
+  <ion-button expand="full" (click)="annuler()">Annuler</ion-button>
+</ion-content>

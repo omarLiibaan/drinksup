@@ -34,7 +34,7 @@
       <ion-input type="email"  formControlName="REG_EMAIL" (focusout)="checkEmailIfExist()"></ion-input>
     </div>
   
-  <ion-button type="submit" shape="round" expand="full" class="regBtn" [disabled]="!registerEmail.valid">Register</ion-button>
+  <ion-button type="submit" shape="round" expand="full" class="regBtn" [disabled]="!registerEmail.valid" (click)="checkEmailIfExist()">Register</ion-button>
 </form>
 
 <a type="button" (click)="mdpOublier()" class="mdpOublie">Forgot password ?</a>

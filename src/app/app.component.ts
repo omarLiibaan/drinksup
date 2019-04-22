@@ -42,8 +42,7 @@ export class AppComponent {
       }).subscribe((match) =>{
         const email = JSON.stringify(match.$args.email);
         this.navCtrl.navigateForward('register/'+email);
-        
-
+      
         },(nomatch)=>{
 
       });
@@ -52,23 +51,47 @@ export class AppComponent {
         this.splashScreen.hide();
       }, 1800);
 
+      //Check if app is launch for the first time
+      this.storage.get('firstLaunch').then((first)=>{
+        if(first!==null){
+          console.log("App is not launch the first time");
+        }else{
+          this.storage.set('firstLaunch', 'Yes');
+          console.log("First time? "+first);
+          this.storage.remove("SessionInKey");
+          this.storage.remove("SessionRoleKey");
+          this.storage.remove("SessionEmailKey");
+          this.storage.remove("SessionIdKey");
+        }
+      });
+
       this.storage.get('SessionInKey').then((val) => {
         this.storage.get('SessionRoleKey').then((valRole) => {
             this.userSessionRole = valRole;
             console.log('val '  + val + ' valRole ' + valRole);
             if(val=='Yes' && this.userSessionRole == this.roleAdmin){
                 this.navCtrl.navigateRoot('/tabsadmin/users');
-                // this.router.navigateByUrl('/tabsadmin/users');
+
             }else if(val=='Yes' && this.userSessionRole == this.roleProprio){
-                this.navCtrl.navigateRoot('/tabsproprio/bar');
-                // this.router.navigateByUrl('/tabsproprio/bar');
+                this.navCtrl.navigateRoot('/tabsproprio/qrcode');
+
             }else if(val=='Yes' && this.userSessionRole == this.roleUser){
                 this.navCtrl.navigateRoot('/tabs/offers');
-                // this.router.navigateByUrl('/tabs/offers');
-            }else if(val == undefined || val == null || val == "" || this.userSessionRole == "" || this.userSessionRole == null || this.userSessionRole == undefined){
+
+            }else if(val === null || valRole === null || val == null || valRole == null){
               this.navCtrl.navigateRoot('/login');
+
+              this.storage.remove("SessionInKey");
+              this.storage.remove("SessionRoleKey");
+              this.storage.remove("SessionEmailKey");
+              this.storage.remove("SessionIdKey");
             }else{
               this.navCtrl.navigateRoot('/login');
+
+              this.storage.remove("SessionInKey");
+              this.storage.remove("SessionRoleKey");
+              this.storage.remove("SessionEmailKey");
+              this.storage.remove("SessionIdKey");
             }
         });
       });

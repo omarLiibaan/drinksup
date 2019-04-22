@@ -17,6 +17,8 @@ export class RegisterPage implements OnInit {
   public emailExist : boolean = false;
   public emailParam : string;
   public emailClean : string;
+  public pushedUserArray : any = [];
+
   constructor(private actRout : ActivatedRoute, private formBuilder: FormBuilder, private navCtrl: NavController, private toastCtrl: ToastController, public http: HttpClient) {
     this.enregistrerForm = new FormGroup({
         // PRO_NOM: new FormControl(),
@@ -105,14 +107,17 @@ export class RegisterPage implements OnInit {
         checkEmailIfExist(email : string){
 
             for(var i = 0; i < this.users.length; i++) {
-                if (this.users[i].INT_EMAIL == email) {
-                    this.emailExist = true;
-                    console.log("address mail exist already!");
-                }else{
-                    this.emailExist = false;
-                    console.log("address mail ready!");
-                }
+                this.pushedUserArray.push(this.users[i].INT_EMAIL);
             }
+    
+            if(this.pushedUserArray.indexOf(email) > -1){
+                this.emailExist = true;
+                console.log("address mail exist already!");
+            }else{
+                this.emailExist = false;
+                console.log("address mail ready!");
+            }
+            
         }
 
 

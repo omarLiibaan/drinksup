@@ -58,7 +58,10 @@ export class ProfilePage implements OnInit {
     }
 
     logoutFromApp(){
-        this.storage.clear();
+        this.storage.remove("SessionInKey");
+        this.storage.remove("SessionRoleKey");
+        this.storage.remove("SessionEmailKey");
+        this.storage.remove("SessionIdKey");
         this.navCtrl.navigateForward('login');
     }
 

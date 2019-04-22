@@ -22,6 +22,7 @@ export class LoginPage implements OnInit {
     users = [];  
     emailExist : boolean = false;
     emailExistReg : boolean = false;
+    pushedUserArray : any = [];
 
     //---------------------------
     roleUser = 'user';
@@ -92,12 +93,16 @@ export class LoginPage implements OnInit {
         .then(res => {
 
           //Check if address mail logged from google exist in the database
-          for(var i = 0; i < this.users.length; i++) {
-                if (this.users[i].INT_EMAIL == res.email) {
-                    this.emailExist = true;
-                }else{
-                    this.emailExist = false;
-                }
+            for(var i = 0; i < this.users.length; i++) {
+                this.pushedUserArray.push(this.users[i].INT_EMAIL);
+            }
+        
+            if(this.pushedUserArray.indexOf(res.email) > -1){
+                this.emailExist = true;
+                console.log("address mail exist already!");
+            }else{
+                this.emailExist = false;
+                console.log("address mail ready!");
             }
             //If email exists then user is accepted and must be logged in
             if(this.emailExist){
@@ -132,7 +137,7 @@ export class LoginPage implements OnInit {
                     this.sendNotification('Bienvenue !');
                     setTimeout( () => {this.loginForm.reset();}, 1000);  
                 } else if (this.userDetails.ROLE === this.roleProprio) {
-                    this.navCtrl.navigateRoot('/tabsproprio/bar');
+                    this.navCtrl.navigateRoot('/tabsproprio/qrcode');
                     this.storage.set('SessionRoleKey', this.roleProprio);
                     this.sendNotification('Bienvenue !');
                     setTimeout( () => {this.loginForm.reset();}, 1000);  
@@ -242,15 +247,17 @@ export class LoginPage implements OnInit {
 
     checkEmailIfExist(){
         const REG_EMAIL: string = this.registerEmail.controls['REG_EMAIL'].value;
-
+      
         for(var i = 0; i < this.users.length; i++) {
-            if (this.users[i].INT_EMAIL == REG_EMAIL) {
-                this.emailExistReg = true;
-                console.log("address mail exist already!");
-            }else{
-                this.emailExistReg = false;
-                console.log("address mail ready!");
-            }
+            this.pushedUserArray.push(this.users[i].INT_EMAIL);
+        }
+
+        if(this.pushedUserArray.indexOf(REG_EMAIL) > -1){
+            this.emailExistReg = true;
+            console.log("address mail exist already!");
+        }else{
+            this.emailExistReg = false;
+            console.log("address mail ready!");
         }
     }
 

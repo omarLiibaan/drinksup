@@ -1,47 +1,97 @@
 import { Component, OnInit } from '@angular/core';
 import {NavController, ToastController} from '@ionic/angular';
-import {Stripe} from '@ionic-native/stripe/ngx';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import * as moment from 'moment';
+import {Storage} from '@ionic/storage';
 @Component({
     selector: 'app-abonnement',
     templateUrl: './abonnement.page.html',
     styleUrls: ['./abonnement.page.scss'],
 })
 export class AbonnementPage implements OnInit {
+    amount: string;
+    couleur: string;
+    couleur2: string;
+    couleur3: string;
+    offre: string;
+    offre2: string;
+    offre3: string;
+    type: string;
+    loggedUser: any = {};
+    baseURI = 'https://macfi.ch/serveur/';
+    data: any;
+    idInternaute: number;
+    public paiementForm: FormGroup;
+    constructor(private formBuilder: FormBuilder, public storage: Storage,  public http: HttpClient, public navCtrl: NavController, private toastCtrl: ToastController) {
+        this.paiementForm = new FormGroup({
+            cardNumber: new FormControl(),
+            cardMonth: new FormControl(),
+            cardYear: new FormControl(),
+            cardCVV: new FormControl(),
+        });
+        this.validationForm();
+    }
+    validationForm() {
+        this.paiementForm = this.formBuilder.group({
+            'cardNumber' : ['', Validators.compose([Validators.maxLength(16), Validators.minLength(16), Validators.pattern('^[0-9]*$'), Validators.required])],
+            'cardMonth' : ['', Validators.compose([Validators.maxLength(2), Validators.minLength(2), Validators.pattern('^[0-9]*$'), Validators.required])],
+            'cardYear' : ['', Validators.compose([Validators.maxLength(4), Validators.minLength(4), Validators.pattern('^[0-9]*$'), Validators.required])],
+            'cardCVV' : ['', Validators.compose([Validators.maxLength(3), Validators.minLength(3), Validators.pattern('^[0-9]*$'), Validators.required])],
+        });
+    }
+    ionViewWillEnter(){
+        this.storage.get('SessionIdKey').then((val) => {
+            this.loadData(val);
+        });
 
-    cardNumber: string;
-    cardMonth: number;
-    cardYear: number;
-    cardCVV: string;
-
-    constructor(public navCtrl: NavController, public stripe: Stripe, private toastCtrl: ToastController) {
     }
     ngOnInit() {
     }
 
 
+    loadData(idSession : string){
+        let headers 	: any		= new HttpHeaders({ 'Content-Type': 'application/json'}),
+            options 	: any		= {"key" : "getUsersById", "idSession" : idSession},
+            url       : any   = this.baseURI + 'aksi.php';
 
-    validateCard(){
-        const card = {
-            number: this.cardNumber,
-            expMonth: this.cardMonth,
-            expYear: this.cardYear,
-            cvc: this.cardCVV,
-            'amount': '1',
-            'currency': 'chf'
-        };
-
-        // Run card validation here and then attempt to tokenise
-        this.stripe.setPublishableKey('pk_test_CUYWhZ0YY8PeL92xNKstWy7i00kHqejvae');
-        this.stripe.createCardToken(card)
-            .then(token => {
-                console.log(token);
-                this.sendNotification('transaction Successfull');
-            })
-            .catch(error => {
-                console.error(error);
-                this.sendNotification('transaction Failed');
+        this.http.post(url, JSON.stringify(options), headers).subscribe((data : any) =>
+            {
+                this.loggedUser = data;
+                this.idInternaute = this.loggedUser.INT_ID;
+            },
+            (error : any) =>
+            {
+                console.dir(error);
             });
-
+    }
+    validateCard() {
+       const  cardNumber: string = this.paiementForm.controls['cardNumber'].value;
+       const  cardMonth: string = this.paiementForm.controls['cardMonth'].value;
+       const  cardYear: string = this.paiementForm.controls['cardYear'].value;
+       const  cardCVV: string = this.paiementForm.controls['cardCVV'].value;
+        if(this.offre === undefined && this.offre2 === undefined){
+            this.type = 'Annuel';
+            this.addOffre(cardNumber, cardMonth, cardYear, cardCVV, this.offre3, this.type, this.idInternaute);
+        }else if (this.offre2 === undefined && this.offre3 === undefined) {
+            this.type = 'Mensuel';
+            this.addOffre(cardNumber, cardMonth, cardYear, cardCVV, this.offre, this.type, this.idInternaute);
+        }else {
+            this.type = 'Trimestriel';
+            this.addOffre(cardNumber, cardMonth, cardYear, cardCVV, this.offre2, this.type, this.idInternaute);
+        }
+    }
+    addOffre(cardNumber: string, cardMonth: string, cardYear: string, cardCVV: string, amount: string, type: string, idInt: number) {
+        const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
+            options: any		= { 'key' : 'addAbo', 'cardNumber': cardNumber, 'cardMonth': cardMonth, 'cardYear': cardYear, 'cardCVV': cardCVV, 'amount' : amount, 'type' : type, 'idInt' : idInt},
+            url: any      	= this.baseURI + 'aksi.php';
+        this.http.post(url, JSON.stringify(options), headers).subscribe((data: any) => {
+                this.sendNotification('Votre paiement a bien été pris en compte');
+            },
+            (error: any) => {
+                console.log(error);
+                this.sendNotification('Erreur! Echec du paiement');
+            });
     }
     async sendNotification(msg: string) {
         const toast = await this.toastCtrl.create({
@@ -50,6 +100,28 @@ export class AbonnementPage implements OnInit {
             position: 'top'
         });
         toast.present();
+    }
+
+    offer() {
+        this.couleur = 'pink';
+        this.couleur2 = '';
+        this.couleur3 = '';
+        this.offre = '9.90';
+        console.log(this.offre);
+    }
+    offer2() {
+        this.couleur = '';
+        this.couleur2 = 'pink';
+        this.couleur3 = '';
+        this.offre2 = '19.90';
+        console.log(this.offre2);
+    }
+    offer3() {
+        this.couleur = '';
+        this.couleur2 = '';
+        this.couleur3 = 'pink';
+        this.offre3 = '59.90';
+        console.log(this.offre3);
     }
 
 

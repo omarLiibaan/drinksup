@@ -1,37 +1,60 @@
 <ion-header>
   <ion-toolbar  color="primary">
     <ion-title>abonnement</ion-title>
+    <ion-back-button text="" style="color: white"></ion-back-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding color="secondary">
-  <ion-list color="secondary">
+  <h3>Découvrez toute l'expérience Drinks up</h3>
+  <p>Abonnez-vous pour profiter d'un verre offert chaque jour.</p>
+  <p>100% sans engagement !</p>
 
-    <ion-item>
-      <ion-label color="primary" stacked>Card Number</ion-label>
-      <ion-input type="text" placeholder="Enter your 16 digit card number"
-                 [(ngModel)]="cardNumber"></ion-input>
+  <div>
+    <ion-card [ngStyle]="{'background-color': couleur}" (click)="offer()">
+      <ion-card-header>
+        <ion-card-title>1 Mois</ion-card-title>
+        <ion-card-subtitle>9.90 CHF / mois</ion-card-subtitle>
+      </ion-card-header>
+    </ion-card>
+    <ion-card [ngStyle]="{'background-color': couleur2}" (click)="offer2()">
+      <ion-card-header>
+        <ion-card-title>3 Mois</ion-card-title>
+        <ion-card-subtitle>19.90 CHF / mois</ion-card-subtitle>
+      </ion-card-header>
+    </ion-card>
+    <ion-card [ngStyle]="{'background-color': couleur3}" (click)="offer3()">
+      <ion-card-header>
+        <ion-card-title>12 Mois</ion-card-title>
+        <ion-card-subtitle>59.90 CHF / mois</ion-card-subtitle>
+      </ion-card-header>
+    </ion-card>
+  </div>
+  <form [formGroup]="paiementForm" (ngSubmit)="validateCard()" >
+    <ion-item color="secondary">
+      <ion-label stacked><ion-icon name="card"></ion-icon></ion-label>
+      <ion-input type="text" placeholder="4576 XXXX XXXX XXXX"
+                 formControlName="cardNumber"></ion-input>
     </ion-item>
 
-    <ion-item>
-      <ion-label color="primary" stacked>Expiration Month</ion-label>
-      <ion-input type="number" placeholder="Enter your card expiration month"
-                 [(ngModel)]="cardMonth"></ion-input>
+    <ion-item color="secondary">
+      <ion-label stacked>MM</ion-label>
+      <ion-input type="number" placeholder="12"
+                 formControlName="cardMonth"></ion-input>
     </ion-item>
 
-    <ion-item>
-      <ion-label color="primary" stacked>Expiration Year</ion-label>
-      <ion-input type="number" placeholder="Enter your card expiration year"
-                 [(ngModel)]="cardYear"></ion-input>
+    <ion-item color="secondary">
+      <ion-label stacked>AA</ion-label>
+      <ion-input type="number" placeholder="2019"
+                 formControlName="cardYear"></ion-input>
     </ion-item>
 
-    <ion-item>
-      <ion-label color="primary" stacked>CVV</ion-label>
-      <ion-input type="number" placeholder="Enter your CVV"
-                 [(ngModel)]="cardCVV"></ion-input>
+    <ion-item color="secondary">
+      <ion-label  stacked>CVV</ion-label>
+      <ion-input type="number" placeholder="123"
+                 formControlName="cardCVV"></ion-input>
     </ion-item>
+    <ion-button type="submit" color="dark" shape="round" expand="full" [disabled]="!paiementForm.valid">Valider</ion-button>
+  </form>
 
-  </ion-list>
-
-  <ion-button color="dark" shape="round" expand="full" (click)="validateCard()">Valider</ion-button>
 </ion-content>

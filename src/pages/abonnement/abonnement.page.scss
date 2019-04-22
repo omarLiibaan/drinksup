@@ -1,0 +1,21 @@
+ion-card{
+  background-color: rgba(0,0,0,.2);
+  border : 1px solid rgba(255,255,255,0.5);
+  font-size: .75rem;
+  text-align: center;
+  flex-basis: 30%;
+  margin: 0;
+  ion-card-header{
+    ion-card-title{
+      color : #fff;
+      font-size: .9rem;
+    }
+  }
+}
+div{
+  display: flex;
+  flex-wrap: wrap;
+  width:100%;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}

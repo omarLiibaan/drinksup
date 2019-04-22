@@ -37,6 +37,7 @@
     "@ionic-native/stripe": "^5.4.0",
     "@ionic/angular": "^4.0.0",
     "@ionic/storage": "^2.2.0",
+    "angular-stripe": "^5.0.0",
     "animate.css": "^3.7.0",
     "com.telerik.plugins.nativepagetransitions": "^0.6.5",
     "cordova-android": "7.1.4",

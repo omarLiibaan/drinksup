@@ -1,17 +1,17 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Utilisateurs</ion-title>
+    <ion-title>Gestion des utilisateurs</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding color="secondary">
   <ion-searchbar animated color="primary" placeholder="Cherchez un utilisateur" (ionInput)="search($event)"></ion-searchbar>
-  
+
   <ion-list color="secondary">
     <ion-item-sliding *ngFor="let user of usersFilter" color="secondary" #slidingItem>
       <ion-item color="secondary" no-padding>
         <ion-icon name="contact"></ion-icon>
-        <p>{{user.INT_PRENOM}} {{user.INT_NOM}}</p>
+        <p>{{user.INT_PRENOM}}</p>
       </ion-item>
       <ion-item-options side="start" color="secondary">
         <ion-item-option  (click)="edit(slidingItem,user.INT_ID, user.INT_PRENOM, user.INT_NOM, user.INT_EMAIL, user.ROL_TYPES)"><ion-icon class="ion-edit" name="settings"></ion-icon></ion-item-option>
@@ -20,8 +20,5 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
-
-    <p>{{haveUserOrNot}} </p>
-
-
+  <p>{{haveUserOrNot}} </p>
 </ion-content>

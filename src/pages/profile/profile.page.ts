@@ -21,6 +21,7 @@ export class ProfilePage implements OnInit {
     userSessionRole : string;
     data: any;
     dateInscription = '';
+    idInternaute: number;
     constructor(private route: Router, public navCtrl : NavController, public storage: Storage, private http : HttpClient, private platform : Platform) {
 
 
@@ -47,6 +48,7 @@ export class ProfilePage implements OnInit {
             {
                 this.loggedUser = data;
                 this.dateInscription = moment(this.loggedUser.INT_DATEINSCRIPTION, "YYYYMMDD").fromNow();
+                this.idInternaute = this.loggedUser.INT_ID;
                 console.log('S ' + this.loggedUser.INT_DATEINSCRIPTION);
 
                 console.log('S ' + moment(this.loggedUser.INT_DATEINSCRIPTION, "YYYYMMDD").fromNow());
@@ -70,7 +72,7 @@ export class ProfilePage implements OnInit {
     }
 
     goSetting(){
-        console.log('salut');
+        console.log('salut ' + this.idInternaute);
         this.navTabs('/settings');
     }
 

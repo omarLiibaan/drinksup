@@ -210,3 +210,32 @@ ion-modal.loading-modal {
   }
 }
 
+
+ion-modal.ratings-modal {
+  @media (min-width: 300px) and (min-height: 500px) {
+    ion-backdrop {
+      visibility: visible;
+      opacity: .75 !important;
+    }
+  }
+
+  .modal-wrapper {
+    position: absolute;
+    overflow: hidden;
+    max-width: 310px;
+    width: 80vw;
+    height: 45vh;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 0 16px 20px rgba(0,0,0,.4);
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+}

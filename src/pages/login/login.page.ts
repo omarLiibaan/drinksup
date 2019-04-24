@@ -142,7 +142,7 @@ export class LoginPage implements OnInit {
                     this.sendNotification('Bienvenue !');
                     setTimeout( () => {this.loginForm.reset();}, 1000);  
                 } else if (this.userDetails.ROLE === this.roleUser) {
-                    this.navCtrl.navigateRoot('/tabs/offers');
+                    this.navCtrl.navigateRoot('/tabs/bars');
                     this.storage.set('SessionRoleKey', this.roleUser);
                     this.sendNotification('Bienvenue !');
                     setTimeout( () => {this.loginForm.reset();}, 1000);  
@@ -182,11 +182,11 @@ export class LoginPage implements OnInit {
                     this.storage.set('SessionRoleKey', this.roleAdmin);
                     this.sendNotification('Bienvenue !');
                 } else if (this.userDetails.ROLE === this.roleProprio) {
-                    this.navCtrl.navigateRoot('/tabsproprio/bar');
+                    this.navCtrl.navigateRoot('/tabsproprio/qrcode');
                     this.storage.set('SessionRoleKey', this.roleProprio);
                     this.sendNotification('Bienvenue !');
                 } else if (this.userDetails.ROLE === this.roleUser) {
-                    this.navCtrl.navigateRoot('/tabs/offers');
+                    this.navCtrl.navigateRoot('/tabs/bars');
                     this.storage.set('SessionRoleKey', this.roleUser);
                     this.sendNotification('Bienvenue !'); 
                 } else {

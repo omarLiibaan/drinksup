@@ -23,8 +23,13 @@
     <!-- Map Button -->
     <ion-button class="map-btn" shape="round"><img src="../../assets/img/map-icon.svg" alt=""></ion-button>
     <div class="first-section padding"> 
-        <h1>{{myBar.ENT_NOM}}</h1>     
+        <h1>{{myBar.ENT_NOM}}</h1>
         <p class="typeBar">{{myBar.ENT_SECTEURACTIVITES}}</p>
+        <div class="note-sec">
+            <!-- <img class="bar-note" *ngIf="ifHasRating(myBar.ENT_ID)"  src="{{'../../assets/img/grade/grade-' + grade + '.svg'}}"> -->
+            <img class="bar-note" src="{{'../../assets/img/grade/grade-' + grade + '.svg'}}">
+            <p>({{gradeTot}}/5.0)</p>
+        </div> 
         <p class="addressBar">{{myBar.ENT_ADRESSE}}, {{myBar.ENT_NPA}} - {{myBar.ENT_LOCALITE}}</p>
         <img class="roundCornerLeft" src="../../assets/img/round-corner-light-small.svg" alt="">
         <img class="roundCornerRight" src="../../assets/img/round-corner-small.svg" alt="">
@@ -84,5 +89,5 @@
     </ion-grid>
   </div>
 
-  <ion-button class="commentButton" shape="round"><ion-icon name="paper"></ion-icon>&nbsp;Voir les avis des clients</ion-button>
+  <ion-button *ngIf="payed=='good'" (click)="rate(myBar.ENT_ID, user_id)" class="commentButton" shape="round"><ion-icon name="paper"></ion-icon>&nbsp;Donner votre note</ion-button>
 </ion-content>

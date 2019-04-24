@@ -16,13 +16,6 @@ const routes: Routes = [
         path: '',
         component: TabsPage,
         children: [
-
-            {
-                path: 'offers',
-                children: [
-                    { path: '', loadChildren: '../offers/offers.module#OffersPageModule' },
-                ]
-            },
             {
                 path: 'bars',
                 children: [

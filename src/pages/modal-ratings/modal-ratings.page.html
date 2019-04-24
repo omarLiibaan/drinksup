@@ -1,0 +1,43 @@
+<ion-content padding color="secondary">
+  <div class="close-header">
+      <ion-icon name="close" (click)="close()"></ion-icon>
+  </div>
+  <h1>Vous avez passé une bonne soirée ?</h1>
+  <p>Donnez votre note</p>
+  <div class="star-row-wrapper">
+    <div class="star-row">
+      <div class="beer-wrapper" (click)="firstGlass()">
+          <img src="../../assets/img/beer-ratings/empty-glass.svg" class="empty-beer">
+          <img src="../../assets/img/beer-ratings/mousse.svg" class="mousse" [ngStyle]="{'bottom' : firstmousse}">
+          <div class="liquid" [ngStyle]="{'height' : firstliquid}"></div>
+      </div>
+
+      <div class="beer-wrapper" (click)="secondGlass()">
+          <img src="../../assets/img/beer-ratings/empty-glass.svg" class="empty-beer">
+          <img src="../../assets/img/beer-ratings/mousse.svg" class="mousse" [ngStyle]="{'bottom' : secondmousse}">
+          <div class="liquid" [ngStyle]="{'height' : secondliquid}"></div>
+      </div>
+
+      <div class="beer-wrapper" (click)="thirdGlass()">
+          <img src="../../assets/img/beer-ratings/empty-glass.svg" class="empty-beer">
+          <img src="../../assets/img/beer-ratings/mousse.svg" class="mousse" [ngStyle]="{'bottom' : thirdmousse}">
+          <div class="liquid" [ngStyle]="{'height' : thirdliquid}"></div>
+      </div>
+
+      <div class="beer-wrapper" (click)="fourthGlass()">
+          <img src="../../assets/img/beer-ratings/empty-glass.svg" class="empty-beer">
+          <img src="../../assets/img/beer-ratings/mousse.svg" class="mousse" [ngStyle]="{'bottom' : fourthmousse}">
+          <div class="liquid" [ngStyle]="{'height' : fourthliquid}"></div>
+      </div>
+
+      <div class="beer-wrapper" (click)="fifthGlass()">
+          <img src="../../assets/img/beer-ratings/empty-glass.svg" class="empty-beer">
+          <img src="../../assets/img/beer-ratings/mousse.svg" class="mousse" [ngStyle]="{'bottom' : fifthmousse}">
+          <div class="liquid" [ngStyle]="{'height' : fifthliquid}"></div>
+      </div>
+      
+    </div>
+  </div>
+
+  <ion-button expand="full" shape="round" (click)="rate()">Confirmer</ion-button>
+</ion-content>

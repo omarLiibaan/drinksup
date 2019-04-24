@@ -19,6 +19,8 @@ import { ModalSchedulePageModule } from '../pages/modal-schedule/modal-schedule.
 import { LoadingpagePageModule } from '../pages/loadingpage/loadingpage.module';
 import { ModalQrcodePageModule } from '../pages/modal-qrcode/modal-qrcode.module';
 import { OffersAddbarPageModule } from '../pages/offers-addbar/offers-addbar.module';
+import { ModalRatingsPageModule } from '../pages/modal-ratings/modal-ratings.module';
+
 import { Calendar } from '@ionic-native/calendar/ngx';
 import {EmailComposer} from '@ionic-native/email-composer/ngx';
 import {Stripe} from '@ionic-native/stripe/ngx';
@@ -29,7 +31,7 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
 @NgModule({
     declarations: [AppComponent],
     entryComponents: [],
-    imports: [NgxQRCodeModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, UsersPageModule, ModalPageModule, ModalQrcodePageModule, ModalbarAdminPageModule, ModalSchedulePageModule, LoadingpagePageModule, OffersAddbarPageModule, IonicStorageModule.forRoot()],
+    imports: [NgxQRCodeModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, UsersPageModule, ModalPageModule, ModalQrcodePageModule, ModalbarAdminPageModule, ModalSchedulePageModule, LoadingpagePageModule, OffersAddbarPageModule, ModalRatingsPageModule, IonicStorageModule.forRoot()],
     providers: [
         StatusBar,
         SplashScreen,

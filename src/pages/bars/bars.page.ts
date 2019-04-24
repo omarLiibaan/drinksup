@@ -14,6 +14,8 @@ export class BarsPage{
   baseURI = 'https://macfi.ch/serveur/aksi.php';
   uplPhotoURI = "https://www.macfi.ch/serveur/barphotos/";
   items : Array<any> = [];
+  offers : Array<any> = [];
+  offerIds : Array<any> = [];
   Filtereditems : Array<any> = [];
   faveBars : Array<any> = [];
   seshId : number;
@@ -26,13 +28,16 @@ export class BarsPage{
   hideElem : string = "block";
   emptyVal : string;
   zindex : string = "5";
+
+  tous : string = "#bf052b";
+  offres : string = "#0a0b0f";
+  top10 : string = "#0a0b0f";
+  presdemoi : string = "#0a0b0f";
   
 
   constructor(private storage : Storage, private http : HttpClient, private nativePageTransitions: NativePageTransitions, private navCtrl : NavController) { 
     this.loadBar();
     this.random = Math.floor(Math.random() * 100);
-    this.ionViewWillEnter();
-
   }
   
   scrollToTop() {
@@ -75,6 +80,8 @@ export class BarsPage{
 
   ionViewWillEnter(){
     this.loadBar();
+    this.loadOffers();
+
     this.storage.get('SessionEmailKey').then((val) => {
       this.loadFavorite(val);
     });
@@ -90,6 +97,26 @@ export class BarsPage{
         this.items = data;
         this.Filtereditems = this.items;
         this.activeBarsNo = this.items.length;
+    },
+    (error : any) =>
+    {
+      console.log(error);
+    });
+  }
+
+  loadOffers() : void{
+    let headers 	: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
+        options 	: any		= { "key" : "getAllOffers"},
+        url       : any      	= this.baseURI;
+
+    this.http.post(url, JSON.stringify(options), headers).subscribe((data : any) =>
+    {
+        this.offers = data;
+        for(var i = 0; i<data.length; i++){
+          this.offerIds.push(data[i].Entreprises_ENT_ID);
+        }
+
+        console.log(this.offerIds);
     },
     (error : any) =>
     {
@@ -182,6 +209,14 @@ export class BarsPage{
     }
   }
 
+  ifHasOffer(id) : boolean{
+      for(var i=0; i < this.offers.length; i++){
+        if(this.offers[i].Entreprises_ENT_ID == id){
+          return true;
+        }
+      }
+  }
+
   searchBar(param){
     const val = param.target.value;
     if(val.trim()!=""){
@@ -200,10 +235,49 @@ export class BarsPage{
   }
 
   imgLoad(){
-    console.log("Loaded !");
     this.disBub = false;
     this.zoomOut = false;
     this.zindex  = "-1";
+  }
+
+
+  tousBtn(){
+    this.Filtereditems = this.items;
+    //
+    this.tous = "#bf052b";
+    this.offres = "#0a0b0f";
+    this.top10  = "#0a0b0f";
+    this.presdemoi = "#0a0b0f";
+  }
+
+  offresBtn(){
+    var ids = this.offerIds;
+    this.Filtereditems = this.items.filter(function(data){
+      return ids.indexOf(data.ENT_ID) > -1;
+    });
+    //
+    this.tous = "#0a0b0f";
+    this.offres = "#bf052b";
+    this.top10  = "#0a0b0f";
+    this.presdemoi = "#0a0b0f";
+  }
+
+  top10Btn(){
+    this.Filtereditems = this.items;
+    //
+    this.tous = "#0a0b0f";
+    this.offres = "#0a0b0f";
+    this.top10  = "#bf052b";
+    this.presdemoi = "#0a0b0f";
+  }
+
+  presdemoiBtn(){
+    this.Filtereditems = this.items;
+    //
+    this.tous = "#0a0b0f";
+    this.offres = "#0a0b0f";
+    this.top10  = "#0a0b0f";
+    this.presdemoi = "#bf052b";
   }
 
 }

@@ -1,0 +1,63 @@
+.close-header{
+    width: 100%;
+    text-align: right;
+
+}
+
+.star-row-wrapper{
+    margin: 2rem 0;
+}
+.star-row{
+    width: 100%;
+    height: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .beer-wrapper{
+        width: 18%;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+    }
+    .empty-beer{
+        width: 30px;
+        position: relative;
+        z-index: 4;
+    }
+
+    .mousse{
+        position: absolute;
+        width: 30px !important;
+        bottom: 0;
+        transition: all .5s ease-out;
+        z-index: 3;
+    }
+
+    .liquid{
+        position: absolute;
+        background-color: #f4b22f;
+        height: 0px;
+        width: 16px;
+        bottom: 0;
+        transition: all .5s ease-out; 
+        z-index: 1;
+    }
+}
+
+h1{
+    text-align: center;
+    font-size: .9rem;
+    font-family: "PNB";
+}
+
+p{
+    text-align: center;
+    font-size: .8rem
+}
+
+ion-button{
+    --background: #f80638;
+}

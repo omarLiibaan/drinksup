@@ -223,6 +223,21 @@ h4{
     }
 }
 
+.note-sec{
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+
+    img{
+        width: 120px;
+    }
+
+    p{
+        margin-left: 9px;
+        font-size: .7rem;
+    }
+}
+
 
 //loading anim
 .lds-ring {

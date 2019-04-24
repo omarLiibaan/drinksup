@@ -55,15 +55,17 @@ export class QrcodePage implements OnInit {
             barId = parseInt(individualData[4]),
             userId = parseInt(individualData[5]);
       //
-      for(var i=0; i<this.scannedOffers.length; i++){
-        if(this.scannedOffers[i].CODE_OFFRE_DESCRIPTION===desc && this.scannedOffers[i].CODE_OFFRE_DATEDEBUT===start && this.scannedOffers[i].CODE_OFFRE_DATEFIN===end && this.scannedOffers[i].CODE_OFFRE_ID===offId && this.scannedOffers[i].CODE_ENTREPRISE_ID===barId && this.scannedOffers[i].CODE_INTERNAUTE_ID===userId){
-          console.log("it is already scanned!");
-          this.ifScanned = true;
-          break;   
-        }else{
-          console.log("not scanned!");
-          this.ifScanned = false;          
+      if(this.scannedOffers!==null){
+        for(var i=0; i<this.scannedOffers.length; i++){
+          if(this.scannedOffers[i].CODE_OFFRE_DESCRIPTION===desc && this.scannedOffers[i].CODE_OFFRE_DATEDEBUT===start && this.scannedOffers[i].CODE_OFFRE_DATEFIN===end && this.scannedOffers[i].CODE_OFFRE_ID===offId && this.scannedOffers[i].CODE_ENTREPRISE_ID===barId && this.scannedOffers[i].CODE_INTERNAUTE_ID===userId){
+            this.ifScanned = true;
+            break;   
+          }else{
+            this.ifScanned = false;          
+          }
         }
+      }else{
+        this.ifScanned = false; 
       }
 
       setTimeout(() => {

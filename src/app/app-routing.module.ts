@@ -10,7 +10,9 @@ const routes: Routes = [
     { path: 'tabsadmin', loadChildren: '../pages/tabsadmin/tabsadmin.module#TabsadminPageModule' },
     { path: 'tabsproprio', loadChildren: '../pages/tabsproprio/tabsproprio.module#TabsproprioPageModule' },
     { path: 'faq', loadChildren: '../pages/faq/faq.module#FaqPageModule' },
-    { path: 'abonnement', loadChildren: '../pages/abonnement/abonnement.module#AbonnementPageModule' }
+    { path: 'abonnement', loadChildren: '../pages/abonnement/abonnement.module#AbonnementPageModule' },
+
+
 
 
 

@@ -6,6 +6,7 @@ import { NavController, ModalController } from "@ionic/angular";
 import { Storage } from '@ionic/storage';
 import { formatDate} from '@angular/common';
 import { ModalQrcodePage } from '../modal-qrcode/modal-qrcode.page';
+import { ModalRatingsPage } from '../modal-ratings/modal-ratings.page';
 import { timer } from 'rxjs';
 
 
@@ -24,6 +25,8 @@ export class BarUserPage implements OnInit {
   myOffers : Array<any> = [];
   scannedOfferId : any = [];
   scannedUserId : any = [];
+  scannedOffers : Array<any> = [];
+  getRating : Array<any> = [];
   ifUserIdScanned = null;
   ifUserIdNotScanned = null;
   ifOfferIdScanned = null;
@@ -35,9 +38,9 @@ export class BarUserPage implements OnInit {
   payed : string;
   dateDebut;
   user_id;
+  grade : string = "0";
+  gradeTot;
   ifDataScanned : boolean = false;
-
-  scannedOffers : Array<any> = [];
   showBtns : boolean = false;
   constructor(private modalCtrl : ModalController, @Inject(LOCALE_ID)private locale: string, private storage : Storage,private http : HttpClient, private aRoute : ActivatedRoute, private nativePageTransitions: NativePageTransitions, private navCtrl : NavController) { 
  
@@ -46,25 +49,17 @@ export class BarUserPage implements OnInit {
   ngOnInit() {}
 
   ionViewWillEnter(){
-    this.getScannedCode();    
+    this.getScannedCode();     
     this.storage.get('SessionIdKey').then((val) => {
       this.getPaidUser(val);
-      console.log(val)
       setTimeout(() => {
         this.user_id = val;
-        // this.userisScanned(this.scannedUserId.indexOf(val)>-1);
-        if(this.scannedUserId.indexOf(val)>-1){
-            this.ifUserIdScanned = true;
-            this.ifUserIdNotScanned = false;
-        }else{
-            this.ifUserIdScanned = false;
-            this.ifUserIdNotScanned = true;
-        }
       }, 100);
     }); 
     this.loadBar(this.aRoute.snapshot.paramMap.get('id'));
     this.loadSchedule(this.aRoute.snapshot.paramMap.get('id'));
     this.loadOffers(this.aRoute.snapshot.paramMap.get('id'));
+    this.getRatings(this.aRoute.snapshot.paramMap.get('id'));
   }
 
   ionViewDidEnter(){
@@ -126,8 +121,7 @@ export class BarUserPage implements OnInit {
       this.http.post(url, JSON.stringify(options), headers).subscribe((data : any) =>
       {
         this.myOffers = data;
-        const start = formatDate(this.myOffers[0].OFF_DATEDEBUT, 'dd MMMM yyyy à HH:mm', this.locale);
-        console.log(start);
+        console.log(this.myOffers);
       },
       (error : any) =>
       {
@@ -164,15 +158,37 @@ export class BarUserPage implements OnInit {
     }
 
     checkIfScanned(offer_id, user_id){
-      for(var i=0; i<this.scannedOffers.length; i++){
+      if(this.scannedOffers!==null){
+        for(var i=0; i<this.scannedOffers.length; i++){
           if(this.scannedOffers[i].CODE_OFFRE_ID===offer_id && this.scannedOffers[i].CODE_INTERNAUTE_ID===user_id){
             return true;        
           }
-      }  
+        } 
+      }else{
+        return false;
+      }
     }
+
+    getRatings(id_bar) {
+      const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
+          options: any		= { 'key' : 'getRating', 'idBar' : id_bar},
+          url: any      	= this.baseURI;
     
-
-
+      this.http.post(url, JSON.stringify(options), headers).subscribe((data: any) => {
+        
+            if(data.totalGrade!==null){
+              this.gradeTot = (Math.round(data.totalGrade * 2) / 2).toFixed(1);
+              this.grade = this.gradeTot.replace(/\./g,'-')
+            }else{
+              this.gradeTot = 0;
+            }
+            console.log(this.gradeTot)
+          },  
+          (error: any) => {
+              console.log(error);
+          });
+    }
+ 
     //modal
     async activerOffre(desc, start, end, off_id, ent_id, user_id) {
         const modal = await this.modalCtrl.create({
@@ -190,7 +206,23 @@ export class BarUserPage implements OnInit {
           
         });
         modal.present();
-    } 
+    }
+
+    //modal
+    async rate(ent_id, user_id) {
+      const modal = await this.modalCtrl.create({
+          component: ModalRatingsPage,
+          cssClass: "ratings-modal",
+          componentProps: {
+            idEnt : ent_id,
+            idUser : user_id
+          },
+      });
+      modal.onDidDismiss().then(() => {
+        
+      });
+      modal.present();
+  }
 
     jemabonne(){
       alert("Abonnez-vous dès maintenant pour profiter l'offre !")

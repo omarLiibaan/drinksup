@@ -76,7 +76,7 @@ export class AppComponent {
                 this.navCtrl.navigateRoot('/tabsproprio/qrcode');
 
             }else if(val=='Yes' && this.userSessionRole == this.roleUser){
-                this.navCtrl.navigateRoot('/tabs/offers');
+                this.navCtrl.navigateRoot('/tabs/bars');
 
             }else if(val === null || valRole === null || val == null || valRole == null){
               this.navCtrl.navigateRoot('/login');

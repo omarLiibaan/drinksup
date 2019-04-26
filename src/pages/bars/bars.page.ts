@@ -171,25 +171,25 @@ export class BarsPage{
 
   addRemoveFave(index, id){
 
-    const imgId_1 = document.getElementById("starIconId1_"+index) as HTMLImageElement;
-    const imgId_2 = document.getElementById("starIconId2_"+index) as HTMLImageElement;
+    // const imgId_1 = document.getElementById("starIconId1_"+index) as HTMLImageElement;
+    // const imgId_2 = document.getElementById("starIconId2_"+index) as HTMLImageElement;
     const imgId_3 = document.getElementById("starIconId3_"+index) as HTMLImageElement;
 
-    const file_1 = "../../assets/img" + imgId_1.src.substring(imgId_1.src.lastIndexOf("/"));
-    const file_2 = "../../assets/img" + imgId_2.src.substring(imgId_2.src.lastIndexOf("/"));
+    // const file_1 = "../../assets/img" + imgId_1.src.substring(imgId_1.src.lastIndexOf("/"));
+    // const file_2 = "../../assets/img" + imgId_2.src.substring(imgId_2.src.lastIndexOf("/"));
     const file_3 = "../../assets/img" + imgId_3.src.substring(imgId_3.src.lastIndexOf("/"));
     const liked = "../../assets/img/star-icon-filled.svg";
 
-    if(file_1==liked || file_2==liked || file_3==liked){
-      imgId_1.src ="../../assets/img/star-icon-empty.svg";
-      imgId_2.src ="../../assets/img/star-icon-empty.svg";
+    if(file_3==liked){
+      // imgId_1.src ="../../assets/img/star-icon-empty.svg";
+      // imgId_2.src ="../../assets/img/star-icon-empty.svg";
       imgId_3.src ="../../assets/img/star-icon-empty.svg";
       this.storage.get('SessionEmailKey').then((val) => {
         this.deletefavorite(id, val);
       });
     }else{
-      imgId_1.src ="../../assets/img/star-icon-filled.svg";
-      imgId_2.src ="../../assets/img/star-icon-filled.svg";
+      // imgId_1.src ="../../assets/img/star-icon-filled.svg";
+      // imgId_2.src ="../../assets/img/star-icon-filled.svg";
       imgId_3.src ="../../assets/img/star-icon-filled.svg";
       this.storage.get('SessionEmailKey').then((val) => {
         this.favorite(id, val);

@@ -1,3 +1,4 @@
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -8,20 +9,20 @@ import { IonicModule } from '@ionic/angular';
 import { AbonnementPage } from './abonnement.page';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: AbonnementPage
-  }
+    {
+        path: '',
+        component: AbonnementPage
+    }
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    ReactiveFormsModule,
-    RouterModule.forChild(routes)
-  ],
-  declarations: [AbonnementPage]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        ReactiveFormsModule,
+        RouterModule.forChild(routes)
+    ],
+    declarations: [AbonnementPage]
 })
 export class AbonnementPageModule {}

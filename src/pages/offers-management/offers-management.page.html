@@ -6,8 +6,8 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content>
-  <ion-card>
+<ion-content  >
+  <ion-card >
     <ion-card-header tappable (click)="collapseCard = !collapseCard">
       <ion-card-title>Nouvelle offre</ion-card-title>
     </ion-card-header>
@@ -20,7 +20,7 @@
           <ion-select-option  *ngFor="let user of usersFilter" value="{{user.ENT_ID}}" >{{user.ENT_NOM}}</ion-select-option>
         </ion-select>
       </ion-item>
-      <ion-item>
+      <ion-item >
         <ion-input type="text" placeholder="Description" [(ngModel)]="event.description"></ion-input>
       </ion-item>
       <ion-item>
@@ -31,7 +31,7 @@
         <ion-label>Date de fin</ion-label>
         <ion-datetime displayFormat="DD/MM/YYYY HH:mm" pickerFormat="DD/MM/YYYY HH:mm" minuteValues="00,15,30,45"[(ngModel)]="event.endTime" [min]="minDate"></ion-datetime>
       </ion-item>
-      <ion-button fill="outline" expand="block" (click)="addEvent()" [disabled]="event.title == '' || event.description =='' || event.endTime < event.startTime">Ajouter l'offre</ion-button>
+      <ion-button fill="outline"  color="dark" style="margin-top: 12px;" expand="block" (click)="addEvent()" [disabled]="event.title == '' || event.description =='' || event.endTime < event.startTime">Ajouter l'offre</ion-button>
     </ion-card-content>
   </ion-card>
   <ion-row>
@@ -57,16 +57,19 @@
     </ion-col>
   </ion-row>
   <ng-template #template let-showEventDetail="showEventDetail" let-selectedDate="selectedDate" let-noEventsLabel="noEventsLabel">
-    <ion-list >
+    <ion-list>
       <ion-item-sliding *ngFor="let event of selectedDate?.events" #slidingItem>
-        <ion-item  (click)="eventSelected(event)">
-                        {{event.startTime|date: 'HH:mm'}} - {{event.endTime|date: 'HH:mm'}} | {{event.entreprise}}
-        </ion-item>
-        <ion-item *ngIf="selectedDate?.events.length==0">
-          <div class="no-events-label">{{noEventsLabel}}</div>
+        <ion-item (click)="eventSelected(event)">
+          <div *ngIf="event.actif ==='Non' " [ngStyle]="{'color' : invalidColor}" class="item-content">
+            <ion-icon name="checkmark-circle" style="size: 18px;"></ion-icon>  {{event.startTime|date: 'HH:mm'}} - {{event.endTime|date: 'HH:mm'}} | {{event.entreprise}}
+          </div>
+          <div *ngIf="event.actif ==='Oui' " [ngStyle]="{'color' : validColor}" class="item-content">
+            <ion-icon name="checkmark-circle" style="size: 18px;"></ion-icon>  {{event.startTime|date: 'HH:mm'}} - {{event.endTime|date: 'HH:mm'}} | {{event.entreprise}}
+          </div>
         </ion-item>
         <ion-item-options side="start">
           <ion-item-option  (click)="delete(slidingItem, event.idOffre, event.entreprise)"><ion-icon name="trash"></ion-icon></ion-item-option>
+          <ion-item-option  (click)="edit(slidingItem, event.idOffre, event.actif, event.entreprise, event.description)"><ion-icon name="create"></ion-icon></ion-item-option>
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>

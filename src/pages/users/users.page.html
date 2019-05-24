@@ -6,7 +6,7 @@
 
 <ion-content padding color="secondary">
   <ion-searchbar animated color="primary" placeholder="Cherchez un utilisateur" (ionInput)="search($event)"></ion-searchbar>
-
+  
   <ion-list color="secondary">
     <ion-item-sliding *ngFor="let user of usersFilter" color="secondary" #slidingItem>
       <ion-item color="secondary" no-padding>
@@ -20,5 +20,5 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
-  <p>{{haveUserOrNot}} </p>
+    <p>{{haveUserOrNot}} </p>
 </ion-content>

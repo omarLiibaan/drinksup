@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>modal</ion-title>
+    <ion-title>Modification des infos</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -8,11 +8,7 @@
 
   <form [formGroup]="modifierForm" (ngSubmit)="editUsers()">
     <ion-item>
-      <ion-label>Nom :</ion-label>
-      <ion-input type="text"  formControlName="nom" [(ngModel)]="passedNom"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>Prénom :</ion-label>
+      <ion-label>Nom complet :</ion-label>
       <ion-input type="text"  formControlName="prenom" [(ngModel)]="passedPrenom"></ion-input>
     </ion-item>
     <ion-item>

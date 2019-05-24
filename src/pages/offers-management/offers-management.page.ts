@@ -20,6 +20,7 @@ export class OffersManagementPage implements OnInit {
         endTime: new Date().toISOString(),
         entreprise: '',
         idOffre: '',
+        actif: '',
         allDay: false
     };
     minDate = new Date().toISOString();
@@ -40,9 +41,11 @@ export class OffersManagementPage implements OnInit {
         endTime: new Date(),
         entreprise: '',
         idOffre: '',
+        actif: '',
         allDay: false
     };
-
+    invalidColor : string = "#DC143C";
+    validColor : string = "#1bdc45"
     @ViewChild(CalendarComponent) myCal: CalendarComponent;
     constructor(public dp: DatePipe, public alertCtrl: AlertController, @Inject(LOCALE_ID)private locale: string, public http: HttpClient, public toastCtrl: ToastController, public alertController: AlertController) { }
     ngOnInit() {
@@ -64,6 +67,7 @@ export class OffersManagementPage implements OnInit {
             endTime: new Date().toISOString(),
             entreprise: '',
             idOffre: '',
+            actif: '',
             allDay: false
         };
     }
@@ -92,6 +96,7 @@ export class OffersManagementPage implements OnInit {
                     endTime: new Date(this.listeOffres[i].endTime),
                     entreprise: this.listeOffres[i].entreprise,
                     idOffre: this.listeOffres[i].idOffre,
+                    actif: this.listeOffres[i].actif,
                     allDay: false
                 }
                 this.eventSource.push(this.offres);
@@ -108,19 +113,20 @@ export class OffersManagementPage implements OnInit {
             endTime: new Date(this.event.endTime),
             entreprise: this.event.entreprise,
             idOffre: this.event.idOffre,
+            actif: 'Non',
             allDay: this.event.allDay
         }
         const dateDebut = this.dp.transform(eventCopy.startTime, 'yyyy-MM-dd HH:mm', 'GMT+0000');
         const dateFin = this.dp.transform(eventCopy.endTime, 'yyyy-MM-dd  HH:mm', 'GMT+0000');
-        this.addOffer(eventCopy.description, dateDebut, dateFin, eventCopy.title);
+        this.addOffer(eventCopy.description, dateDebut, dateFin,eventCopy.actif, eventCopy.title);
         this.eventSource.push(eventCopy);
         this.ionViewWillEnter();
 
     }
 
-    addOffer(description: String, dateDebut: String, dateFin: String, idEnt: String) {
+    addOffer(description: String, dateDebut: String, dateFin: String, actif: String, idEnt: String) {
         const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
-            options: any		= { 'key' : 'insertOffers', 'description': description, 'dateDebut': dateDebut, 'dateFin': dateFin, 'idEnt': idEnt},
+            options: any		= { 'key' : 'insertOffers', 'description': description, 'dateDebut': dateDebut, 'dateFin': dateFin, 'actif': actif, 'idEnt': idEnt},
             url: any      	= this.baseURI + 'aksi.php';
 
         this.http.post(url, JSON.stringify(options), headers).subscribe((data: any) => {
@@ -176,6 +182,23 @@ export class OffersManagementPage implements OnInit {
         console.log('id de l\'offre ' + id);
         this.presentAlert(id, nom);
     }
+
+    async edit(slidingItem: IonItemSliding, id, actif, nom, description){
+        await slidingItem.close();
+        const nactif = '';
+        if(actif === 'Oui'){
+            const inactif = 'Non';
+            const header = 'Voulez-vous désactiver l\'offre de ' + nom + ' description de l\'offre : ' + description;
+            console.log(header + '----> ' + inactif);
+            this.presentAlertActif(id, inactif, header);
+        }else {
+            const activer = 'Oui';
+            const header = 'Voulez-vous activer l\'offre de ' + nom + ' description de l\'offre : ' + description;
+            console.log(header + '----> ' + activer);
+            this.presentAlertActif(id, activer, header);
+        }
+
+    }
     deleteOffre(id: number) {
         const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
             options: any		= { 'key' : 'deleteOffre', 'id': id},
@@ -183,6 +206,21 @@ export class OffersManagementPage implements OnInit {
 
         this.http.post(url, JSON.stringify(options), headers).subscribe((data: any) => {
                 this.sendNotification('Votre suppresion a bien été pris en compte !');
+                console.log('ouais bien');
+            },
+            (error: any) => {
+                console.log(error);
+                this.sendNotification('Erreur!');
+            });
+    }
+
+    editOffre(id: number, actif: string) {
+        const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
+            options: any		= { 'key' : 'editOffre', 'id': id, 'actif': actif},
+            url: any      	= this.baseURI + 'aksi.php';
+
+        this.http.post(url, JSON.stringify(options), headers).subscribe((data: any) => {
+                this.sendNotification('Votre Modification a bien été pris en compte !');
                 console.log('ouais bien');
             },
             (error: any) => {
@@ -207,6 +245,31 @@ export class OffersManagementPage implements OnInit {
                         this.deleteOffre(id);
                         this.ionViewWillEnter();
                         console.log('Confirm Okay');
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
+    }
+
+    async presentAlertActif(id, actif, header) {
+        const alert = await this.alertController.create({
+            header: header,
+            buttons: [
+                {
+                    text: 'Non',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                    handler: (blah) => {
+                        console.log('Confirm Cancel: blah');
+                    }
+                }, {
+                    text: 'Oui',
+                    handler: () => {
+                        this.editOffre(id, actif);
+                        this.ionViewWillEnter();
+                        console.log('Confirm Okay ' + actif + ' ' + id);
                     }
                 }
             ]

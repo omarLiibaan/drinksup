@@ -1,9 +1,15 @@
 <ion-header>
   <ion-toolbar color="primary" >
-    <ion-title>stats</ion-title>
+    <ion-title>MES STATS</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding color="secondary">
+  <div *ngFor="let stat of stats" >
+    <p>
+      Nombre de QrCode scanné : {{stat.nbOffre}} pour le mois de {{stat.Mois}}
+    </p>
+  </div>
+  <p>{{msg}} </p>
 
 </ion-content>

@@ -12,7 +12,6 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 export class ModalPage implements OnInit {
   passedId = null;
   passedPrenom = null;
-  passedNom = null;
   passedEmail = null;
   passedRoles = null;
   public modifierForm: FormGroup;
@@ -20,7 +19,6 @@ export class ModalPage implements OnInit {
   public baseURI = 'https://macfi.ch/serveur/';
   constructor(private formBuilder: FormBuilder, private route: Router, private navCtrl: NavController, private navParams: NavParams, private modalController: ModalController,  private toastCtrl: ToastController,  public http: HttpClient) {
     this.modifierForm = new FormGroup({
-       nom: new FormControl(),
        prenom: new FormControl(),
        email: new FormControl(),
        role: new FormControl(),
@@ -32,7 +30,6 @@ export class ModalPage implements OnInit {
 
   validationForm() {
     this.modifierForm = this.formBuilder.group({
-       'nom': ['', Validators.required],
        'prenom': ['', Validators.required],
        'email': ['', Validators.compose([Validators.maxLength(70), Validators.pattern('^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$'), Validators.required])],
        'id' : ['', Validators.required],
@@ -41,22 +38,19 @@ export class ModalPage implements OnInit {
   ngOnInit() {
     this.passedId = this.navParams.get('id');
     this.passedPrenom = this.navParams.get('prenom');
-    this.passedNom = this.navParams.get('nom');
     this.passedEmail = this.navParams.get('email');
   }
   editUsers() {
-    const nom: string = this.modifierForm.controls['nom'].value;
     const prenom: string = this.modifierForm.controls['prenom'].value;
     const email: string = this.modifierForm.controls['email'].value;
     const id: number = this.modifierForm.controls['id'].value;
-    console.log(nom + prenom + email + id);
     // update users
-    this.updateUsers(nom, prenom, email, id);
+    this.updateUsers(prenom, email, id);
 
   }
-  updateUsers(nom: string, prenom: string, email: string, id: number) {
+  updateUsers(prenom: string, email: string, id: number) {
       const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
-          options: any		= { 'key' : 'updateUser', 'nom': nom, 'prenom': prenom, 'email': email, 'id': id},
+          options: any		= { 'key' : 'updateUser','prenom': prenom, 'email': email, 'id': id},
           url: any      	= this.baseURI + 'aksi.php';
 
       this.http.post(url, JSON.stringify(options), headers).subscribe((data: any) => {

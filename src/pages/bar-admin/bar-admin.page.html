@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content padding color="secondary">
-  <ion-searchbar animated color="primary" placeholder="Cherchez un propriétaire" (ionInput)="search($event)"></ion-searchbar>
+  <ion-searchbar animated color="primary" placeholder="Cherchez un bar" (ionInput)="search($event)"></ion-searchbar>
   <ion-card *ngFor="let user of usersFilter" (click)="validated(user.INT_ID, user.ENT_ID)">
     <ion-card-header>
       <ion-card-title>{{user.ENT_NOM}}</ion-card-title>

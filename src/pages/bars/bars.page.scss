@@ -1,382 +1,570 @@
-.header-buttons{
-  margin-top: 16px;
+ion-list{
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-bottom: 0 !important;
+  padding-top: 0 !important;
+  --border-radius: 0;
+  overflow: hidden;
+  background-color: #070708;
+}
+
+
+
+.freedrinkstab{
   width: 100%;
+  height: 50px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding: 0 16px;
+  flex-direction: row;
+  background-color: #101012;
+  position: relative;
+  transition: all .3s ease-in-out;
 
   div{
-    background-color: #0a0b0f;
-    font-size: .7rem;
-    padding: 5px 18px;
-    box-shadow: 1px 1px 3px #000;
-    border-radius: 50px;
+      width: 33.3333%;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: rgb(82, 82, 82);
+      font-size: .85rem;
+      font-family: "NBO";
+      transition: all 0.3s linear;
+      position: relative;
+      z-index: 1;
   }
-
-  .active{
-    background-color: #bf052b;
-  }
 }
 
-
-
-.all-bars{
-    margin: 30px 16px 16px 16px;
-    font-size: .8rem;
-    display: flex;
-    align-items: center;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+.outline_bar{
+  display: block;
+  content: "";
+  position: absolute;
+  width: 33.3333%;
+  height: 3px;
+  bottom: 0;
+  left: 0;
+  background-color: rgb(196, 0, 0);
+  transition: all 0.3s linear;
 }
 
-ion-list{
-    margin-top: 8px;
-    margin-bottom: 8px;
-    background-color: #12141b;
-    padding-bottom: 0 !important;
-    overflow: hidden;
-}
 
 ion-item{
-    position: relative;
-    --inner-padding-start : 16px;
-    --inner-padding-end : 16px;
-    overflow: hidden;
+  --border-radius: 0;
+  --padding-bottom: 0;
+  --padding-top: 0;
+  --inner-padding-bottom : 0;
+  --inner-padding-top: 0;
+  --inner-padding-start: 0;
+  --inner-padding-end: 0;
+  --padding-start: 0;
+  --padding-end: 0;
+  --background: #070708 !important;
+  overflow: hidden;
+  position: relative;    
+  margin-bottom: 7px;
 
-    .star{
+  .star{
+    position: absolute;
+    width : 25px;
+    z-index: 50;
+    bottom : 16px;
+    right: 16px;
+  }
+
+  .bubbles-wrapper{
+      position: absolute;  
+      height: 100%;
+      width: calc(100% - 32px);
+      left: 16px;
+      bottom: 0;
+      background: #0d0e13;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 5px;
+      opacity: 0;
+      transition: opacity .3s ease-out;
+
+      .bubbles{
+          margin-top: -50px;
+      }
+  }
+  
+
+  .img-overlay{
       position: absolute;
-      width : 30px;
-      z-index: 50;
-      top : 16px;
-      right: 32px;
-    }
+      background: rgb(0,0,0);
+      background: linear-gradient(0deg, rgba(0,0,0,.8) 50%, rgba(0,0,0,0) 100%); 
+      height: 80%;
+      width: 100%;
+      left: 0;
+      bottom: 0;
+      z-index: 4;
+      border-radius: 0;
+  }
 
-    .bubbles-wrapper{
-        position: absolute;  
-        height: 100%;
-        width: calc(100% - 32px);
-        left: 16px;
-        bottom: 0;
-        background: #0d0e13;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        opacity: 0;
-        transition: opacity .3s ease-out;
+  .bar-img{
+      height: 220px;
+      min-width: 100%;
+      object-fit: cover;
+      z-index: 2;
+      display: block;
+      border-radius: 0;
+      transition: 1.8s ease-out;
+  }
 
-        .bubbles{
-            margin-top: -50px;
-        }
-    }
+  .bar-details{
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      z-index: 5;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+      flex-direction: column;
+      padding: 16px;
+
+      p{  
+          margin: 0;
+      }
+
+      img{
+          margin: 5px 0 3px 0;
+          width : 100px;
+      }
+
+      .note-sec{
+          display: flex;
+          align-items: center;
+
+          p{
+              margin-left: 9px;
+              font-size: .7rem;
+          }
+      }
+
+      .off_desc{
+          font-family: "NBL";
+          font-size: 1.4rem;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+      }
+
+      .row_off{
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+          flex-direction: row;
+          margin-top: 5px;
+      }
+
+      .ent_nom{
+          font-size: 16px;
+          color: rgb(134, 134, 134);
+          font-family: "NBO";
+          
+      }
+
+      .countdown{
+          margin-top: 3px;
+          font-size: 12px;
+          width: 170px;
+          height: 20px;
+          background-color: transparent;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: rgb(134, 134, 134);
+          border: 1px solid rgb(134, 134, 134);
+          border-radius: 20px;
+      }
+     
+  }
+
+ 
+}
+
+// .header-buttons{
+//   margin-top: 16px;
+//   width: 100%;
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   padding: 0 16px;
+
+//   div{
+//     background-color: #0a0b0f;
+//     font-size: .7rem;
+//     padding: 5px 18px;
+//     box-shadow: 1px 1px 3px #000;
+//     border-radius: 50px;
+//   }
+
+//   .active{
+//     background-color: #bf052b;
+//   }
+// }
+
+
+
+// .all-bars{
+//     margin: 30px 16px 16px 16px;
+//     font-size: .8rem;
+//     display: flex;
+//     align-items: center;
+//     text-transform: uppercase;
+//     letter-spacing: 1px;
+// }
+
+// ion-list{
+//     margin-top: 8px;
+//     margin-bottom: 8px;
+//     background-color: #12141b;
+//     padding-bottom: 0 !important;
+//     overflow: hidden;
+// }
+
+// ion-item{
+//     position: relative;
+//     --inner-padding-start : 16px;
+//     --inner-padding-end : 16px;
+//     overflow: hidden;
+
+//     .star{
+//       position: absolute;
+//       width : 30px;
+//       z-index: 50;
+//       top : 16px;
+//       right: 32px;
+//     }
+
+//     .bubbles-wrapper{
+//         position: absolute;  
+//         height: 100%;
+//         width: calc(100% - 32px);
+//         left: 16px;
+//         bottom: 0;
+//         background: #0d0e13;
+//         display: flex;
+//         justify-content: center;
+//         align-items: center;
+//         opacity: 0;
+//         transition: opacity .3s ease-out;
+
+//         .bubbles{
+//             margin-top: -50px;
+//         }
+//     }
     
 
-    .img-overlay{
-        position: absolute;
-        background: rgb(0,0,0);
-        background: linear-gradient(0deg, rgba(0,0,0,.5) 50%, rgba(0,0,0,0) 100%); 
-        height: 60%;
-        width: calc(100% - 32px);
-        left: 16px;
-        bottom: 0;
-        z-index: 4;
-    }
+//     .img-overlay{
+//         position: absolute;
+//         background: rgb(0,0,0);
+//         background: linear-gradient(0deg, rgba(0,0,0,.5) 50%, rgba(0,0,0,0) 100%); 
+//         height: 60%;
+//         width: calc(100% - 32px);
+//         left: 16px;
+//         bottom: 0;
+//         z-index: 4;
+//     }
 
-    .bar-img{
-        height: 200px;
-        min-width: 100%;
-        object-fit: cover;
-        z-index: 2;
-        display: block;
-        transition: 1.8s ease-out;
-    }
+//     .bar-img{
+//         height: 200px;
+//         min-width: 100%;
+//         object-fit: cover;
+//         z-index: 2;
+//         display: block;
+//         transition: 1.8s ease-out;
+//     }
 
-    .bar-details{
-        position: absolute;
-        bottom: 16px;
-        left: 32px;
-        z-index: 5;
+//     .bar-details{
+//         position: absolute;
+//         bottom: 16px;
+//         left: 32px;
+//         z-index: 5;
 
-        p{  
-            margin: 0;
-        }
+//         p{  
+//             margin: 0;
+//         }
 
-        img{
-            margin: 5px 0 3px 0;
-            width : 100px;
-        }
+//         img{
+//             margin: 5px 0 3px 0;
+//             width : 100px;
+//         }
 
-        .note-sec{
-            display: flex;
-            align-items: center;
+//         .note-sec{
+//             display: flex;
+//             align-items: center;
 
-            p{
-                margin-left: 9px;
-                font-size: .7rem;
-            }
-        }
+//             p{
+//                 margin-left: 9px;
+//                 font-size: .7rem;
+//             }
+//         }
 
-        .bar-nom{
-            font-family: "PNB";
-            font-size: .8rem;
-        }
+//         .bar-nom{
+//             font-family: "PNB";
+//             font-size: .8rem;
+//         }
 
-        .bar-desc{
-            font-size: .8rem;
-        }
+//         .bar-desc{
+//             font-size: .8rem;
+//         }
        
-    }
+//     }
 
    
-}
+// }
 
 
-.container {
-    width: 100%;
-    height: 235px;
-    white-space: nowrap;
-    background-color: #15181e;
-    padding-bottom: 16px;
-    padding-top: 16px;
-    margin-top: 16px;
-    box-sizing: border-box;
+// .container {
+//     width: 100%;
+//     height: 235px;
+//     white-space: nowrap;
+//     background-color: #15181e;
+//     padding-bottom: 16px;
+//     padding-top: 16px;
+//     margin-top: 16px;
+//     box-sizing: border-box;
     
-    ::-webkit-scrollbar {
-      display: none;
-    }
+//     ::-webkit-scrollbar {
+//       display: none;
+//     }
 
-    h1{
-        margin: 0 0 16px 16px;
-        font-size: .8rem;
-        display: flex;
-        align-items: center;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
+//     h1{
+//         margin: 0 0 16px 16px;
+//         font-size: .8rem;
+//         display: flex;
+//         align-items: center;
+//         text-transform: uppercase;
+//         letter-spacing: 1px;
+//     }
 
-    .bars{
-        position: relative;
-        z-index: 1;
-        display: inline-block;
-        width: 80%;
-        height: 170px;
-        margin-left: 16px;
-        position: relative;
-        overflow: hidden;
+//     .bars{
+//         position: relative;
+//         z-index: 1;
+//         display: inline-block;
+//         width: 80%;
+//         height: 170px;
+//         margin-left: 16px;
+//         position: relative;
+//         overflow: hidden;
 
-        .star{
-          position: absolute;
-          width : 30px;
-          z-index: 3;
-          top : 16px;
-          right: 16px;
-        }
+//         .star{
+//           position: absolute;
+//           width : 30px;
+//           z-index: 3;
+//           top : 16px;
+//           right: 16px;
+//         }
 
-        .bubbles-wrapper{
-            position: absolute;  
-            height: 100%;
-            width: 100%;
-            left: 0;
-            bottom: 0;
-            z-index: 2;
-            background: #12141a;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity .3s ease-out;
+//         .bubbles-wrapper{
+//             position: absolute;  
+//             height: 100%;
+//             width: 100%;
+//             left: 0;
+//             bottom: 0;
+//             z-index: 2;
+//             background: #12141a;
+//             display: flex;
+//             justify-content: center;
+//             align-items: center;
+//             opacity: 0;
+//             transition: opacity .3s ease-out;
 
-            .bubbles{
-                margin-top: -50px;
-            }
-        }
+//             .bubbles{
+//                 margin-top: -50px;
+//             }
+//         }
 
-        .img-overlay{
-            position: absolute;
-            background: rgb(0,0,0);
-            background: linear-gradient(0deg, rgba(0,0,0,.5) 50%, rgba(0,0,0,0) 100%); 
-            height: 60%;;
-            width: 100%;
-            left: 0;
-            bottom: 0;
-            z-index: 3;
-        }
+//         .img-overlay{
+//             position: absolute;
+//             background: rgb(0,0,0);
+//             background: linear-gradient(0deg, rgba(0,0,0,.5) 50%, rgba(0,0,0,0) 100%); 
+//             height: 60%;;
+//             width: 100%;
+//             left: 0;
+//             bottom: 0;
+//             z-index: 3;
+//         }
 
-        .bar-img{
-            height: 100%;
-            width: 100%;
-            object-fit: cover;
-            transition: 1.8s ease-out;
-        }
+//         .bar-img{
+//             height: 100%;
+//             width: 100%;
+//             object-fit: cover;
+//             transition: 1.8s ease-out;
+//         }
 
-        .bar-details{
-            position: absolute;
-            bottom: 16px;
-            left: 16px;
-            z-index: 3;
+//         .bar-details{
+//             position: absolute;
+//             bottom: 16px;
+//             left: 16px;
+//             z-index: 3;
 
-            p{  
-                margin: 0;
-            }
+//             p{  
+//                 margin: 0;
+//             }
 
-            img{
-                margin: 5px 0 3px 0;
-                width : 100px;
-                border-radius: 0px;
-            }
+//             img{
+//                 margin: 5px 0 3px 0;
+//                 width : 100px;
+//                 border-radius: 0px;
+//             }
 
-            .note-sec{
-                display: flex;
-                align-items: center;
+//             .note-sec{
+//                 display: flex;
+//                 align-items: center;
 
-                p{
-                    margin-left: 9px;
-                    font-size: .7rem;
-                }
-            }
+//                 p{
+//                     margin-left: 9px;
+//                     font-size: .7rem;
+//                 }
+//             }
 
-            .bar-nom{
-                font-family: "PNB";
-                font-size: .8rem;
-            }
+//             .bar-nom{
+//                 font-family: "PNB";
+//                 font-size: .8rem;
+//             }
 
-            .bar-desc{
-                font-size: .8rem;
-            }
+//             .bar-desc{
+//                 font-size: .8rem;
+//             }
         
-        }
-    }
+//         }
+//     }
     
-    .scroll {
-      overflow: auto;
-    }
-  }
+//     .scroll {
+//       overflow: auto;
+//     }
+//   }
 
-  ion-toolbar{
-    position: relative;
-    ion-button{
-        position: absolute;
-        right: 16px;
-        top: 50%;
-        transform: translateY(-50%);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 1.2em;
-        --box-shadow : none;
-    }
-}
-
-
+//   ion-toolbar{
+//     position: relative;
+//     ion-button{
+//         position: absolute;
+//         right: 16px;
+//         top: 50%;
+//         transform: translateY(-50%);
+//         display: flex;
+//         justify-content: center;
+//         align-items: center;
+//         font-size: 1.2em;
+//         --box-shadow : none;
+//     }
+// }
 
 
+// .bubbles {
+//     display: inline-block;
+//     position: relative;
+//     width: 64px;
+//     height: 64px;
+//   }
+//   .bubbles div {
+//     position: absolute;
+//     top: 27px;
+//     width: 11px;
+//     height: 11px;
+//     border-radius: 50%;
+//     background: #f4b22f;
+//     animation-timing-function: cubic-bezier(0, 1, 1, 0);
+//   }
+//   .bubbles div:nth-child(1) {
+//     left: 6px;
+//     animation: bubbles1 0.6s infinite;
+//   }
+//   .bubbles div:nth-child(2) {
+//     left: 6px;
+//     animation: bubbles2 0.6s infinite;
+//   }
+//   .bubbles div:nth-child(3) {
+//     left: 26px;
+//     animation: bubbles2 0.6s infinite;
+//   }
+//   .bubbles div:nth-child(4) {
+//     left: 45px;
+//     animation: bubbles3 0.6s infinite;
+//   }
+//   @keyframes bubbles1 {
+//     0% {
+//       transform: scale(0);
+//     }
+//     100% {
+//       transform: scale(1);
+//     }
+//   }
+//   @keyframes bubbles3 {
+//     0% {
+//       transform: scale(1);
+//     }
+//     100% {
+//       transform: scale(0);
+//     }
+//   }
+//   @keyframes bubbles2 {
+//     0% {
+//       transform: translate(0, 0);
+//     }
+//     100% {
+//       transform: translate(19px, 0);
+//     }
+//   }
 
-//bubbles animation
-.bubbles {
-    display: inline-block;
-    position: relative;
-    width: 64px;
-    height: 64px;
-  }
-  .bubbles div {
-    position: absolute;
-    top: 27px;
-    width: 11px;
-    height: 11px;
-    border-radius: 50%;
-    background: #f4b22f;
-    animation-timing-function: cubic-bezier(0, 1, 1, 0);
-  }
-  .bubbles div:nth-child(1) {
-    left: 6px;
-    animation: bubbles1 0.6s infinite;
-  }
-  .bubbles div:nth-child(2) {
-    left: 6px;
-    animation: bubbles2 0.6s infinite;
-  }
-  .bubbles div:nth-child(3) {
-    left: 26px;
-    animation: bubbles2 0.6s infinite;
-  }
-  .bubbles div:nth-child(4) {
-    left: 45px;
-    animation: bubbles3 0.6s infinite;
-  }
-  @keyframes bubbles1 {
-    0% {
-      transform: scale(0);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-  @keyframes bubbles3 {
-    0% {
-      transform: scale(1);
-    }
-    100% {
-      transform: scale(0);
-    }
-  }
-  @keyframes bubbles2 {
-    0% {
-      transform: translate(0, 0);
-    }
-    100% {
-      transform: translate(19px, 0);
-    }
-  }
+//   .displayBubbles{
+//       opacity: 1 !important;
+//   }
 
-  .displayBubbles{
-      opacity: 1 !important;
-  }
-
-  .zoomOut, .zmdIn{
-    transform: scale(5);
-  }
+//   .zoomOut, .zmdIn{
+//     transform: scale(5);
+//   }
 
 
-  .zmImg{
-    transform: scale(1.05);
-    animation: zoomOutImage 1.8s ease-out forwards;
-  }
+//   .zmImg{
+//     transform: scale(1.05);
+//     animation: zoomOutImage 1.8s ease-out forwards;
+//   }
 
   
-  .goUp{
-    opacity: 0;
-    transform: translateY(20px);
-    animation: goUp 1s ease-out forwards;
-  }
+//   .goUp{
+//     opacity: 0;
+//     transform: translateY(20px);
+//     animation: goUp 1s ease-out forwards;
+//   }
 
-  .goUp2{
-    opacity: 0;
-    transform: translateY(20px);
-    animation: goUp 1s ease-out forwards;
-    animation-delay: .3s;
-  }
+//   .goUp2{
+//     opacity: 0;
+//     transform: translateY(20px);
+//     animation: goUp 1s ease-out forwards;
+//     animation-delay: .3s;
+//   }
 
-  @keyframes zoomOutImage{
-    from{
-      transform: scale(1.05);
-    }
+//   @keyframes zoomOutImage{
+//     from{
+//       transform: scale(1.05);
+//     }
 
-    to{
-      transform: scale(1);
-    }
-  }
+//     to{
+//       transform: scale(1);
+//     }
+//   }
 
-  @keyframes goUp{
-    from{
-      transform: translateY(20px);
-      opacity: 0;
-    }
+//   @keyframes goUp{
+//     from{
+//       transform: translateY(20px);
+//       opacity: 0;
+//     }
 
-    to{
-      transform: translateY(0px);
-      opacity: 1;
-    }
-  }
+//     to{
+//       transform: translateY(0px);
+//       opacity: 1;
+//     }
+//   }
   
 
 
@@ -384,20 +572,20 @@ ion-item{
 
 
 
-.freeDrinkTag{
-  position: absolute;
-  z-index: 3;
-  top: 0;
-  left: 16px;
-  background-color: #bf052b;
-  -webkit-clip-path: polygon(0 0, 0% 100%, 100% 0);
-  clip-path: polygon(0 0, 0% 100%, 100% 0);
-  height: 70px;
-  width: 70px;
+// .freeDrinkTag{
+//   position: absolute;
+//   z-index: 3;
+//   top: 0;
+//   left: 16px;
+//   background-color: #bf052b;
+//   -webkit-clip-path: polygon(0 0, 0% 100%, 100% 0);
+//   clip-path: polygon(0 0, 0% 100%, 100% 0);
+//   height: 70px;
+//   width: 70px;
 
-  img{
-    width: 22px;
-    margin-top: 10px;
-    margin-left: 10px;
-  }
-}
+//   img{
+//     width: 22px;
+//     margin-top: 10px;
+//     margin-left: 10px;
+//   }
+// }

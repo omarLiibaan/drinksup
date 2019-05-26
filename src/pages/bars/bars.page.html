@@ -1,4 +1,4 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar color="primary">
     <ion-title *ngIf="!isSearchbarOpened">bars</ion-title>
     <ion-searchbar *ngIf="isSearchbarOpened" showCancelButton="true" (ionCancel)="isSearchbarOpened=false; hideElem='block'; Filtereditems=items" (ionChange)="searchBar($event)"></ion-searchbar>
@@ -14,7 +14,7 @@
       <div (click)="offresBtn()" [ngStyle]="{'background-color' : offres}">OFFRES</div>
       <div (click)="top10Btn()" [ngStyle]="{'background-color' : top10}">TOP 10</div>
       <div (click)="presdemoiBtn()" [ngStyle]="{'background-color' : presdemoi}">PRES DE MOI</div>
-    </div>
+    </div> -->
     <!-- <div class="container" [ngStyle]="{'display' : hideElem}">
       <h1 class="goUp"><ion-icon name="ribbon"></ion-icon>&nbsp;Top 10</h1>
       <div class="scroll" scrollY="true">
@@ -64,7 +64,7 @@
           </div>
         </div>
       </div> -->
-    <ion-list *ngFor="let bars of Filtereditems; let i = index">
+    <!-- <ion-list *ngFor="let bars of Filtereditems; let i = index">
       <ion-item no-padding color="secondary" lines="none">
           <div class="bubbles-wrapper" [class.displayBubbles]="disBub" [ngStyle]="{'z-index' : zindex}">
             <div class="bubbles"><div></div><div></div><div></div><div></div></div>
@@ -85,4 +85,27 @@
         </ion-item>
     </ion-list>
 
+</ion-content> -->
+
+<div class="tab_header" [ngStyle]="{'margin-top' : hideHeader}">Drinks up <span (click)="openSearch()"><ion-icon name="search"></ion-icon></span></div>
+<div class="freedrinkstab">
+  <div (click)="tousLesBars()" [ngStyle]="{'color' : activeColor1}">Tous <span class="rippleEffect"></span></div>
+  <div (click)="topten()" [ngStyle]="{'color' : activeColor2}">Top 10</div>
+  <div (click)="presdemoi()" [ngStyle]="{'color' : activeColor3}">Près de moi</div>
+  <span class="outline_bar" [ngStyle]="{'transform' : tabPosition, 'left' : leftPosition}"></span>
+</div>
+<!-- (ionScroll)="scrollEvent($event)" -->
+<ion-content color="secondary" [scrollEvents]="true" (ionScroll)="scrollEvent($event)">
+  <ion-list *ngFor="let bars of Filtereditems; let i = index">
+      <ion-item no-padding color="secondary" lines="none">
+        <img *ngIf="!ifFave(bars.ENT_ID)" src="../../assets/img/star-icon-empty.svg" class="star" (click)="addRemoveFave(i, bars.ENT_ID)" id="starIconId3_{{i}}">
+        <img *ngIf="ifFave(bars.ENT_ID)" src="../../assets/img/star-icon-filled.svg" class="star" (click)="addRemoveFave(i, bars.ENT_ID)" id="starIconId3_{{i}}">
+        <div (click)="moveToBar(bars.ENT_ID)" class="img-overlay"></div>
+        <img (click)="moveToBar(bars.ENT_ID)" class="bar-img" [src]="uplPhotoURI + bars.ENT_NOM + '_1.jpg?ran=' + random"  [id]="'offset_'+i">
+        <div (click)="moveToBar(bars.ENT_ID)" class="bar-details">
+        <p class="off_desc"><ion-icon src="../../assets/img/bars_icon.svg"></ion-icon>&nbsp;{{bars.ENT_NOM}}</p>
+        <p class="ent_nom">{{bars.ENT_ADRESSE}}</p>
+        </div>  
+      </ion-item>
+  </ion-list>
 </ion-content>

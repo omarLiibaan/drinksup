@@ -29,10 +29,15 @@ export class BarsPage{
   emptyVal : string;
   zindex : string = "5";
 
-  tous : string = "#bf052b";
-  offres : string = "#0a0b0f";
-  top10 : string = "#0a0b0f";
-  presdemoi : string = "#0a0b0f";
+  tabPosition : string = "translateX(0)";
+  leftPosition : string = "0%";
+  activeColor1 : string = "#fff";
+  activeColor2 : string = "rgb(82, 82, 82)";
+  activeColor3 : string = "rgb(82, 82, 82)";
+  hideHeader : string = "0";
+  tousClicked : boolean = false;
+  toptenClicked : boolean = false;
+  presdemoiClicked : boolean = false;
   
 
   constructor(private storage : Storage, private http : HttpClient, private nativePageTransitions: NativePageTransitions, private navCtrl : NavController) { 
@@ -65,18 +70,6 @@ export class BarsPage{
   //   }
   // }
 
-  
-
-  moveToBar(id : string){
-    let options: NativeTransitionOptions = {
-      duration: 250,
-     }
-    this.nativePageTransitions.fade(options); 
-    this.navCtrl.navigateRoot('/tabs/bar-user/'+id);
-    setTimeout(() => {
-      this.hideElem = "block";
-    }, 500);
-  }
 
   ionViewWillEnter(){
     this.loadBar();
@@ -241,43 +234,137 @@ export class BarsPage{
   }
 
 
-  tousBtn(){
-    this.Filtereditems = this.items;
-    //
-    this.tous = "#bf052b";
-    this.offres = "#0a0b0f";
-    this.top10  = "#0a0b0f";
-    this.presdemoi = "#0a0b0f";
+  // tousBtn(){
+  //   this.Filtereditems = this.items;
+    
+  //   this.tous = "#bf052b";
+  //   this.offres = "#0a0b0f";
+  //   this.top10  = "#0a0b0f";
+  //   this.presdemoi = "#0a0b0f";
+  // }
+
+  // offresBtn(){
+  //   var ids = this.offerIds;
+  //   this.Filtereditems = this.items.filter(function(data){
+  //     return ids.indexOf(data.ENT_ID) > -1;
+  //   });
+    
+  //   this.tous = "#0a0b0f";
+  //   this.offres = "#bf052b";
+  //   this.top10  = "#0a0b0f";
+  //   this.presdemoi = "#0a0b0f";
+  // }
+
+  // top10Btn(){
+  //   this.Filtereditems = this.items;
+    
+  //   this.tous = "#0a0b0f";
+  //   this.offres = "#0a0b0f";
+  //   this.top10  = "#bf052b";
+  //   this.presdemoi = "#0a0b0f";
+  // }
+
+  // presdemoiBtn(){
+  //   this.Filtereditems = this.items;
+    
+  //   this.tous = "#0a0b0f";
+  //   this.offres = "#0a0b0f";
+  //   this.top10  = "#0a0b0f";
+  //   this.presdemoi = "#bf052b";
+  // }
+
+  scrollEvent(event){
+    var position = 0;
+
+    if(position <= event.detail.deltaY){
+      this.hideHeader = "-50px";
+      position = event.detail.deltaY;
+      if(event.detail.scrollTop==0){
+        this.content.scrollToTop(0);
+      }  
+    }else{
+      this.hideHeader = "0px";
+      position = event.detail.deltaY;
+    }
   }
 
-  offresBtn(){
-    var ids = this.offerIds;
-    this.Filtereditems = this.items.filter(function(data){
-      return ids.indexOf(data.ENT_ID) > -1;
-    });
-    //
-    this.tous = "#0a0b0f";
-    this.offres = "#bf052b";
-    this.top10  = "#0a0b0f";
-    this.presdemoi = "#0a0b0f";
+
+  openSearch(){
+    let options: NativeTransitionOptions = {
+      direction: 'left',
+      duration: 150,
+      slowdownfactor: 3,
+      iosdelay: 100,
+      androiddelay: 150
+     }
+    this.nativePageTransitions.slide(options); 
+    this.navCtrl.navigateForward("/tabs/searchAbar");
   }
 
-  top10Btn(){
-    this.Filtereditems = this.items;
-    //
-    this.tous = "#0a0b0f";
-    this.offres = "#0a0b0f";
-    this.top10  = "#bf052b";
-    this.presdemoi = "#0a0b0f";
+  moveToBar(id : string){
+    let options: NativeTransitionOptions = {
+      direction: 'left',
+      duration: 150,
+      slowdownfactor: 3,
+      iosdelay: 100,
+      androiddelay: 150
+     }
+    this.nativePageTransitions.slide(options); 
+    this.navCtrl.navigateForward('/tabs/bar-user/'+id);
+    setTimeout(() => {
+      this.hideElem = "block";
+    }, 500);
   }
 
-  presdemoiBtn(){
+  tousLesBars(){
     this.Filtereditems = this.items;
-    //
-    this.tous = "#0a0b0f";
-    this.offres = "#0a0b0f";
-    this.top10  = "#0a0b0f";
-    this.presdemoi = "#bf052b";
+
+    this.tabPosition = "translateX(0%)";
+    this.leftPosition = "0%";
+    this.activeColor1 = "#fff";
+    this.activeColor2 = "rgb(82, 82, 82)";
+    this.activeColor3 = "rgb(82, 82, 82)";
+
+    this.tousClicked = true;
+    this.toptenClicked = false;
+    this.presdemoiClicked = false;
   }
+
+  topten(){
+    this.tabPosition = "translateX(-50%)";
+    this.leftPosition = "50%";
+    this.activeColor2 = "#fff";
+    this.activeColor1 = "rgb(82, 82, 82)";
+    this.activeColor3 = "rgb(82, 82, 82)";
+
+    // this.Filtereditems = this.items.filter(function(data : any){
+    //   var today = new Date().getTime();
+    //   var dateStart = new Date(data.OFF_DATEDEBUT).getTime();
+    //   return today>dateStart; 
+    // });
+
+    this.tousClicked = false;
+    this.toptenClicked = true;
+    this.presdemoiClicked = false;
+  }
+
+  presdemoi(){
+    this.tabPosition = "translateX(-100%)";
+    this.leftPosition = "100%";
+    this.activeColor3 = "#fff";
+    this.activeColor2 = "rgb(82, 82, 82)";
+    this.activeColor1 = "rgb(82, 82, 82)";
+
+    // this.Filtereditems = this.items.filter(function(data : any){
+    //   var today = new Date().getTime();
+    //   var dateStart = new Date(data.OFF_DATEDEBUT).getTime();
+    //   return today<dateStart; 
+    // });   
+
+    this.tousClicked = false;
+    this.toptenClicked = false;
+    this.presdemoiClicked = true;
+  }
+
 
 }

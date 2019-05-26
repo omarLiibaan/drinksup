@@ -1,0 +1,22 @@
+<ion-content color="secondary">
+  <div class="header-solid">
+    <div class="hs-button" (click)="retour()"><img src="../../assets/img/back-arrow-icon.svg"> retour</div>
+  </div>
+  <form [formGroup]="registerEmailForFB" (ngSubmit)="proceedReg()" class="fgRP">
+    <img src="../../assets/img/facebook-img.svg" class="img-icon">
+    <h1>Connexion avec<br>Facebook</h1>
+    <h2>Vous avez essayé de vous connectez avec votre compte facebook. Malheureusement, votre compte ne contient pas d'adresse e-mail.
+      Veuillez saisir votre adresse e-mail.
+    </h2>
+    <ion-item color="transparent" lines="none" no-padding>
+        <ion-label position="floating">Email :</ion-label>
+        <ion-input type="email"  formControlName="REG_EMAIL_FOR_FB" (focusout)="checkEmailIfExist()"></ion-input>
+    </ion-item>  
+    
+    <button type="button" (click)="registerMeFB()" class="customBtn" id="customBtnId">
+        <span class="rippleEffect" id="rippleEffectId2"></span>
+        <span class="customBtnText" id="cbTextId">S'inscrire</span>
+    </button>
+
+  </form>
+</ion-content>

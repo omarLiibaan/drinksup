@@ -1,42 +1,31 @@
-
-
 <ion-content color="secondary">
-  <div style="padding: 20px 20px 0 20px; text-align: center;">
-    <h2>A vous de jouer !</h2>
-    <p>Inscrivez-vous pour profiter de boissons offertes</p>
+  <div class="header-solid">
+      <div class="hs-button" (click)="retour()"><img src="../../assets/img/back-arrow-icon.svg"> retour</div>
   </div>
-  <form [formGroup]="enregistrerForm" (ngSubmit)="addProprio()" style="padding:20px;">
-    <!-- <div class="inputWrapper">
-      <ion-label>Nom :</ion-label>
-      <ion-input type="text" formControlName="PRO_NOM" class="inputFirstLetter"></ion-input>
-    </div> -->
 
-    <div class="inputWrapper">
-      <ion-label>Fullname :</ion-label>
-      <ion-input type="text" formControlName="PRO_PRENOM" class="inputFirstLetter" (focusout)="checkOnFocusOut()"></ion-input>
-    </div>
+  <form [formGroup]="enregistrerForm" (ngSubmit)="addProprio()" class="fgRP">
 
-    <!-- <div class="inputWrapper">
-      <ion-label>Email :</ion-label>
-      <ion-input type="email" formControlName="PRO_EMAIL"></ion-input>
-      <span *ngIf="!enregistrerForm .controls.PRO_EMAIL.valid && (enregistrerForm .controls.PRO_EMAIL.dirty)">format email invalid !</span>
-    </div> -->
+      <img src="../../assets/img/logo-text.svg" class="img-icon">
+      <h1>A vous de jouer !</h1>
+      <h2>Inscrivez-vous pour profiter de boissons offertes</h2>
 
-    <div class="inputWrapper">
-      <ion-label>Password :</ion-label>
-      <ion-input type="password" formControlName="PRO_PASSWORD" (focusout)="checkOnFocusOut()"></ion-input>
-    </div>
+      <ion-item color="transparent" lines="none" no-padding>
+        <ion-label position="floating">Nom complet :</ion-label>
+        <ion-input type="text" formControlName="PRO_PRENOM" class="inputFirstLetter" (focusout)="checkEmailIfExist(emailClean)"></ion-input>
+      </ion-item>
 
-    <!-- <div class="inputWrapper">
-      <ion-label>Confirmer mot de passe :</ion-label>
-      <ion-input type="password" formControlName="CONFIRM_PRO_PASSWORD"></ion-input>      
-    </div> -->
-    
-    <ion-button type="submit" color="dark" shape="round" expand="full" [disabled]="!enregistrerForm.valid">Register</ion-button>
-    
-    <div class="dejaInscrit">
-      <p> Déjà inscrit ?</p> <p (click)="formLogin()">se connecter</p>
-    </div>
-  </form>
+      <ion-item color="transparent" lines="none" no-padding>
+        <ion-label position="floating">Mot de passe :</ion-label>
+        <ion-input type="password" formControlName="PRO_PASSWORD" (focusout)="checkEmailIfExist(emailClean)"></ion-input>
+      </ion-item>
+
+      <!-- <div class="customBtn_wrapper">
+          <div class="loading-spinner" [ngStyle]="{'display' : sls}"></div> -->
+      <button type="button" (click)="registerME()" class="customBtn" id="customBtnId"><span class="btnText" id="cbTextId">S'inscrire</span></button>
+      <!-- </div> -->
+
+    </form>
+
+  
 
 </ion-content>

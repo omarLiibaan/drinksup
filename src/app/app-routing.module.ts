@@ -11,7 +11,10 @@ const routes: Routes = [
     { path: 'tabsproprio', loadChildren: '../pages/tabsproprio/tabsproprio.module#TabsproprioPageModule' },
     { path: 'faq', loadChildren: '../pages/faq/faq.module#FaqPageModule' },
     { path: 'abonnement', loadChildren: '../pages/abonnement/abonnement.module#AbonnementPageModule' },
-
+    { path: 'registerthirdparty/:name/:email/:id', loadChildren: '../pages/registerthirdparty/registerthirdparty.module#RegisterthirdpartyPageModule' },
+    { path: 'forgot-password', loadChildren: '../pages/forgot-password/forgot-password.module#ForgotPasswordPageModule' },
+    { path: 'forgot-password/:email', loadChildren: '../pages/forgot-password/forgot-password.module#ForgotPasswordPageModule' },
+    // { path: 'search-a-bar', loadChildren: '../pages/search-a-bar/search-a-bar.module#SearchABarPageModule' },
 
 
 

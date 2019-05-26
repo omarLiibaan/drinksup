@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, Inject, LOCALE_ID } from '@angular/core';
 import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions/ngx';
 import { ActivatedRoute } from '@angular/router';
-import { NavController, ModalController } from "@ionic/angular";
+import { NavController, ModalController, ToastController } from "@ionic/angular";
 import { Storage } from '@ionic/storage';
 import { formatDate} from '@angular/common';
 import { ModalQrcodePage } from '../modal-qrcode/modal-qrcode.page';
@@ -20,9 +20,12 @@ import { timer } from 'rxjs';
 export class BarUserPage implements OnInit {
   baseURI = 'https://macfi.ch/serveur/aksi.php';
   uplPhotoURI = 'https://www.macfi.ch/serveur/barphotos/';
+  drinksPhotoURI = 'https://www.macfi.ch/serveur/drinksphotos/';
+
   myBar : any = {};
   mySchedule : Array<any> = [];
   myOffers : Array<any> = [];
+  oneOffer : any = {};
   scannedOfferId : any = [];
   scannedUserId : any = [];
   scannedOffers : Array<any> = [];
@@ -42,8 +45,31 @@ export class BarUserPage implements OnInit {
   gradeTot;
   ifDataScanned : boolean = false;
   showBtns : boolean = false;
-  constructor(private modalCtrl : ModalController, @Inject(LOCALE_ID)private locale: string, private storage : Storage,private http : HttpClient, private aRoute : ActivatedRoute, private nativePageTransitions: NativePageTransitions, private navCtrl : NavController) { 
- 
+
+  touchstartX = 0;
+  touchstartY = 0;
+  touchendX = 0;
+  touchendY = 0;
+
+  interval;
+
+  dayOfTheWeek : string;
+  timeNow : string;
+  FilteredSched : Array<any> = [];
+  five : string = "05:00:00";
+  noon : string = "12:00:00";
+  midnight : string = "00:00:00";
+  nightShift : boolean = false;
+  dayShift : boolean = false;
+  nightShiftIn : boolean = false;
+  dayShiftIn : boolean = false;
+
+  paramOfferId : string;
+  bar_user_countdown : string;
+  offerIsActive : boolean = false;
+
+  constructor(private modalCtrl : ModalController, private toastCtrl: ToastController, private storage : Storage,private http : HttpClient, private aRoute : ActivatedRoute, private nativePageTransitions: NativePageTransitions, private navCtrl : NavController) { 
+    
   }
 
   ngOnInit() {}
@@ -60,10 +86,49 @@ export class BarUserPage implements OnInit {
     this.loadSchedule(this.aRoute.snapshot.paramMap.get('id'));
     this.loadOffers(this.aRoute.snapshot.paramMap.get('id'));
     this.getRatings(this.aRoute.snapshot.paramMap.get('id'));
+    this.loadOneOfferById(this.aRoute.snapshot.paramMap.get('idOffer'));
+    this.paramOfferId = this.aRoute.snapshot.paramMap.get('idOffer');
+
+    //SlideShow Styles
+    this.initStyle();
+    //
+    var jours = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
+    var date = new Date();
+    this.dayOfTheWeek = jours[date.getDay()-1];
+    this.timeNow = ('0' + (date.getHours())).slice(-2)+":"+('0' + date.getMinutes()).slice(-2);
+  
+
+    if(this.five < this.timeNow && this.noon > this.timeNow){
+      this.dayShift = true;
+      console.log("Sched => DayShift")   
+    }
+
+    if(this.timeNow > this.noon && this.timeNow < this.midnight){
+      this.nightShift = true;
+      console.log("Sched => NightShift sunset")   
+    }
+
+    if(this.timeNow > this.midnight && this.timeNow < this.five){
+      this.nightShift = true;   
+      console.log("Sched => NightShift dawn")   
+    }
+    
+  }
+
+  ionViewDidLeave(){
+    clearInterval(this.interval);
+    this.initStyle();
+    document.getElementById("first_pic").classList.remove("firstimgscale");
+    document.getElementById("second_pic").classList.remove("secondimgscale");
+    document.getElementById("third_pic").classList.remove("thirdimgscale");
+    document.getElementById("load_overL").style.opacity = "1";
+    document.getElementById("load_overL").style.display = "block";
   }
 
   ionViewDidEnter(){
+    this.initStyle();
     timer(2000).subscribe(() => (this.showBtns = true));
+
   }
 
   ifOfferScanned(offerId){
@@ -83,7 +148,7 @@ export class BarUserPage implements OnInit {
 
     this.http.post(url, JSON.stringify(options), headers).subscribe((data : any) =>
     {
-        var random = Math.floor(Math.random() * 100);
+        var random = Math.floor(Math.random() * 5000);
 
         this.myBar = data;
         this.barName = data.ENT_NOM;
@@ -106,6 +171,34 @@ export class BarUserPage implements OnInit {
       this.http.post(url, JSON.stringify(options), headers).subscribe((data : any) =>
       {
         this.mySchedule = data;
+        //
+        var days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
+        var date = new Date();
+        var today = days[date.getDay()-1];
+        var time_Now = ('0' + (date.getHours())).slice(-2)+":"+('0' + date.getMinutes()).slice(-2);
+
+        console.log("dasdsad", time_Now);
+
+        this.FilteredSched = this.mySchedule.filter(function(data){
+          return data.HOR_JOURS == today;
+        });
+
+
+        if(this.FilteredSched[0].HOR_HEUREDEBUT_JOUR== "00:00:00" && this.FilteredSched[0].HOR_HEUREFIN_JOUR== "00:00:00"){
+          this.dayShiftIn = false;
+        }else if(this.FilteredSched[0].HOR_HEUREDEBUT_JOUR < time_Now && this.FilteredSched[0].HOR_HEUREFIN_JOUR > time_Now){
+          this.dayShiftIn = true;
+        }else{
+          this.dayShiftIn = false;
+        }
+
+        if(this.FilteredSched[0].HOR_HEUREDEBUT_SOIR== "00:00:00" && this.FilteredSched[0].HOR_HEUREFIN_SOIR== "00:00:00"){
+          this.nightShiftIn = false;
+        }else if(this.FilteredSched[0].HOR_HEUREDEBUT_SOIR < time_Now && this.FilteredSched[0].HOR_HEUREFIN_SOIR > time_Now){
+          this.nightShiftIn = true;
+        }else{
+          this.nightShiftIn = false;
+        }
       },
       (error : any) =>
       {
@@ -121,7 +214,60 @@ export class BarUserPage implements OnInit {
       this.http.post(url, JSON.stringify(options), headers).subscribe((data : any) =>
       {
         this.myOffers = data;
-        console.log(this.myOffers);
+
+      },
+      (error : any) =>
+      {
+        console.log(error);
+      });
+  }
+
+  loadOneOfferById(idOffer : string){
+    let headers 	: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
+          options 	: any		= { "key" : "getOneOfferById", "id_offer" : idOffer},
+          url       : any      	= this.baseURI;
+  
+      this.http.post(url, JSON.stringify(options), headers).subscribe((data : any) =>
+      {
+        this.oneOffer = data;
+        var id = null;
+
+        setInterval(()=>{
+          // Get todays date and time
+          let startDate = new Date(this.oneOffer.OFF_DATEDEBUT).getTime();
+          let endDate = new Date(this.oneOffer.OFF_DATEFIN).getTime();
+          let now = new Date().getTime();
+          id = this.oneOffer.OFF_ID;
+
+          // Output the result in an element with id="demo"
+          if(now>startDate){
+            // Find the distance between now and the count down date
+            let distance = endDate - now;
+            // Time calculations for days, hours, minutes and seconds
+            let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            if(distance<0){
+              this.bar_user_countdown = "Offre terminée";
+              this.offerIsActive = false;
+            }else{
+              this.bar_user_countdown = "expire dans "+ days + "j " + hours + "h "+ minutes + "m " + seconds + "s ";
+              this.offerIsActive = true;
+            }
+          }else{
+            // Find the distance between now and the count down date
+            let distance = startDate - now;
+            // Time calculations for days, hours, minutes and seconds
+            let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+              this.bar_user_countdown = "active dans "+ days + "j " + hours + "h "+ minutes + "m " + seconds + "s ";
+              this.offerIsActive = false;
+          }
+        }, 1000);
+
       },
       (error : any) =>
       {
@@ -150,7 +296,7 @@ export class BarUserPage implements OnInit {
     
       this.http.post(url, JSON.stringify(options), headers).subscribe((data: any) => {
             this.scannedOffers = data;
-            console.log(this.scannedOffers);
+            // console.log("Scanned code",this.scannedOffers);
           },  
           (error: any) => {
               console.log(error);
@@ -187,6 +333,177 @@ export class BarUserPage implements OnInit {
           (error: any) => {
               console.log(error);
           });
+    }
+
+    scrollEvent(event){
+      var scroll = event.detail.scrollTop*1.4;
+      // console.log(event);
+      if(scroll<330){
+        // this.dynamicHeight = (350 - scroll+"px");
+      }
+    }
+
+    // SLIDESHOW ANIMATION
+
+    touchstart_1(event){
+      this.touchstartX = event.touches[0].screenX;
+      this.touchstartY = event.touches[0].screenY;
+    }
+
+    touchend_1(event){
+      this.touchendX = event.changedTouches[0].screenX;
+      this.touchendY = event.changedTouches[0].screenY;
+      this.handleGesture_1();
+    }
+
+    handleGesture_1() {
+      if (this.touchendX < this.touchstartX) {
+        if(document.getElementById("img_1").style.zIndex === "2"){
+          //Z-index
+          document.getElementById("img_1").style.zIndex = "1";
+          document.getElementById("img_2").style.zIndex = "2";
+          //Opacity
+          document.getElementById("img_1").style.opacity = "0";
+          document.getElementById("img_2").style.opacity = "1";
+          //
+          setTimeout(() => {document.getElementById("first_pic").classList.remove("firstimgscale");}, 800);
+          document.getElementById("second_pic").classList.add("secondimgscale");
+        }
+        clearInterval(this.interval);
+        this.interval = setInterval(() => {this.slideShow()}, 5000);
+      }
+      if (this.touchendX > this.touchstartX) {
+        if(document.getElementById("img_1").style.zIndex === "2"){
+          document.getElementById("img_1").style.zIndex = "1";
+          document.getElementById("img_3").style.zIndex = "2";
+          //Opacity
+          document.getElementById("img_1").style.opacity = "0";
+          document.getElementById("img_3").style.opacity = "1";
+          //
+          setTimeout(() => {document.getElementById("first_pic").classList.remove("firstimgscale");}, 800);
+          document.getElementById("third_pic").classList.add("thirdimgscale");
+        }
+        clearInterval(this.interval);
+        this.interval = setInterval(() => {this.slideShow()}, 5000);
+      }
+    }
+
+    touchstart_2(event){
+      this.touchstartX = event.touches[0].screenX;
+      this.touchstartY = event.touches[0].screenY;
+    }
+
+    touchend_2(event){
+      this.touchendX = event.changedTouches[0].screenX;
+      this.touchendY = event.changedTouches[0].screenY;
+      this.handleGesture_2();
+    }
+
+    handleGesture_2() {
+      if (this.touchendX < this.touchstartX) {
+        if(document.getElementById("img_2").style.zIndex === "2"){
+          document.getElementById("img_2").style.zIndex = "1";
+          document.getElementById("img_3").style.zIndex = "2";
+          //Opacity
+          document.getElementById("img_2").style.opacity = "0";
+          document.getElementById("img_3").style.opacity = "1";
+          //
+          setTimeout(() => {document.getElementById("second_pic").classList.remove("secondimgscale");}, 800);
+          document.getElementById("third_pic").classList.add("thirdimgscale");
+        }
+        clearInterval(this.interval);
+        this.interval = setInterval(() => {this.slideShow()}, 5000);
+      }
+      if (this.touchendX > this.touchstartX) {
+        if(document.getElementById("img_2").style.zIndex === "2"){
+          document.getElementById("img_2").style.zIndex = "1";
+          document.getElementById("img_1").style.zIndex = "2";
+          //Opacity
+          document.getElementById("img_2").style.opacity = "0";
+          document.getElementById("img_1").style.opacity = "1";
+          //
+          setTimeout(() => {document.getElementById("second_pic").classList.remove("secondimgscale");}, 800);
+          document.getElementById("first_pic").classList.add("firstimgscale");
+        }
+        clearInterval(this.interval);
+        this.interval = setInterval(() => {this.slideShow()}, 5000);
+      }
+    }
+
+    touchstart_3(event){
+      this.touchstartX = event.touches[0].screenX;
+      this.touchstartY = event.touches[0].screenY;
+    }
+
+    touchend_3(event){
+      this.touchendX = event.changedTouches[0].screenX;
+      this.touchendY = event.changedTouches[0].screenY;
+      this.handleGesture_3();
+    }
+
+    handleGesture_3() {
+      if (this.touchendX < this.touchstartX) {
+        if(document.getElementById("img_3").style.zIndex === "2"){
+          document.getElementById("img_3").style.zIndex = "1";
+          document.getElementById("img_1").style.zIndex = "2";
+          //Opacity
+          document.getElementById("img_3").style.opacity = "0";
+          document.getElementById("img_1").style.opacity = "1";
+          //
+          setTimeout(() => {document.getElementById("third_pic").classList.remove("thirdimgscale");}, 800);
+          document.getElementById("first_pic").classList.add("firstimgscale");
+        }
+        clearInterval(this.interval);
+        this.interval = setInterval(() => {this.slideShow()}, 5000);
+      }
+      if (this.touchendX > this.touchstartX) {
+        if(document.getElementById("img_3").style.zIndex === "2"){
+          document.getElementById("img_3").style.zIndex = "1";
+          document.getElementById("img_2").style.zIndex = "2";
+          //Opacity
+          document.getElementById("img_3").style.opacity = "0";
+          document.getElementById("img_2").style.opacity = "1";
+          //
+          setTimeout(() => {document.getElementById("third_pic").classList.remove("thirdimgscale");}, 800);
+          document.getElementById("second_pic").classList.add("secondimgscale");
+        }
+        clearInterval(this.interval);
+        this.interval = setInterval(() => {this.slideShow()}, 5000);
+      }
+    }
+
+    slideShow(){
+        if(document.getElementById("img_1").style.zIndex === "2"){
+          document.getElementById("img_1").style.zIndex = "1";
+          document.getElementById("img_2").style.zIndex = "2";
+          //Opacity
+          document.getElementById("img_1").style.opacity = "0";
+          document.getElementById("img_2").style.opacity = "1";
+          //
+          setTimeout(() => {document.getElementById("first_pic").classList.remove("firstimgscale")}, 800);
+          document.getElementById("second_pic").classList.add("secondimgscale");
+        }else if(document.getElementById("img_2").style.zIndex === "2"){
+          document.getElementById("img_2").style.zIndex = "1";
+          document.getElementById("img_1").style.zIndex = "1";
+          document.getElementById("img_3").style.zIndex = "2";
+          //Opacity
+          document.getElementById("img_2").style.opacity = "0";
+          document.getElementById("img_3").style.opacity = "1";
+          //
+          setTimeout(() => {document.getElementById("second_pic").classList.remove("secondimgscale");}, 800);
+          document.getElementById("third_pic").classList.add("thirdimgscale");
+        }else if(document.getElementById("img_3").style.zIndex === "2"){
+          document.getElementById("img_3").style.zIndex = "1";
+          document.getElementById("img_1").style.zIndex = "2";
+          //Opacity
+          document.getElementById("img_3").style.opacity = "0";
+          document.getElementById("img_1").style.opacity = "1";
+          //
+          setTimeout(() => {document.getElementById("third_pic").classList.remove("thirdimgscale");}, 800);
+          document.getElementById("first_pic").classList.add("firstimgscale");
+        }else{
+          console.log(document.getElementById("img_1").style.zIndex);
+        }
     }
  
     //modal
@@ -228,14 +545,66 @@ export class BarUserPage implements OnInit {
       alert("Abonnez-vous dès maintenant pour profiter l'offre !")
     }
 
-  goBack(){
-    let options: NativeTransitionOptions = {
-      duration: 250,
-     }
-    this.nativePageTransitions.fade(options); 
-    this.navCtrl.back();
+    imgLoaded(){
+      this.initStyle();
+      document.getElementById("load_overL").style.opacity = "0";
+      document.getElementById("first_pic").classList.add("firstimgscale");
+      setTimeout(() => {
+        document.getElementById("load_overL").style.display = "none";  
+      }, 800);
+
+      this.interval = setInterval(() => { this.slideShow() }, 5000);    
       
+    }
+
+
+  retour(){
+    clearInterval(this.interval);
+    this.initStyle();
+    document.getElementById("first_pic").classList.remove("firstimgscale");
+    document.getElementById("second_pic").classList.remove("secondimgscale");
+    document.getElementById("third_pic").classList.remove("thirdimgscale");
+    let options: NativeTransitionOptions = {
+      direction: 'right',
+      duration: 150,
+      slowdownfactor: 3,
+      iosdelay: 100,
+      androiddelay: 150
+     }
+    this.nativePageTransitions.slide(options); 
+    this.navCtrl.back();
+  }
+
+  notActiveBtn(){
+    this.sendNotification("Cette offre n'est pas encore active");
+  }
+
+  async sendNotification(msg: string) {
+    const toast = await this.toastCtrl.create({
+        message: msg,
+        duration: 3000,
+        position: 'top'
+    });
+    toast.present();
+}
+
+  initStyle(){
+    document.getElementById("img_1").style.zIndex = "2";
+    document.getElementById("img_2").style.zIndex = "1";
+    document.getElementById("img_3").style.zIndex = "1";
+    document.getElementById("img_1").style.opacity = "1";
+    document.getElementById("img_2").style.opacity = "0";
+    document.getElementById("img_3").style.opacity = "0";
   }
  
 
 }
+// if (this.touchendY < this.touchstartY) {
+//     alert(swiped + 'down!');
+// }
+// if (this.touchendY > this.touchstartY) {
+//     alert(swiped + 'up!');
+// }
+// if (this.touchendY == this.touchstartY) {
+//     alert('tap!');
+// }

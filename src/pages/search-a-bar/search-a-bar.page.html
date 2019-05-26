@@ -1,0 +1,29 @@
+<div class="search_bar">
+  <span (click)="backToTheRoots()">
+    <ion-icon name="arrow-round-back"></ion-icon>
+  </span>
+  <!-- <ion-input placeholder="Rechercher..." (keyup)="searching($event)"></ion-input> -->
+  <ion-searchbar placeholder="Rechercher" (ionChange)="searchBar($event)"></ion-searchbar>
+</div>
+
+<ion-content color="secondary">
+  <div class="bar_name_wrapper">
+    <div *ngFor="let bars of Filtereditems" class="bar_name" [ngStyle]="{'display' : showItems}">
+      <div (click)="moveToBar(bars.ENT_ID)" class="bar_name_content">
+        <p *ngIf="!filteredItemsZero"><ion-icon name="arrow-forward"></ion-icon>&nbsp;{{bars.ENT_NOM}}</p>
+        <p *ngIf="filteredItemsZero">Oops</p>
+      </div>
+    </div>
+
+    <div *ngIf="filteredItemsZero" class="bar_name" [ngStyle]="{'display' : showItems}">
+      <div class="bar_name_content">
+        <p>Ce bar n'existe pas</p>
+      </div>
+    </div>
+  </div>
+  <div class="backdrop" [ngStyle]="{'display' : showItems}"></div>
+  <div class="search_icon_bar">
+    <img src="../../assets/img/search_bar.svg">
+    <h1>Saissisez le nom du bar</h1>
+  </div>
+</ion-content>

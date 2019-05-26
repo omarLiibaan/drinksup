@@ -8,8 +8,8 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { IonicStorageModule} from '@ionic/storage';
 import { HttpClientModule } from '@angular/common/http';
-import { Facebook} from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { Facebook } from '@ionic-native/facebook/ngx'
 import { UsersPageModule } from '../pages/users/users.module';
 import { ModalPageModule } from '../pages/modal/modal.module';
 import { Camera } from '@ionic-native/camera/ngx';
@@ -35,8 +35,8 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
     providers: [
         StatusBar,
         SplashScreen,
-        Facebook,
         GooglePlus,
+        Facebook,
         Camera,
         Deeplinks,
         Calendar,

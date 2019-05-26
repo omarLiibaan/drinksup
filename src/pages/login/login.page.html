@@ -1,46 +1,63 @@
-<ion-content color="secondary">
-  <div style="text-align: center;">
-    <img src="../../assets/img/logo-text.svg" alt="">
+<ion-content color="transparent">
+  <div class="ion-content-wrapper">
+    <div class="overlay"></div>
+    <div class="login-content">
+      <img src="../../assets/img/logo-text.png" class="login-logo" id="loginLogoId">
+
+      <form [formGroup]="loginForm" (ngSubmit)="loginUsers()" [ngStyle]="{'display' : formLog}">
+          <ion-item color="transparent" lines="none" no-padding [ngStyle]="{'animation' : slideUP, 'transform' : su_t, 'opacity' : su_opac}">
+              <ion-label position="floating">Email :</ion-label>
+              <ion-input class="inputEmailLogin" type="email" formControlName="PRO_EMAIL"></ion-input>
+          </ion-item>
+          
+          <ion-item color="transparent" lines="none" id="ad2" class="ad2" no-padding [ngStyle]="{'animation' : slideUP, 'transform' : su_t, 'opacity' : su_opac}">
+              <ion-label position="floating">Mot de passe :</ion-label>
+              <ion-input type="password"  formControlName="PRO_PASSWORD" ></ion-input>
+          </ion-item>
+          <p class="mdpoublie ad3" id="ad3" (click)="forgotPass()" [ngStyle]="{'animation' : slideUP, 'transform' : su_t, 'opacity' : su_opac}">Mot de passe oublié</p>
+        
+        <div class="seConnBtn_wrapper ad4" [ngStyle]="{'animation' : slideUP, 'transform' : su_t, 'opacity' : su_opac}" id="ad4">
+            <button type="button" id="seConnBtnId" class="seConnBtn" (click)="seConnecter()">
+              <span id="rippleEffectId" class="rippleEffect"></span>
+              <span id="seConnTextId" class="seConnText">se&nbsp;connecter</span>
+            </button>
+        </div>
+        
+        
+        <div class="loginAlternative">
+            <p class="la-text ad5" id="ad5" [ngStyle]="{'animation' : slideUP, 'transform' : su_t, 'opacity' : su_opac}">connectez-vous avec</p>
+            <button type="button" id="ad6_id" (click)="loginWithFB()" class="fbConn ad6" [ngStyle]="{'animation' : slideUP, 'transform' : su_t, 'opacity' : su_opac}"><img src="../../assets/img/facebook.svg"><span class="fbRipple"></span>Facebook</button>
+            <button type="button" id="ad7" (click)="loginWithGoogle()" class="gConn ad7" [ngStyle]="{'animation' : slideUP, 'transform' : su_t, 'opacity' : su_opac}"><img src="../../assets/img/googleplus.svg"><span class="gRipple"></span>Google+</button>
+        </div>    
+        
+
+        <p class="register-text ad8" id="ad8" (click)="signup()" [ngStyle]="{'animation' : slideUP, 'transform' : su_t, 'opacity' : su_opac}">Pas de compte ? <span>inscrivez-vous</span></p>
+      </form>
+
+      <form [formGroup]="registerEmail" (ngSubmit)="proceedReg()" [ngStyle]="{'display' : formReg}">
+          <h1 class="formRegMainTitle" [ngStyle]="{'animation' : slideUP2, 'transform' : su_t2, 'opacity' : su_opac}">Inscrivez-vous<br>dès maintenant</h1>
+          <p class="formregtitle ad2_2" id="ad2_2" [ngStyle]="{'animation' : slideUP2, 'transform' : su_t2, 'opacity' : su_opac}">Veuillez saisir votre adresse mail<br>afin de créer un compte.</p>
+
+          <ion-item color="transparent" lines="none" id="ad3_2" class="ad3_2" no-padding [ngStyle]="{'animation' : slideUP2, 'transform' : su_t2, 'opacity' : su_opac}">
+            <ion-label position="floating">Email :</ion-label>
+            <ion-input type="email"  formControlName="REG_EMAIL" (focusout)="checkEmailIfExist()"></ion-input>
+          </ion-item>
+
+          <!-- <div class="seConnBtn_wrapper scw_2">
+              <div class="loading-spinner" [ngStyle]="{'display' : sls}"></div>
+              <button type="button" (click)="sendToRegister()" id="ad4_2" class="seConn ad4_2" [ngStyle]="{'display' : slb, 'width' : slw, 'background-color' : slbg, 'animation' : slideUP2, 'transform' : su_t, 'opacity' : su_opac}"><span class="btnText" [ngStyle]="{'opacity' : slt}" id="envBtn">Envoyer</span></button>
+          </div> -->
+
+          <div class="regBtn_wrapper ad4_2" id="ad4_2" [ngStyle]="{'animation' : slideUP2, 'transform' : su_t2, 'opacity' : su_opac}">
+            <button type="button" id="regBtnId" class="regBtn" (click)="sendToRegister()">
+              <span id="rippleEffectId2" class="rippleEffect"></span>
+              <span id="regTextId" class="regText">envoyer</span>
+            </button>
+          </div>
+          
+          <p class="login-text ad5_2" id="ad5_2" (click)="signin()" [ngStyle]="{'animation' : slideUP2, 'transform' : su_t2, 'opacity' : su_opac}">Déjà un compte ? <span>connectez-vous</span></p>
+      </form>
+
+    </div>
   </div>
-  <div class="header-btn">
-    <div class="signin active" (click)="activeSI()" id="siId">SIGN IN</div>
-    <div class="signup" (click)="activeSU()" id="suId">SIGN UP</div>
-  </div>
-  <form [formGroup]="loginForm" (ngSubmit)="loginUsers()" style="padding:20px;" [ngStyle]="{display : activeSignIn}">
-
-    <div class="inputWrapper">
-      <ion-label>Email :</ion-label>
-      <ion-input class="inputEmailLogin" type="email" formControlName="PRO_EMAIL"></ion-input>
-    </div>
-
-    <div class="inputWrapper">
-      <ion-label>Password :</ion-label>
-      <ion-input type="password"  formControlName="PRO_PASSWORD" ></ion-input>
-    </div>
-    
-      <!-- buttons -->
-    <ion-button type="submit" class="seConn" shape="round" expand="full">Login</ion-button>
-    
-    <div class="loginAlternative">
-      <ion-button class="btngoogle" (click)="loginWithGoogle()" shape="round"><ion-icon name="logo-googleplus"></ion-icon></ion-button>
-    </div>   
-    
-  </form>
-
-<form [formGroup]="registerEmail" (ngSubmit)="proceedReg()" style="padding:20px;" [ngStyle]="{display : activeSignUp}">
-
-    <div class="inputWrapper">
-      <ion-label>Email :</ion-label>
-      <ion-input type="email"  formControlName="REG_EMAIL" (focusout)="checkEmailIfExist()"></ion-input>
-    </div>
-  
-  <ion-button type="submit" shape="round" expand="full" class="regBtn" [disabled]="!registerEmail.valid" (click)="checkEmailIfExist()">Register</ion-button>
-</form>
-
-<a type="button" (click)="mdpOublier()" class="mdpOublie">Forgot password ?</a>
-    
-  
-  <!-- <div class="pasDeCompte">
-    <p>Vous n'avez pas de compte ?</p> <p (click)="formRegister()">Inscrivez-vous</p>
-  </div> -->
 </ion-content>

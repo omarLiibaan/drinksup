@@ -1,32 +1,77 @@
-ion-content{
-    margin-bottom: 100px !important
-}
-
 ion-list{
-    margin-top: 8px;
-    margin-bottom: 8px;
-    background-color: #12141b;
+    margin-top: 0;
+    margin-bottom: 0;
     padding-bottom: 0 !important;
-    --border-radius: 5px;
+    padding-top: 0 !important;
+    --border-radius: 0;
     overflow: hidden;
-}
-
-
-ion-item{
-  --border-radius: 5px;
+    background-color: #070708;
+  }
+  
+  
+  
+  .freedrinkstab{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    background-color: #101012;
     position: relative;
-    --inner-padding-start : 16px;
-    --inner-padding-end : 16px;
+    transition: all .3s ease-in-out;
+  
+    div{
+        width: 33.3333%;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: rgb(82, 82, 82);
+        font-size: .85rem;
+        font-family: "NBO";
+        transition: all 0.3s linear;
+        position: relative;
+        z-index: 1;
+    }
+  }
+  
+  .outline_bar{
+    display: block;
+    content: "";
+    position: absolute;
+    width: 33.3333%;
+    height: 3px;
+    bottom: 0;
+    left: 0;
+    background-color: #13d7e3;
+    transition: all 0.3s linear;
+  }
+  
+  
+  ion-item{
+    --border-radius: 0;
+    --padding-bottom: 0;
+    --padding-top: 0;
+    --inner-padding-bottom : 0;
+    --inner-padding-top: 0;
+    --inner-padding-start: 0;
+    --inner-padding-end: 0;
+    --padding-start: 0;
+    --padding-end: 0;
+    --background: #070708 !important;
     overflow: hidden;
-
+    position: relative;    
+    margin-bottom: 7px;
+  
     .star{
       position: absolute;
-      width : 30px;
+      width : 25px;
       z-index: 50;
-      top : 16px;
-      right: 32px;
+      bottom : 16px;
+      right: 16px;
     }
-
+  
     .bubbles-wrapper{
         position: absolute;  
         height: 100%;
@@ -40,70 +85,223 @@ ion-item{
         border-radius: 5px;
         opacity: 0;
         transition: opacity .3s ease-out;
-
+  
         .bubbles{
             margin-top: -50px;
         }
     }
     
-
+  
     .img-overlay{
         position: absolute;
         background: rgb(0,0,0);
-        background: linear-gradient(0deg, rgba(0,0,0,.5) 50%, rgba(0,0,0,0) 100%); 
-        height: 60%;
-        width: calc(100% - 32px);
-        left: 16px;
+        background: linear-gradient(0deg, rgba(0,0,0,.8) 50%, rgba(0,0,0,0) 100%); 
+        height: 80%;
+        width: 100%;
+        left: 0;
         bottom: 0;
         z-index: 4;
-        border-radius: 5px;
+        border-radius: 0;
     }
-
+  
     .bar-img{
-        height: 200px;
+        height: 220px;
         min-width: 100%;
         object-fit: cover;
         z-index: 2;
         display: block;
-        border-radius: 5px;
+        border-radius: 0;
         transition: 1.8s ease-out;
     }
-
+  
     .bar-details{
         position: absolute;
-        bottom: 16px;
-        left: 32px;
+        bottom: 0;
+        left: 0;
         z-index: 5;
-
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 16px;
+  
         p{  
             margin: 0;
         }
-
+  
         img{
             margin: 5px 0 3px 0;
             width : 100px;
         }
-
+  
         .note-sec{
             display: flex;
             align-items: center;
-
+  
             p{
                 margin-left: 9px;
                 font-size: .7rem;
             }
         }
-
-        .bar-nom{
-            font-family: "PNB";
-            font-size: .8rem;
+  
+        .off_desc{
+            font-family: "NBL";
+            font-size: 1.4rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
         }
-
-        .bar-desc{
-            font-size: .8rem;
+  
+        .row_off{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            flex-direction: row;
+            margin-top: 5px;
         }
-       
+  
+        .ent_nom{
+            font-size: 16px;
+            color: rgb(134, 134, 134);
+            font-family: "NBO";
+            
+        }       
     }
+  
+   
+  }
+
+  .empty_fave{
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
+      img{
+          margin-top: 170px;
+          width: 65%;
+          opacity: .5;
+      }
+
+      h1{
+          font-size: 1rem;
+          color: rgb(218, 218, 218);
+          font-family: "NBL";
+      }
+  }
+
+// ion-content{
+//     margin-bottom: 100px !important
+// }
+
+// ion-list{
+//     margin-top: 8px;
+//     margin-bottom: 8px;
+//     background-color: #12141b;
+//     padding-bottom: 0 !important;
+//     --border-radius: 5px;
+//     overflow: hidden;
+// }
+
+
+// ion-item{
+//   --border-radius: 5px;
+//     position: relative;
+//     --inner-padding-start : 16px;
+//     --inner-padding-end : 16px;
+//     overflow: hidden;
+
+//     .star{
+//       position: absolute;
+//       width : 30px;
+//       z-index: 50;
+//       top : 16px;
+//       right: 32px;
+//     }
+
+//     .bubbles-wrapper{
+//         position: absolute;  
+//         height: 100%;
+//         width: calc(100% - 32px);
+//         left: 16px;
+//         bottom: 0;
+//         background: #0d0e13;
+//         display: flex;
+//         justify-content: center;
+//         align-items: center;
+//         border-radius: 5px;
+//         opacity: 0;
+//         transition: opacity .3s ease-out;
+
+//         .bubbles{
+//             margin-top: -50px;
+//         }
+//     }
+    
+
+//     .img-overlay{
+//         position: absolute;
+//         background: rgb(0,0,0);
+//         background: linear-gradient(0deg, rgba(0,0,0,.5) 50%, rgba(0,0,0,0) 100%); 
+//         height: 60%;
+//         width: calc(100% - 32px);
+//         left: 16px;
+//         bottom: 0;
+//         z-index: 4;
+//         border-radius: 5px;
+//     }
+
+//     .bar-img{
+//         height: 200px;
+//         min-width: 100%;
+//         object-fit: cover;
+//         z-index: 2;
+//         display: block;
+//         border-radius: 5px;
+//         transition: 1.8s ease-out;
+//     }
+
+//     .bar-details{
+//         position: absolute;
+//         bottom: 16px;
+//         left: 32px;
+//         z-index: 5;
+
+//         p{  
+//             margin: 0;
+//         }
+
+//         img{
+//             margin: 5px 0 3px 0;
+//             width : 100px;
+//         }
+
+//         .note-sec{
+//             display: flex;
+//             align-items: center;
+
+//             p{
+//                 margin-left: 9px;
+//                 font-size: .7rem;
+//             }
+//         }
+
+//         .bar-nom{
+//             font-family: "PNB";
+//             font-size: .8rem;
+//         }
+
+//         .bar-desc{
+//             font-size: .8rem;
+//         }
+       
+//     }
 
    
-}
+// }

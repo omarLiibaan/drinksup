@@ -1,23 +1,68 @@
-ion-content{
-    margin-bottom: 100px !important
+ion-list{
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-bottom: 0 !important;
+    padding-top: 0 !important;
+    --border-radius: 0;
+    overflow: hidden;
+    background-color: #070708;
 }
 
-ion-list{
-    margin-top: 8px;
-    margin-bottom: 8px;
-    background-color: #12141b;
-    padding-bottom: 0 !important;
-    --border-radius: 5px;
-    overflow: hidden;
+
+
+.freedrinkstab{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    background-color: #101012;
+    position: relative;
+    transition: all .3s ease-in-out;
+
+    div{
+        width: 33.3333%;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: rgb(82, 82, 82);
+        font-size: .85rem;
+        font-family: "NBO";
+        transition: all 0.3s linear;
+        position: relative;
+        z-index: 1;
+    }
+}
+
+.outline_bar{
+    display: block;
+    content: "";
+    position: absolute;
+    width: 33.3333%;
+    height: 3px;
+    bottom: 0;
+    left: 0;
+    background-color: rgb(196, 0, 0);
+    transition: all 0.3s linear;
 }
 
 
 ion-item{
-  --border-radius: 5px;
-    position: relative;
-    --inner-padding-start : 16px;
-    --inner-padding-end : 16px;
+    --border-radius: 0;
+    --padding-bottom: 0;
+    --padding-top: 0;
+    --inner-padding-bottom : 0;
+    --inner-padding-top: 0;
+    --inner-padding-start: 0;
+    --inner-padding-end: 0;
+    --padding-start: 0;
+    --padding-end: 0;
+    --background: #070708 !important;
     overflow: hidden;
+    position: relative;    
+    margin-bottom: 7px;
 
     .star{
       position: absolute;
@@ -50,30 +95,37 @@ ion-item{
     .img-overlay{
         position: absolute;
         background: rgb(0,0,0);
-        background: linear-gradient(0deg, rgba(0,0,0,.5) 50%, rgba(0,0,0,0) 100%); 
-        height: 60%;
-        width: calc(100% - 32px);
-        left: 16px;
+        background: linear-gradient(0deg, rgba(0,0,0,.8) 50%, rgba(0,0,0,0) 100%); 
+        height: 80%;
+        width: 100%;
+        left: 0;
         bottom: 0;
         z-index: 4;
-        border-radius: 5px;
+        border-radius: 0;
     }
 
     .bar-img{
-        height: 200px;
+        height: 220px;
         min-width: 100%;
         object-fit: cover;
         z-index: 2;
         display: block;
-        border-radius: 5px;
+        border-radius: 0;
         transition: 1.8s ease-out;
     }
 
     .bar-details{
         position: absolute;
-        bottom: 16px;
-        left: 32px;
+        bottom: 0;
+        left: 0;
         z-index: 5;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 16px;
 
         p{  
             margin: 0;
@@ -92,15 +144,47 @@ ion-item{
                 margin-left: 9px;
                 font-size: .7rem;
             }
+
         }
 
-        .bar-nom{
-            font-family: "PNB";
-            font-size: .8rem;
+        .off_desc{
+            font-family: "NBL";
+            font-size: 1.4rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+
         }
 
-        .bar-desc{
-            font-size: .8rem;
+        .row_off{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            flex-direction: row;
+            margin-top: 5px;
+        }
+
+        .ent_nom{
+            font-size: 16px;
+            color: rgb(134, 134, 134);
+            font-family: "NBO";
+            
+        }
+
+        .countdown{
+            margin-top: 3px;
+            font-size: 12px;
+            width: 170px;
+            height: 20px;
+            background-color: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgb(134, 134, 134);
+            border: 1px solid rgb(134, 134, 134);
+            border-radius: 20px;
         }
        
     }

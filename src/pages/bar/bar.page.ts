@@ -255,7 +255,7 @@ async editSchedule(jourIdParam : string, jourParam : string, hDebParam : string,
   upl(photoNumber : string){
     this.photoNUM = photoNumber;
     const options: CameraOptions = {
-      quality: 80,
+      quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
@@ -288,7 +288,7 @@ async editSchedule(jourIdParam : string, jourParam : string, hDebParam : string,
   gal(photoNumber : string){
     this.photoNUM = photoNumber;
     const options: CameraOptions = {
-      quality: 80,
+      quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,

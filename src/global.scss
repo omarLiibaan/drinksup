@@ -13,6 +13,34 @@
 @import '~animate.css/animate.min.css';
 
 
+
+//Fonts
+@font-face {
+  font-family: "NLI";
+  src: url("../src/assets/fonts/NunitoSans-Light.ttf");
+}
+
+@font-face {
+  font-family: "NBO";
+  src: url("../src/assets/fonts/NunitoSans-Bold.ttf");
+}
+
+@font-face {
+  font-family: "NBL";
+  src: url("../src/assets/fonts/NunitoSans-Black.ttf");
+}
+
+@font-face {
+  font-family: "FA";
+  src: url("../src/assets/fonts/FontAwesome.otf");
+}
+
+*{
+  font-family: "NLI";
+}
+
+button:focus {outline:0;}
+
 //disabled input opacity
 .native-input[disabled].sc-ion-input-md, .native-input[disabled].sc-ion-input-ios,
 .native-textarea[disabled].sc-ion-textarea-md, .native-textarea[disabled].sc-ion-textarea-ios{
@@ -86,29 +114,60 @@
   animation-delay: 2.6s !important;
 }
 
+.tab_header{
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #101012;
+  position: relative;
+  color: #fff;
+  font-size: 1rem;
+  font-family: "NBL";
+  letter-spacing: 1px;
+  transition: all .3s ease-in-out;
 
-@font-face {
-  font-family: "PNB";
-  src: url("../src/assets/fonts/ProximaNovaBold.otf");
+  span{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    width: 50px;
+    color: #fff;
+    position: absolute;
+    top: 0;
+    right: 16px;
+    font-size: 1.8rem;
+  }
 }
 
-@font-face {
-  font-family: "PNL";
-  src: url("../src/assets/fonts/ProximaNovaLight.otf");
+ion-refresher {
+  height: 80px !important;
 }
 
-@font-face {
-  font-family: "FA";
-  src: url("../src/assets/fonts/FontAwesome.otf");
+.refresher-pulling-text,
+.refresher-refreshing-text {
+  color: rgb(66, 66, 66) !important;
+  font-size: .8rem !important;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -60%);
 }
 
-*{
-  font-family: "PNL";
+ion-refresher-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  position: relative;
 }
+
 
 ion-header{
-  background-color: #12141b;
-  background:  #12141b;
+  background-color: #101012;
+  background:  #101012;
   color : #fff;
   
 }
@@ -118,11 +177,11 @@ ion-title{
   text-align: center;
   text-transform: capitalize;
   font-size: 1rem;
-  font-family: "PNB";
+  font-family: "NBL";
   letter-spacing: 1px;
 }
 ion-tab-bar, ion-tab-button{
-  background-color: #1b1e27;
+  background-color: #101012;
 
   ion-label, ion-icon{
     color: rgba(255, 255, 255, 0.45);
@@ -207,6 +266,65 @@ ion-modal.loading-modal {
     border-radius: 10px;
     box-shadow: 0 16px 20px rgba(0,0,0,.4);
     background-color: transparent;
+  }
+}
+
+
+ion-modal.ratings-modal {
+  @media (min-width: 300px) and (min-height: 500px) {
+    ion-backdrop {
+      visibility: visible;
+      opacity: .75 !important;
+    }
+  }
+
+  .modal-wrapper {
+    position: absolute;
+    overflow: hidden;
+    max-width: 310px;
+    width: 80vw;
+    height: 45vh;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 0 16px 20px rgba(0,0,0,.4);
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+}
+
+
+//header solid
+.header-solid{
+  width: 100%;
+  height: 65px;
+  background-color: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+
+  .hs-button{
+      height: 65px;
+      padding: 0 16px;
+      display: inline-flex;
+      justify-content: flex-start;
+      align-items: center;
+      font-family: "NBL";
+      font-size: .9rem;
+      text-transform: uppercase;
+      color: #fff;
+
+      img{
+          width: 9px;
+          margin-right: 8px;
+      }
   }
 }
 

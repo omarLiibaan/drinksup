@@ -17,6 +17,7 @@ export class FavoritePage implements OnInit{
   uplPhotoURI = "https://www.macfi.ch/serveur/barphotos/";
   items : Array<any> = [];
   log : string;
+  faveBarNo;
 
   constructor(private modalCtrl : ModalController, private storage : Storage, private http : HttpClient, private nativePageTransitions: NativePageTransitions, private navCtrl : NavController) { 
     
@@ -43,7 +44,9 @@ export class FavoritePage implements OnInit{
     this.http.post(url, JSON.stringify(options), headers).subscribe((data : any) =>
     {
         this.items = data;
-        console.log(data);
+        // this.faveBarNo = this.items.length;
+
+        // console.log("=>",this.faveBarNo);
     },
     (error : any) =>
     {

@@ -1,9 +1,6 @@
-<ion-header>
-  <ion-toolbar  color="primary">
-    <ion-title>abonnement</ion-title>
-    <ion-back-button text="" style="color: white"></ion-back-button>
-  </ion-toolbar>
-</ion-header>
+<div class="header-solid">
+  <div class="hs-button" (click)="retour()"><img src="../../assets/img/back-arrow-icon.svg"> retour</div>
+</div>
 
 <ion-content padding color="secondary">
   <h3>Découvrez toute l'expérience Drinks up</h3>
@@ -13,19 +10,19 @@
   <div>
     <ion-card [ngStyle]="{'background-color': couleur}" (click)="offer()">
       <ion-card-header>
-        <ion-card-title>1 Mois</ion-card-title>
+        <ion-card-title [ngStyle]="{'color': fcolor1}">1 Mois</ion-card-title>
         <ion-card-subtitle>9.90 CHF / mois</ion-card-subtitle>
       </ion-card-header>
     </ion-card>
     <ion-card [ngStyle]="{'background-color': couleur2}" (click)="offer2()">
       <ion-card-header>
-        <ion-card-title>3 Mois</ion-card-title>
+        <ion-card-title [ngStyle]="{'color': fcolor2}">3 Mois</ion-card-title>
         <ion-card-subtitle>19.90 CHF / mois</ion-card-subtitle>
       </ion-card-header>
     </ion-card>
     <ion-card [ngStyle]="{'background-color': couleur3}" (click)="offer3()">
       <ion-card-header>
-        <ion-card-title>12 Mois</ion-card-title>
+        <ion-card-title [ngStyle]="{'color': fcolor3}">12 Mois</ion-card-title>
         <ion-card-subtitle>59.90 CHF / mois</ion-card-subtitle>
       </ion-card-header>
     </ion-card>
@@ -54,7 +51,7 @@
       <ion-input type="number" placeholder="123"
                  formControlName="cardCVV"></ion-input>
     </ion-item>
-    <ion-button type="submit" color="dark" shape="round" expand="full" [disabled]="!paiementForm.valid">Valider</ion-button>
+    <ion-button type="submit" class="validerBtn" shape="round" expand="full" [disabled]="!paiementForm.valid">Valider</ion-button>
   </form>
 
 </ion-content>

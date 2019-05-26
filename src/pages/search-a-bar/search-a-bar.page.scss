@@ -1,0 +1,108 @@
+.search_bar{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #101012;
+    position: relative;
+    color: #fff;
+    font-size: 1rem;
+    font-family: "NBL";
+    letter-spacing: 1px;
+    padding: 0 16px;
+
+    span{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        height: 50px;
+        width: 50px;
+        color: #fff;
+        font-size: 1.8rem;
+    }
+
+    ion-searchbar{
+        --padding-start : 20px;
+        padding-left: 10px;
+        --border-radius: 20px;
+        --placeholder-color: rgba(255,255,255,1);
+        --color: #fff;
+        --clear-button-color : #fff;
+        --cancel-button-color : #fff;
+        width: 100%;
+        --background: rgba(255,255,255,.1);
+        font-family: "NBO";
+        .searchbar-search-icon { display:none; width:0; height:0; }
+        
+    }
+    .searchbar-search-icon { display:none; width:0; height:0; }
+}
+
+ion-content{
+    position: relative;
+}
+
+.bar_name_wrapper{
+    width: 100%;
+    height: auto;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 99;
+}
+
+.bar_name{
+    width: 100%;
+    height: 60px;
+    background-color: #101012;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    padding-left: 32px;
+    font-family: "NBO";
+
+    &:last-child{
+        border-bottom: none;
+    }
+
+    .bar_name_content{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        p{
+            font-family: "NBO" !important;
+        }
+    }
+}
+
+.backdrop{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: rgba(0,0,0,.7);
+    z-index: 90;
+}
+
+.search_icon_bar{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    img{
+        margin-top: 50px;
+        width: 55%;
+        opacity: .4;
+    }
+
+    h1{
+        font-size: 1rem;
+        color: rgb(218, 218, 218);
+        font-family: "NBL";
+    }
+}

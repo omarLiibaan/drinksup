@@ -1,114 +1,144 @@
 @import url('https://use.fontawesome.com/releases/v5.0.9/css/all.css');
+.header_bar{
+    height: 65px;
+    width: 100%;
+    color: #fff;
+    position: absolute;
+    top:0;
+    left: 0;
+    z-index: 999;
+    background: rgb(0,0,0);
+    background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%); 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px;
 
+    .hb-button{
+        height: 65px;
+        width: 30%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        font-family: "NBL";
+        font-size: .9rem;
+        text-transform: uppercase;
+        img{
+            width: 9px;
+            margin-right: 8px;
+        }
+    }
+
+    .ifOpen{
+        height: 65px;
+        width: 70%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        p{
+            font-family: "NBL";
+            font-size: .9rem;
+            text-transform: uppercase;
+            height: auto;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .closeSched{
+            color: rgba(180, 0, 0, 1);
+        }
+
+        .openSched{
+            color: rgba(0, 175, 0, 1);
+        }
+    }
+    
+}
 ion-content{
     height: 100%;
     width: 100%;
-}
-
-ion-slide{
-    position: relative;
-    min-height: 100px;
-    z-index: 1;
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    img{
-        height: 300px;
-        width: 100%;
-        display: block;
-        position: relative;
-        object-fit: cover;    
-    }
-
-    img:after { 
-        content: "\f1c5" " " attr(alt);
-        font-size: 16px;
-        font-family: "FA";
-        color: rgb(100, 100, 100);
-        display: flex;
-        justify-content: center;
-        align-content: center;
-        position: absolute;
-        padding-top: 30%;
-        z-index: 2;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #282d3d;
-      }
-}
-
-ion-slides{
-    width: 100%;
-    height: 300px;
-    position: relative;
-    z-index: 3;
-}
-
-.slides-md, .slides-ios{
-    --bullet-background-active: #fff;
-    --bullet-background : #fff;
-    opacity : 1;
-}
-
-.bar-content{
-    position: relative;
-    z-index: 5;
-
-    .roundCorner{
-        position: absolute;
-        top : -80px;
-        left: -5px;
-        height: 80px;
-        width: 80px;
-    }
-    
-    .map-btn{
-        --background: #f80638;
-        // --background: linear-gradient(20deg, rgba(48,107,179,1) 0%, rgba(108,209,241,1) 100%); 
-        box-shadow: 0 0 10px rgba(248, 6, 56,.6);
-        height: 50px;
-        width: 50px;
-        position: absolute;
-        top : -28px;
-        right: 16px;
-        border-radius: 100%;
-        z-index: 10;
-
-        img{
-            position: absolute;
-            width: 18px;
-            display: block
-        }
-    }
-}
-p, h1{
-    margin: 0;
-}
-
-h1{
-    font-size: 1rem;
-    font-family: "PNB";
-}
-
-p{
-    font-size: .85rem
-}
-
-.typeBar{
-    color : #f80638;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    position: relative !important;
+    z-index: 2 !important;
 }
 
 .img-slide{
+    width: 100%;
+    z-index: 3;
+    height: 400px;
     position: relative;
+    overflow: hidden;
 
+    .load_overlay{
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background-color: #070708;
+        z-index: 5;
+        opacity: 1;
+        transition: opacity .8s ease-in-out;
+    }
+
+    .bot_overlay{
+        bottom: 0px;
+        left: 0;
+        position: absolute;
+        width: 100%;
+        height: 30%;
+        background: rgb(7,7,8);
+        background: linear-gradient(0deg, rgba(7,7,8,1) 0%, rgba(7,7,8,0) 100%); 
+        z-index: 5;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-end;
+        padding-left: 16px;
+        h1{
+            font-family: "NBL";
+            font-size: 1.6rem;
+        }
+    }
+
+    #img_1{
+        z-index: 2;
+    }
+
+    #img_2, #img_3{
+        z-index: 1;
+    }
+
+    .img_wrapper{
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%; 
+        transition: opacity .8s ease-in-out;
+
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.1);
+        }
+
+        .firstimgscale{
+            animation: scales 15s linear infinite;
+        }
+
+        .secondimgscale{
+            animation: scales 15s linear infinite;
+        }
+
+        .thirdimgscale{
+            animation: scales 15s linear infinite;
+        }
+
+        @keyframes scales {
+            0%{transform: scale(1.1)}
+            50%{transform: scale(1)}
+            100%{transform: scale(1.1)}
+        }
+    }
     .backbutton{
         position: fixed;
         left: 16px;
@@ -118,92 +148,253 @@ p{
     }
 }
 
-.padding{
-   padding: 30px;
+.bar-content{
+    position: relative;
+    z-index: 5;
+}
+p, h1{
+    margin: 0;
+}
+
+h1{
+    font-size: 1rem;
+    font-family: "NBO";
+}
+
+p{
+    font-size: .85rem
+}
+
+.typeBar{
+    background-color : rgb(196, 0, 0);
+    margin-top: 8px;
+    margin-bottom: 11px;
+    display: inline-flex;
+    padding: 2px 15px;
+    border-radius: 20px;
 }
 
 .first-section{
-    background-color: #0e1015;
+    background-color: #070708;
     width: 100%;
     position: relative;
+    height: auto;
+    padding: 0 16px;
 
-    .roundCornerLeft{
-        position: absolute;
-        bottom : 0;
-        left: 0;
-        height: 25px;
-        width: 25px;
-    }
-
-    .roundCornerRight{
-        position: absolute;
-        bottom : -25px;
-        right: 0;
-        height: 25px;
-        width: 25px;
+    .addressBar{
+        margin-top: 8px;
+        font-size: 17px;
+        color: rgb(175, 175, 175);
+        font-family: "NBO";
     }
 }
 
-ion-grid{
-    padding: 0;
-    font-size: .8rem;
+.second-section{
+    background-color: #070708;
+    width: 100%;
+    position: relative;
+    height: auto;
+    padding: 45px 16px;
+
+    p{
+        font-size: 17px;
+        color: rgb(175, 175, 175);
+        font-family: "NBO";
+    }
 }
 
-ion-row {
-    padding: 0 30px 0 30px;
+.ifOpenNow{
+    width: 100%;
+    height: 30px;
+    padding: 0 16px;
+    .openSchednow, .closeSchednow{
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "NBL";
+        font-size: 17px;
+
+        span{
+            margin-left: 5px;
+            font-size: 17px;
+            color: rgb(134, 134, 134);
+            ion-datetime{
+                display: inline-flex;
+                font-size: 17px;
+                padding: 0;
+            }
+        }
+    }
 }
 
-ion-datetime{
-    padding: 0 !important;
+.schedule{
+    width: 100%;
+    .sched_row{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        padding: 0 30px;
+        color: rgb(134, 134, 134);
+        height: 45px;
+        p{
+            width: 30%;
+            font-family: "NBO";
+            font-size: 15px;
+        }
+        .sched_col{
+            height: 100%;
+            width: 70%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            p{
+                display: inline-flex;
+                justify-content: flex-end;
+                align-items: center;
+                width: 100%;
+                font-size: 15px;
+                text-align: right;
+                ion-datetime{
+                    display: inline-flex;
+                    font-size: 15px;
+                    padding: 0;
+                }
+            }
+        }
+    }
 }
 
-h4{
-    margin : 0;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    color : rgba(255,255,255,.4);
-    font-size: .7rem;
-    letter-spacing: 2px;
-}
+.offered_drinks{
+    width: 100%;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    padding: 0 16px;
+    margin-bottom: 45px;
 
-.horaire{
-    margin : 0;
-    margin-bottom: 10px;
-    margin-left: 30px;
+    .offered_drinks_img{
+        width: 150px;
+        height: 150px;
+        position: relative;
+        z-index: 1;
+
+        img{
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 15%;
+            background: rgb(7,7,8);
+            background: linear-gradient(0deg, rgba(7,7,8,0) 0%, rgba(7,7,8,1) 100%); 
+            z-index: 1;
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 15%;
+            background: rgb(7,7,8);
+            background: linear-gradient(0deg, rgba(7,7,8,1) 0%, rgba(7,7,8,0) 100%); 
+            z-index: 1;
+        }
+    }
+    
+    .offered_drinks_desc{
+        width: calc(100% - 150px);
+        height: 100%;
+        padding-left: 16px;
+        padding-top: 16px;
+        padding-bottom: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-direction: column;
+        p{
+            font-family: "NBO";
+            color: rgb(134, 134, 134);
+            font-size: .8rem;
+        }
+        h1{
+            font-family: "NBL";
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        span{
+            font-family: "NBO";
+            color: rgb(134, 134, 134);
+            font-size: .8rem; 
+        }
+
+        .activer_btn{
+            width: 100%;
+            background-color: rgb(196, 0, 0);
+            height: 27px;
+            color: #fff;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: "NBL";
+            margin-top: 5px;
+        }
+
+        .notactive{
+            background-color: rgb(134, 134, 134);
+            color: rgb(97, 97, 97);
+        }
+    }
+
 }
 
 .commentButton{
-    margin : 50px 15% 50px 15%;
-    width: 70%;
+    margin: 0 16px;
+    width: calc(100% - 32px);
     text-transform: none;
     font-size: .9rem;
-    --background : transparent;
+    --background : #fff;
     --border-width : 1px;
     --border-color : #fff;
     --border-style : solid; 
-    color : #fff; 
+    color : #070708; 
+    margin-top: 40px;
+    font-family: "NBL";
+}
 
+.geoLocalButton{
+    margin: 10px 16px;
+    width: calc(100% - 32px);
+    text-transform: none;
+    font-size: .9rem;
+    --background : rgb(196, 0, 0);
+    --border-width : 1px;
+    --border-color : rgb(196, 0, 0);
+    --border-style : solid; 
+    color : #fff;
+    margin-bottom: 40px;
+    font-family: "NBL";
+}
+
+.today{
+    color : #fff !important;
 }
 
 
-.odd{
-    background-color: #1b1e27;
-}
-
-.closed{
-    display : none;
-}
-
-.open{
-    display : block;
-}
-
-.closedCol{
-    font-size: .7rem;
-    color : rgba(255,255,255,.4);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
 
 
 
@@ -220,6 +411,21 @@ h4{
         border-radius: 5px;
         padding: 1rem;
         margin-bottom: 10px;
+    }
+}
+
+.note-sec{
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+
+    img{
+        width: 120px;
+    }
+
+    p{
+        margin-left: 9px;
+        font-size: .7rem;
     }
 }
 

@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 import { matches } from '@ionic/core/dist/types/components/nav/view-controller';
+import { RegisterthirdpartyPage } from './../pages/registerthirdparty/registerthirdparty.page';
+import { ForgotPasswordPage } from 'src/pages/forgot-password/forgot-password.page';
 
 
 
@@ -36,20 +38,40 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.statusBar.overlaysWebView(false);
+      this.statusBar.backgroundColorByHexString("#101012");
 
-      this.deepLinks.routeWithNavController(this.navCtrl,{
-        '/register': RegisterPage
+      this.deepLinks.route({
+        '/register': RegisterPage,
+        '/registerthirdparty': RegisterthirdpartyPage,
+        '/forgot-password' : ForgotPasswordPage,
       }).subscribe((match) =>{
-        const email = JSON.stringify(match.$args.email);
-        this.navCtrl.navigateForward('register/'+email);
+          console.log(match)
+          if(match.$link.path == "/registerthirdparty"){
+            const name = JSON.stringify(match.$args.name);
+            const email = JSON.stringify(match.$args.email);
+            const id = JSON.stringify(match.$args.id);
+            this.navCtrl.navigateForward('registerthirdparty/'+name+"/"+email+"/"+id);
+          }else if(match.$link.path == "/register"){
+            const email = JSON.stringify(match.$args.email);
+            this.navCtrl.navigateForward('register/'+email);
+          }else{
+            const email = JSON.stringify(match.$args.email);
+            this.navCtrl.navigateForward('forgot-password/'+email);
+          }
+        });
       
-        },(nomatch)=>{
 
+      this.storage.get('SessionInKey').then((val) => {
+        if(val!==null){
+          setTimeout(() => {
+            this.splashScreen.hide();
+          }, 1800);
+        }else{
+          setTimeout(() => {
+            this.splashScreen.hide();
+          }, 800);
+        }
       });
-      
-      setTimeout(() => {
-        this.splashScreen.hide();
-      }, 1800);
 
       //Check if app is launch for the first time
       this.storage.get('firstLaunch').then((first)=>{
@@ -62,6 +84,7 @@ export class AppComponent {
           this.storage.remove("SessionRoleKey");
           this.storage.remove("SessionEmailKey");
           this.storage.remove("SessionIdKey");
+          this.storage.remove("firstLogin");
         }
       });
 

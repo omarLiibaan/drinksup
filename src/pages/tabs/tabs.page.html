@@ -1,23 +1,25 @@
   <ion-tabs>
     <ion-tab-bar slot="bottom">
-      <ion-tab-button tab="offers">
-        <ion-icon name="calendar"></ion-icon>
-        <ion-label>offres</ion-label>
+
+      <ion-tab-button tab="offers" (click)="offreclick()">
+        <ion-icon src="../../assets/img/offres_icon.svg" [ngStyle]="{'opacity' : offres_icon}"></ion-icon>
+        <ion-label>Offres</ion-label>
       </ion-tab-button>
 
-      <ion-tab-button tab="bars">
-        <ion-icon name="locate"></ion-icon>
+      <ion-tab-button tab="bars" (click)="barclick()">
+        <ion-icon src="../../assets/img/bars_icon.svg"></ion-icon>
         <ion-label>Bars</ion-label>
       </ion-tab-button>
 
-      <ion-tab-button tab="favorite">
-        <ion-icon name="star"></ion-icon>
+      <ion-tab-button tab="favorite" (click)="faveclick()">
+        <ion-icon src="../../assets/img/favoris_icon.svg" [ngStyle]="{'opacity' : favoris_icon}"></ion-icon>
         <ion-label>Favoris</ion-label>
       </ion-tab-button>
 
-      <ion-tab-button tab="profile">
+      <ion-tab-button tab="profile" (click)="profilclick()">
         <ion-icon name="person"></ion-icon>
         <ion-label>Profil</ion-label>
       </ion-tab-button>
+
     </ion-tab-bar>
   </ion-tabs>

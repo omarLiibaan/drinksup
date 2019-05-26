@@ -10,6 +10,9 @@ import {Storage} from '@ionic/storage';
     styleUrls: ['./abonnement.page.scss'],
 })
 export class AbonnementPage implements OnInit {
+    fcolor1 : string;
+    fcolor2 : string;
+    fcolor3 : string;
     amount: string;
     couleur: string;
     couleur2: string;
@@ -103,25 +106,38 @@ export class AbonnementPage implements OnInit {
     }
 
     offer() {
-        this.couleur = 'pink';
+        this.fcolor1 = 'black';
+        this.fcolor2 = '';
+        this.fcolor3 = '';
+        this.couleur = '#fff';
         this.couleur2 = '';
         this.couleur3 = '';
         this.offre = '9.90';
         console.log(this.offre);
     }
     offer2() {
+        this.fcolor1 = '';
+        this.fcolor2 = 'black';
+        this.fcolor3 = '';
         this.couleur = '';
-        this.couleur2 = 'pink';
+        this.couleur2 = '#fff';
         this.couleur3 = '';
         this.offre2 = '19.90';
         console.log(this.offre2);
     }
     offer3() {
+        this.fcolor1 = '';
+        this.fcolor2 = '';
+        this.fcolor3 = 'black';
         this.couleur = '';
         this.couleur2 = '';
-        this.couleur3 = 'pink';
+        this.couleur3 = '#fff';
         this.offre3 = '59.90';
         console.log(this.offre3);
+    }
+
+    retour(){
+        this.navCtrl.back();
     }
 
 

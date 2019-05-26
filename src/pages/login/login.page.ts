@@ -14,15 +14,19 @@ import { Storage } from '@ionic/storage';
 })
 export class LoginPage implements OnInit {
     userData: any;
+    userfb: any = {};
+    userdatafb: any;
     loginForm: FormGroup;
     registerEmail: FormGroup;
     baseURI = 'https://macfi.ch/serveur/';
     regURL = 'https://www.futurae-ge.ch/ionic-phpmailer.php';
     userDetails : any;
     users = [];  
+    fbIdExist : boolean = false;
     emailExist : boolean = false;
     emailExistReg : boolean = false;
     pushedUserArray : any = [];
+    pushedIdFbArray : any = [];
 
     //---------------------------
     roleUser = 'user';
@@ -32,8 +36,17 @@ export class LoginPage implements OnInit {
     //----------------------------
     activeSignUp = "none";
     activeSignIn = "block";
+    //--transitions
+  
+    formLog = "none";
+    slideUP = "slide-up .5s ease-out forwards";
+    slideUP2 = "slide-up .5s ease-out forwards";
+    su_t = "translateY(30px)";
+    su_t2 = "translateY(30px)";
+    su_opac = "0";
+    formReg = "none";
 
-    constructor(private route: Router, private formBuilder: FormBuilder, private navCtrl: NavController, private fb: Facebook, private googlePlus : GooglePlus, private toastCtrl: ToastController, public http: HttpClient, private storage: Storage) {
+    constructor(private fb: Facebook, private route: Router, private formBuilder: FormBuilder, private navCtrl: NavController, private googlePlus : GooglePlus, private toastCtrl: ToastController, public http: HttpClient, private storage: Storage) {
         this.loginForm = new FormGroup({
             PRO_EMAIL: new FormControl(),
             PRO_PASSWORD: new FormControl(),
@@ -44,15 +57,30 @@ export class LoginPage implements OnInit {
         });
 
         this.validationForm();
+         
+        
     }
 
     ngOnInit() {
         this.getUsers();
-        this.activeSignUp = "none";
-        this.activeSignIn = "block";
-        document.getElementById("siId").className = "signin active"
-        document.getElementById("suId").className = "signup"
     }
+
+    ionViewWillEnter(){
+        setTimeout(() => {
+            this.formLog = "block";
+        }, 2100);
+        this.loginForm.controls['PRO_EMAIL'].setValue("");
+        this.loginForm.controls['PRO_PASSWORD'].setValue("");
+    }
+
+    ionViewDidLeave(){
+        this.formLog = "none";
+        this.slideUP = "slide-up .5s ease-out forwards";
+        this.su_t = "translateY(30px)";
+        this.su_opac ="0";
+        // document.getElementById("regText").innerHTML = "Envoyer";
+        // document.getElementById("regText").style.color = "rgb(61, 61, 61)";
+    } 
     
     validationForm() {
         this.loginForm = this.formBuilder.group({
@@ -65,20 +93,6 @@ export class LoginPage implements OnInit {
         });
     }
 
-
-    formRegister() {
-        this.navCtrl.navigateForward('register');
-    }
-
-    loginWithFB() {
-        this.fb.login(['email', 'public_profile']).then((response: FacebookLoginResponse) => {
-            this.fb.api('me?fields=id,name,email,first_name,picture.width(720).height(720).as(picture_large)', []).then(profile => {
-                // this.userData = {email: profile['email'], first_name: profile['first_name'], picture: profile['picture_large']['data']['url'], username: profile['name']}
-                console.log(profile);
-            });
-        });
-    }
-
     getUsers() {
         const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
               options: any		= { 'key' : 'get_all_users'},
@@ -86,6 +100,65 @@ export class LoginPage implements OnInit {
         this.http.post(url, JSON.stringify(options), headers).subscribe((data: any) => {
             this.users = data;   
         });
+    }
+
+    loginWithFB(){
+        this.fb.login(['public_profile','email']).then((res : FacebookLoginResponse)=>{
+            if(res.status==='connected'){
+                this.userfb.img = 'https://graph.facebook.com/'+res.authResponse.userID+'/picture?type=large';
+                this.fb.api('me?fields=id,name,first_name,last_name,email',[]).then(profile =>{
+                    this.userdatafb = {email : profile['email'], id : profile['id'], name : profile['name']};
+                    //Check if email from fb is obtainable
+                    if(this.userdatafb.email===undefined || this.userdatafb.email === null || this.userdatafb.email === ""){
+                        //Check if fb without email is already registered
+                        for(var i = 0; i < this.users.length; i++) {
+                            this.pushedIdFbArray.push(this.users[i].INT_FB_ID);
+                        }
+                        if(this.pushedIdFbArray.indexOf(this.userdatafb.id) > -1){
+                            this.fbIdExist = true;
+                            console.log("Facebook Id is already used!");
+                        }else{
+                            this.fbIdExist = false;
+                            console.log("Facebook Id ready!");
+                        }
+
+                        //If fb id exists then user is accepted and must be logged in
+                        if(this.fbIdExist){
+                            this.LoginForFBUserWithID(this.userdatafb.id);
+                        }else{
+                        // else it should be registered
+                            this.navCtrl.navigateForward("registerthirdparty/"+this.userdatafb.name+"/no-email/"+this.userdatafb.id);
+                        }
+                    }else{
+                        //Check if address mail logged from facebook exist in the database
+                        for(var i = 0; i < this.users.length; i++) {
+                            this.pushedUserArray.push(this.users[i].INT_EMAIL);
+                        }
+
+                        if(this.pushedUserArray.indexOf(this.userdatafb.email) > -1){
+                            this.emailExist = true;
+                            console.log("address mail exist already!");
+                        }else{
+                            this.emailExist = false;
+                            console.log("address mail ready!");
+                        }
+                        //If email exists then user is accepted and must be logged in
+                        if(this.emailExist){
+                            this.LoginForFBUser(this.userdatafb.email);
+                        }else{
+                        // else it should be registered
+                            this.registerUserFB(this.userdatafb.name, this.userdatafb.email);
+                            setTimeout(() => {
+                                this.LoginForFBUser(this.userdatafb.email);
+                            }, 500);   
+                        }
+                    }
+                });
+            }else{
+                this.sendNotification("Échec de connexion Facebook");
+            }
+            console.log("login fb successful !", res);
+        }).catch(e=> console.log("Error logging into Facebook", e));
     }
 
     loginWithGoogle() {
@@ -132,23 +205,44 @@ export class LoginPage implements OnInit {
                 this.storage.set('SessionEmailKey', this.userDetails.EMAIL);
                 this.storage.set('SessionInKey', 'Yes');
                 if (this.userDetails.ROLE === this.roleAdmin) {
-                    this.navCtrl.navigateRoot('/tabsadmin/users');
+                    
                     this.storage.set('SessionRoleKey', this.roleAdmin);
-                    this.sendNotification('Bienvenue !');
-                    setTimeout( () => {this.loginForm.reset();}, 1000);  
+                    //transitions
+                    document.getElementById("seConnTextId").innerHTML = "OK !";
+                    document.getElementById("seConnTextId").style.color = "#4caf50";
+                    this.btnAnim_1_Off();
+                    setTimeout(() => {
+                        this.navCtrl.navigateRoot('/tabsadmin/users');
+                        this.sendNotification('Bienvenue !');
+                    }, 500);
                 } else if (this.userDetails.ROLE === this.roleProprio) {
-                    this.navCtrl.navigateRoot('/tabsproprio/qrcode');
+                    
                     this.storage.set('SessionRoleKey', this.roleProprio);
-                    this.sendNotification('Bienvenue !');
-                    setTimeout( () => {this.loginForm.reset();}, 1000);  
+                    //transitions
+                    document.getElementById("seConnTextId").innerHTML = "OK !";
+                    document.getElementById("seConnTextId").style.color = "#4caf50";
+                    this.btnAnim_1_Off();
+                    setTimeout(() => {
+                        this.navCtrl.navigateRoot('/tabsproprio/qrcode');
+                        this.sendNotification('Bienvenue !');
+                    }, 500); 
                 } else if (this.userDetails.ROLE === this.roleUser) {
-                    this.navCtrl.navigateRoot('/tabs/offers');
                     this.storage.set('SessionRoleKey', this.roleUser);
-                    this.sendNotification('Bienvenue !');
-                    setTimeout( () => {this.loginForm.reset();}, 1000);  
+                    //transitions
+                    document.getElementById("seConnTextId").innerHTML = "OK !";
+                    document.getElementById("seConnTextId").style.color = "#4caf50";
+                    this.btnAnim_1_Off();
+                    setTimeout(() => {
+                        this.navCtrl.navigateRoot('/tabs/offers');
+                        this.sendNotification('Bienvenue !');
+                    }, 500);
                 } else {
-                    // console.log(JSON.stringify(options));
-                    this.sendNotification('Email ou mot de passe erroné');
+                    
+                    //transitions
+                    this.btnAnim_1_Off()
+                    setTimeout(() => {
+                        this.sendNotification('Email ou mot de passe erroné');
+                    }, 500);
                 }
             },
             (error: any) => {
@@ -182,7 +276,7 @@ export class LoginPage implements OnInit {
                     this.storage.set('SessionRoleKey', this.roleAdmin);
                     this.sendNotification('Bienvenue !');
                 } else if (this.userDetails.ROLE === this.roleProprio) {
-                    this.navCtrl.navigateRoot('/tabsproprio/bar');
+                    this.navCtrl.navigateRoot('/tabsproprio/qrcode');
                     this.storage.set('SessionRoleKey', this.roleProprio);
                     this.sendNotification('Bienvenue !');
                 } else if (this.userDetails.ROLE === this.roleUser) {
@@ -191,6 +285,7 @@ export class LoginPage implements OnInit {
                     this.sendNotification('Bienvenue !'); 
                 } else {
                     // console.log(JSON.stringify(options));
+                    this.googlePlus.logout().then(res => {console.log(res);}).catch(err => console.error(err));
                     this.sendNotification('Votre adresse Google+ a été déjà utilisé via inscription native de Drinks Up. Si vous ne vous souvenez plus de votre mot de passe. Veuillez cliquer sur "Mot de passe oublié"');
                 }
             },
@@ -199,6 +294,95 @@ export class LoginPage implements OnInit {
                 this.sendNotification('Erreur!');
             });
     }
+
+    LoginForFBUser(PRO_EMAIL) {
+        const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
+            options: any		= { 'key' : 'seLoguerUserFacebook', 'PRO_EMAIL' : PRO_EMAIL},
+            url: any      	= this.baseURI + 'aksi.php';
+    
+        this.http.post(url, JSON.stringify(options), headers).subscribe((data: any) =>
+            {
+                
+                this.userDetails = data;
+                console.log(this.userDetails);
+                this.storage.set('SessionIdKey', this.userDetails.ID);
+                this.storage.set('SessionEmailKey', this.userDetails.EMAIL);
+                this.storage.set('SessionInKey', 'Yes');
+                if (this.userDetails.ROLE === this.roleAdmin) {
+                    this.navCtrl.navigateRoot('/tabsadmin/users');
+                    this.storage.set('SessionRoleKey', this.roleAdmin);
+                    //check if first login
+                    this.storage.get('firstLogin').then((val) => {
+                        if (val !== null) {
+                          console.log("This is not your first time logging into this app");
+                        }else {
+                              this.storage.set('firstLogin', 'Yes');
+                        }
+                    });
+                    this.sendNotification('Bienvenue !');
+                } else if (this.userDetails.ROLE === this.roleProprio) {
+                    this.navCtrl.navigateRoot('/tabsproprio/qrcode');
+                    this.storage.set('SessionRoleKey', this.roleProprio);
+                    this.sendNotification('Bienvenue !');
+                } else if (this.userDetails.ROLE === this.roleUser) {
+                    this.navCtrl.navigateRoot('/tabs/offers');
+                    this.storage.set('SessionRoleKey', this.roleUser);
+                    this.sendNotification('Bienvenue !'); 
+                } else {
+                    // console.log(JSON.stringify(options));
+                    this.sendNotification('Votre compte Facebook a été déjà utilisé');
+                }
+            },
+            (error: any) => {
+                console.log(error);
+                this.sendNotification('Erreur!');
+            });
+    }
+
+    LoginForFBUserWithID(PRO_FB_ID) {
+        const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
+            options: any		= { 'key' : 'seLoguerUserFacebookID', 'PRO_FB_ID' : PRO_FB_ID},
+            url: any      	= this.baseURI + 'aksi.php';
+    
+        this.http.post(url, JSON.stringify(options), headers).subscribe((data: any) =>
+            {
+                
+                this.userDetails = data;
+                console.log(this.userDetails);
+                this.storage.set('SessionIdKey', this.userDetails.ID);
+                this.storage.set('SessionEmailKey', this.userDetails.EMAIL);
+                this.storage.set('SessionInKey', 'Yes');
+                if (this.userDetails.ROLE === this.roleAdmin) {
+                    this.navCtrl.navigateRoot('/tabsadmin/users');
+                    this.storage.set('SessionRoleKey', this.roleAdmin);
+                    //check if first login
+                    this.storage.get('firstLogin').then((val) => {
+                        if (val !== null) {
+                          console.log("This is not your first time logging into this app");
+                        }else {
+                              this.storage.set('firstLogin', 'Yes');
+                        }
+                    });
+                    this.sendNotification('Bienvenue !');
+                } else if (this.userDetails.ROLE === this.roleProprio) {
+                    this.navCtrl.navigateRoot('/tabsproprio/qrcode');
+                    this.storage.set('SessionRoleKey', this.roleProprio);
+                    this.sendNotification('Bienvenue !');
+                } else if (this.userDetails.ROLE === this.roleUser) {
+                    this.navCtrl.navigateRoot('/tabs/offers');
+                    this.storage.set('SessionRoleKey', this.roleUser);
+                    this.sendNotification('Bienvenue !'); 
+                } else {
+                    // console.log(JSON.stringify(options));
+                    this.sendNotification('Votre compte Facebook a été déjà utilisé');
+                }
+            },
+            (error: any) => {
+                console.log(error);
+                this.sendNotification('Erreur!');
+            });
+    }
+    
 
     registerFromGoogle(param_email: string, param_firstname: string, param_name: string) {
         const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -213,6 +397,20 @@ export class LoginPage implements OnInit {
                 console.log(error);
             });
     }
+
+    registerUserFB(paramName, paramEmail){
+        const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
+                options: any		= { 'key' : 'registerFromFB', 'email' : paramEmail, 'name' : paramName},
+                url: any      	= this.baseURI + 'aksi.php';
+    
+        this.http.post(url, JSON.stringify(options), headers).subscribe((data: any) =>
+            {
+                console.log("Registered !");
+            },
+            (error: any) => {
+                console.log(error);
+        });
+      }
 
     proceedReg(){
         if(this.emailExistReg){
@@ -238,13 +436,6 @@ export class LoginPage implements OnInit {
             });
     }
 
-    ionViewWillEnter(){
-        this.activeSignUp = "none";
-        this.activeSignIn = "block";
-        document.getElementById("siId").className = "signin active"
-        document.getElementById("suId").className = "signup"
-    }
-
     checkEmailIfExist(){
         const REG_EMAIL: string = this.registerEmail.controls['REG_EMAIL'].value;
       
@@ -261,21 +452,9 @@ export class LoginPage implements OnInit {
         }
     }
 
-    activeSI(){
-        this.activeSignUp = "none";
-        this.activeSignIn = "block";
-        document.getElementById("siId").className = "signin active"
-        document.getElementById("suId").className = "signup"
+    forgotPass(){
+        this.navCtrl.navigateForward("forgot-password");
     }
-
-    activeSU(){
-        this.activeSignUp = "block";
-        this.activeSignIn = "none";
-        document.getElementById("suId").className = "signup active"
-        document.getElementById("siId").className = "signin"
-    }
-
-
 
     async sendNotification(msg: string) {
         const toast = await this.toastCtrl.create({
@@ -290,5 +469,176 @@ export class LoginPage implements OnInit {
         this.route.navigateByUrl(msg);
     }
 
+    //animations
+    seConnecter(){
+        const PRO_EMAIL: string = this.loginForm.controls['PRO_EMAIL'].value,
+              PRO_PASSWORD: string = this.loginForm.controls['PRO_PASSWORD'].value;
+              
+        
+        if(PRO_EMAIL=="" && PRO_PASSWORD==""){
+            this.sendNotification("Veuillez remplir tous les champs pour pouvoir vous connectez")
+        }else{
+            this.btnAnim_1_on();
+            setTimeout(() => {
+                this.loginUsers();
+            }, 2000);
+        }
+    }
+
+    sendToRegister(){
+        this.checkEmailIfExist();
+
+        if(!this.registerEmail.valid){
+            this.sendNotification("L'adresse e-mail est invalide !")
+        }else if(this.emailExistReg && this.registerEmail.valid){
+            //transitions
+            setTimeout(() => {
+                this.btnAnim_2_on();
+            }, 300);
+            setTimeout(() => {
+                this.btnAnim_2_Off();
+                this.sendNotification("Cette adresse e-mail a été déjà utilisée");
+            }, 2000);
+        
+        }else{
+            //transitions
+            setTimeout(() => {
+                this.btnAnim_2_on();
+            }, 300);
+
+            setTimeout(() => {
+                document.getElementById("regTextId").innerHTML = "validé&nbsp;!";
+                document.getElementById("regTextId").style.color = "#4caf50";
+                this.btnAnim_2_Off();
+                this.confirmThenRegister();
+                this.sendNotification("Un mail de confirmation vous a été envoyé");
+            }, 2000);         
+        }    
+    }
+
+    
+    signup(){
+        this.slideUP = "slide-down .5s ease-out forwards"
+        this.su_t = "translateY(0)";
+        document.getElementById("ad2").classList.remove("ad2");
+        document.getElementById("ad3").classList.remove("ad3");
+        document.getElementById("ad4").classList.remove("ad4");
+        document.getElementById("ad5").classList.remove("ad5");
+        document.getElementById("ad6_id").classList.remove("ad6");
+        document.getElementById("ad7").classList.remove("ad7");
+        document.getElementById("ad8").classList.remove("ad8");
+        //
+        document.getElementById("ad2_2").classList.add("ad2_2");
+        document.getElementById("ad3_2").classList.add("ad3_2");
+        document.getElementById("ad4_2").classList.add("ad4_2");
+        document.getElementById("ad5_2").classList.add("ad5_2");
+        setTimeout(() => {
+            this.formLog = "none";
+            this.formReg = "block";
+            this.slideUP2 = "slide-up .5s ease-out forwards"
+            this.su_t2 = "translateY(0)";
+            this.su_opac = "0";
+        }, 510);
+
+    }
+
+    signin(){
+        this.slideUP2 = "slide-down .5s ease-out forwards"
+        this.su_t2 = "translateY(0)";
+        document.getElementById("ad2_2").classList.remove("ad2_2");
+        document.getElementById("ad3_2").classList.remove("ad3_2");
+        document.getElementById("ad4_2").classList.remove("ad4_2");
+        document.getElementById("ad5_2").classList.remove("ad5_2");
+        //
+        document.getElementById("ad2").classList.add("ad2");
+        document.getElementById("ad3").classList.add("ad3");
+        document.getElementById("ad4").classList.add("ad4");
+        document.getElementById("ad5").classList.add("ad5");
+        document.getElementById("ad6_id").classList.add("ad6");
+        document.getElementById("ad7").classList.add("ad7");
+        document.getElementById("ad8").classList.add("ad8");
+        setTimeout(() => {
+            this.formLog = "block";
+            this.formReg = "none";
+            this.slideUP = "slide-up .5s ease-out forwards"
+            this.su_t = "translateY(0)";
+            this.su_opac = "0";
+
+        }, 510);
+        
+    }
+
+
+    btnAnim_1_on(){
+        //Button
+        document.getElementById("seConnBtnId").style.width = "40px";
+        document.getElementById("seConnBtnId").style.borderBottom = "none";
+        document.getElementById("seConnBtnId").style.backgroundColor = "transparent";
+        document.getElementById("seConnBtnId").style.transitionDelay = ".5s";
+        setTimeout(() => {
+            document.getElementById("seConnBtnId").style.animation = "spin .5s linear infinite";    
+        }, 750);        
+        document.getElementById("seConnBtnId").style.opacity = "1";
+
+        //Button Ripple
+        document.getElementById("rippleEffectId").style.backgroundColor = "transparent";
+        //Button Text
+        setTimeout(() => {
+            document.getElementById("seConnTextId").style.opacity = "0";
+        }, 500);
+    }
+
+    btnAnim_1_Off(){
+        //Button
+        document.getElementById("seConnBtnId").style.width = "100%";
+        document.getElementById("seConnBtnId").style.borderBottom = "1px solid #fff";
+        document.getElementById("seConnBtnId").style.backgroundColor = "#fff";
+        document.getElementById("seConnBtnId").style.transitionDelay = "0s";
+        document.getElementById("seConnBtnId").style.animation = "none";
+        //Button Ripple
+        document.getElementById("rippleEffectId").style.backgroundColor = "#fff";
+        document.getElementById("rippleEffectId").style.transition = "background 0.8s";
+        //Button Text
+        document.getElementById("seConnTextId").style.display = "block";
+        document.getElementById("seConnTextId").style.opacity = "1";
+        document.getElementById("seConnTextId").style.transition = "all .3s linear";
+        document.getElementById("seConnTextId").style.transitionDelay = "0s"; 
+    }
+
+    btnAnim_2_on(){
+        //Button
+        document.getElementById("regBtnId").style.width = "40px";
+        document.getElementById("regBtnId").style.borderBottom = "none";
+        document.getElementById("regBtnId").style.backgroundColor = "transparent";
+        document.getElementById("regBtnId").style.transitionDelay = ".2s";
+        setTimeout(() => {
+            document.getElementById("regBtnId").style.animation = "spin .5s linear infinite";    
+        }, 450);        
+        document.getElementById("regBtnId").style.opacity = "1";
+
+        //Button Ripple
+        document.getElementById("rippleEffectId2").style.backgroundColor = "transparent";
+        //Button Text
+        setTimeout(() => {
+            document.getElementById("regTextId").style.opacity = "0";
+        }, 300);
+    }
+
+    btnAnim_2_Off(){
+        //Button
+        document.getElementById("regBtnId").style.width = "100%";
+        document.getElementById("regBtnId").style.borderBottom = "1px solid #fff";
+        document.getElementById("regBtnId").style.backgroundColor = "#fff";
+        document.getElementById("regBtnId").style.transitionDelay = "0s";
+        document.getElementById("regBtnId").style.animation = "none";
+        //Button Ripple
+        document.getElementById("rippleEffectId2").style.backgroundColor = "#fff";
+        document.getElementById("rippleEffectId2").style.transition = "background 0.8s";
+        //Button Text
+        document.getElementById("regTextId").style.display = "block";
+        document.getElementById("regTextId").style.opacity = "1";
+        document.getElementById("regTextId").style.transition = "all .3s linear";
+        document.getElementById("regTextId").style.transitionDelay = "0s"; 
+    }
 
 }

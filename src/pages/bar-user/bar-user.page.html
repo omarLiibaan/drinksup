@@ -1,36 +1,53 @@
-<ion-content color="secondary">
+<div class="header_bar">
+    <div class="hb-button" (click)="retour()"><img src="../../assets/img/back-arrow-icon.svg">retour</div>
+    <!-- <div class="ifOpen" *ngFor="let sched of FilteredSched">
+      <div *ngIf="dayShift">
+        <div *ngIf="(dayShiftIn)">
+            <p class="openSched"><ion-icon name="time"></ion-icon>&nbsp;{{sched.HOR_JOURS}}, Ouvert</p>
+        </div>
+        <div *ngIf="(!dayShiftIn)">
+            <p class="closeSched"><ion-icon name="time"></ion-icon>&nbsp;{{sched.HOR_JOURS}}, Fermé le matin</p>
+        </div>
+      </div>
+      <div *ngIf="nightShift">
+        <div *ngIf="(nightShiftIn)">
+            <p class="openSched"><ion-icon name="time"></ion-icon>&nbsp;{{sched.HOR_JOURS}}, Ouvert</p>
+        </div>
+        <div *ngIf="(!nightShiftIn)">
+            <p class="closeSched"><ion-icon name="time"></ion-icon>&nbsp;{{sched.HOR_JOURS}}, Fermé le soir</p>
+        </div>
+      </div>
+    </div> -->
+</div>
+
+<ion-content color="secondary" [scrollEvents]="true" (ionScroll)="scrollEvent($event)">
   <div class="img-slide">
-    <img src="../../assets/img/back-arrow-icon.svg" alt="" class="backbutton" (click)="goBack()">
-    <ion-slides pager="true" [options]="slideOpts">
-        <ion-slide>
-            <img [src]="imgLink1" alt="Photo n° 1">
-        </ion-slide>
-
-        <ion-slide>
-            <img [src]="imgLink2" alt="Photo n° 2">
-      </ion-slide>
-
-      <ion-slide>
-          <img [src]="imgLink3" alt="Photo n° 3">
-    </ion-slide>
-    
-    </ion-slides>
+    <div class="load_overlay" id="load_overL"></div>
+    <div class="img_wrapper iw_1" id="img_1" (touchstart)="touchstart_1($event)" (touchend)="touchend_1($event)">
+      <img [src]="imgLink1" alt="Photo n° 1" id="first_pic" (load)="imgLoaded()">
+    </div>
+  
+    <div class="img_wrapper iw_2" id="img_2" (touchstart)="touchstart_2($event)" (touchend)="touchend_2($event)">
+      <img [src]="imgLink2" alt="Photo n° 2" id="second_pic">
+    </div>
+  
+    <div class="img_wrapper iw_3" id="img_3" (touchstart)="touchstart_3($event)" (touchend)="touchend_3($event)">
+      <img [src]="imgLink3" alt="Photo n° 3" id="third_pic">
+    </div>
+    <div class="bot_overlay"><h1>{{myBar.ENT_NOM}}</h1></div>
   </div>
 
-  <div class="bar-content">
-
-    <img class="roundCorner" src="../../assets/img/round-corner.svg" alt="">
-    <!-- Map Button -->
-    <ion-button class="map-btn" shape="round"><img src="../../assets/img/map-icon.svg" alt=""></ion-button>
-    <div class="first-section padding"> 
-        <h1>{{myBar.ENT_NOM}}</h1>     
+   <div class="bar-content">
+    <div class="first-section"> 
         <p class="typeBar">{{myBar.ENT_SECTEURACTIVITES}}</p>
+        <div class="note-sec">
+            <img class="bar-note" src="{{'../../assets/img/grade/grade-' + grade + '.svg'}}">
+            <p>( {{gradeTot}} / 5.0 )</p>
+        </div> 
         <p class="addressBar">{{myBar.ENT_ADRESSE}}, {{myBar.ENT_NPA}} - {{myBar.ENT_LOCALITE}}</p>
-        <img class="roundCornerLeft" src="../../assets/img/round-corner-light-small.svg" alt="">
-        <img class="roundCornerRight" src="../../assets/img/round-corner-small.svg" alt="">
     </div>
 
-    <div class="offer-wrapper">
+    <!-- <div class="offer-wrapper">
         <div *ngFor="let offer of myOffers" class="offers">
           <h1>{{offer.OFF_DESCRIPTION}}</h1>
           <p><b>De :</b> {{offer.OFF_DATEDEBUT}}</p>
@@ -45,44 +62,80 @@
 
           <ion-button *ngIf="payed!='good' && showBtns" (click)="jemabonne()">Activer l'offre</ion-button>
         </div>
-    </div>
+    </div> -->
 
-    <div class="padding">
-      <h4>Description :</h4>
+    <div class="second-section">
       <p class="descBar">{{myBar.ENT_DESCRIPTION}}</p>
     </div>
+
+    <div *ngIf="paramOfferId !== null">
+      <div class="offered_drinks">
+        <div class="offered_drinks_img">
+            <img [src]="drinksPhotoURI + 'cocktail.jpg'">
+        </div>
+        <div class="offered_drinks_desc">
+          <div>
+            <p>Boisson offerte</p>
+            <h1>{{oneOffer.OFF_DESCRIPTION}}</h1>
+          </div>
+          <div>
+            <span>{{bar_user_countdown}}</span>
+            <div *ngIf="payed=='good'">
+                <div *ngIf="offerIsActive" class="activer_btn" (click)="activerOffre(oneOffer.OFF_DESCRIPTION, oneOffer.OFF_DATEDEBUT, oneOffer.OFF_DATEFIN, oneOffer.OFF_ID, oneOffer.Entreprises_ENT_ID, user_id)">Activer</div>
+                <div *ngIf="!offerIsActive" class="activer_btn notactive" (click)="notActiveBtn()">Activer</div>
+            </div>
+            <div *ngIf="payed!='good'">
+                <div *ngIf="offerIsActive" class="activer_btn" (click)="jemabonne()">Activer</div>
+                <div *ngIf="!offerIsActive" class="activer_btn notactive" (click)="notActiveBtn()">Activer</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="bar-schedule">
-    <h4 class="horaire">Horaire :</h4>
-    <ion-grid *ngFor="let schedule of mySchedule; let i = index">
-      <ion-row [ngClass]="(i % 2 == 0) ? 'odd' : 'even'">
-        <ion-col size="4" align-self-center>
-          <div>
-            {{schedule.HOR_JOURS}}
+  <div class="sched_now">
+      <div class="ifOpenNow">
+        <p class="closeSchednow"><ion-icon name="time"></ion-icon>&nbsp;Horaire du bar</p>
+      </div>
+      <!-- <div class="ifOpenNow" *ngFor="let sched of FilteredSched">
+          <div *ngIf="dayShift">
+            <div *ngIf="(dayShiftIn)">
+                <p class="openSchednow"><ion-icon name="time"></ion-icon>&nbsp;{{sched.HOR_JOURS}}, Ouvert<span>&nbsp;ferme à <ion-datetime [readonly]="true" displayFormat="HH:mm" value="{{sched.HOR_HEUREFIN_JOUR}}"></ion-datetime></span></p>
+            </div>
+            <div *ngIf="(!dayShiftIn)">
+                <p class="closeSchednow"><ion-icon name="time"></ion-icon>&nbsp;{{sched.HOR_JOURS}}, Fermé le matin</p>
+            </div>
           </div>
-        </ion-col>
-        <ion-col size="4" align-self-center [ngClass]="(schedule.HOR_HEUREDEBUT == '00:00:00' && schedule.HOR_HEUREFIN == '00:00:00') ? 'closed' : 'open'">
-          <div>
-            <ion-datetime [readonly]="true" displayFormat="HH:mm" value="{{schedule.HOR_HEUREDEBUT}}"></ion-datetime>
-          </div>
-          
-        </ion-col>
-        <ion-col size="4" align-self-center [ngClass]="(schedule.HOR_HEUREDEBUT == '00:00:00' && schedule.HOR_HEUREFIN == '00:00:00') ? 'closed' : 'open'">
-          <div >
-            <ion-datetime [readonly]="true" displayFormat="HH:mm" value="{{schedule.HOR_HEUREFIN}}"></ion-datetime>            
-          </div>
-        </ion-col>
 
-        <ion-col size="8" align-self-center [ngClass]="(schedule.HOR_HEUREDEBUT == '00:00:00' && schedule.HOR_HEUREFIN == '00:00:00') ? 'open' : 'closed'">
-          <div class="closedCol" >
-            Fermé
+
+          <div *ngIf="nightShift">
+            <div *ngIf="(nightShiftIn)">
+                <p class="openSchednow"><ion-icon name="time"></ion-icon>&nbsp;{{sched.HOR_JOURS}}, Ouvert<span>&nbsp;ferme à <ion-datetime [readonly]="true" displayFormat="HH:mm" value="{{sched.HOR_HEUREFIN_SOIR}}"></ion-datetime></span></p>
+            </div>
+            <div *ngIf="(!nightShiftIn)">
+                <p class="closeSchednow"><ion-icon name="time"></ion-icon>&nbsp;{{sched.HOR_JOURS}}, Fermé le soir</p>
+            </div>
           </div>
-        </ion-col>
-       
-      </ion-row>
-    </ion-grid>
+        </div> -->
   </div>
 
-  <ion-button class="commentButton" shape="round"><ion-icon name="paper"></ion-icon>&nbsp;Voir les avis des clients</ion-button>
+  <div class="schedule">
+    <div *ngFor="let schedule of mySchedule">
+        <div class="sched_row" [ngClass]="(schedule.HOR_JOURS == dayOfTheWeek) ? 'today' : 'notToday'">
+          <p>{{schedule.HOR_JOURS}}</p>
+          <div class="sched_col">
+            <p *ngIf="(schedule.HOR_HEUREDEBUT_JOUR == '00:00:00' && schedule.HOR_HEUREFIN_JOUR == '00:00:00') && (schedule.HOR_HEUREDEBUT_SOIR != '00:00:00' || schedule.HOR_HEUREFIN_SOIR != '00:00:00')">Fermé le matin</p>
+            <p *ngIf="schedule.HOR_HEUREDEBUT_JOUR != '00:00:00' || schedule.HOR_HEUREFIN_JOUR != '00:00:00'"><ion-icon name="sunny"></ion-icon>&nbsp;<ion-datetime [readonly]="true" displayFormat="HH:mm" value="{{schedule.HOR_HEUREDEBUT_JOUR}}"></ion-datetime> - <ion-datetime [readonly]="true" displayFormat="HH:mm" value="{{schedule.HOR_HEUREFIN_JOUR}}"></ion-datetime></p>
+            <p *ngIf="schedule.HOR_HEUREDEBUT_SOIR != '00:00:00' || schedule.HOR_HEUREFIN_SOIR != '00:00:00'"><ion-icon name="moon"></ion-icon>&nbsp;<ion-datetime [readonly]="true" displayFormat="HH:mm" value="{{schedule.HOR_HEUREDEBUT_SOIR}}"></ion-datetime> - <ion-datetime [readonly]="true" displayFormat="HH:mm" value="{{schedule.HOR_HEUREFIN_SOIR}}"></ion-datetime></p>
+            <p *ngIf="(schedule.HOR_HEUREDEBUT_SOIR == '00:00:00' && schedule.HOR_HEUREFIN_SOIR == '00:00:00') && (schedule.HOR_HEUREDEBUT_JOUR != '00:00:00' || schedule.HOR_HEUREFIN_JOUR != '00:00:00')">Fermé le soir</p>
+            <p *ngIf="schedule.HOR_HEUREDEBUT_SOIR == '00:00:00' && schedule.HOR_HEUREFIN_SOIR == '00:00:00' && schedule.HOR_HEUREDEBUT_JOUR == '00:00:00' && schedule.HOR_HEUREFIN_JOUR == '00:00:00'">Fermé toute la journée</p>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <ion-button *ngIf="payed=='good'" (click)="rate(myBar.ENT_ID, user_id)" class="commentButton" shape="round"><ion-icon name="paper"></ion-icon>&nbsp;Donner votre note</ion-button>
+  <ion-button  class="geoLocalButton" shape="round"><ion-icon name="navigate"></ion-icon>&nbsp;Localiser ce bar</ion-button>
+
 </ion-content>

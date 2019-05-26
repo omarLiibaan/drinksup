@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
 import {EmailComposer} from '@ionic-native/email-composer/ngx';
 
 @Component({
@@ -8,6 +8,8 @@ import {EmailComposer} from '@ionic-native/email-composer/ngx';
     styleUrls: ['./settings.page.scss'],
 })
 export class SettingsPage implements OnInit {
+    idParam : string;
+    emailParam : string;
 
     constructor(private route: Router, private emailComposer: EmailComposer) { }
 

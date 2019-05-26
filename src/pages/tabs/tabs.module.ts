@@ -16,7 +16,6 @@ const routes: Routes = [
         path: '',
         component: TabsPage,
         children: [
-
             {
                 path: 'offers',
                 children: [
@@ -46,6 +45,21 @@ const routes: Routes = [
                 children: [
                     { path: '', loadChildren: '../bar-user/bar-user.module#BarUserPageModule' },
                 ]
+                
+            },
+            {
+                path: 'bar-user/:id/:idOffer',
+                children: [
+                    { path: '', loadChildren: '../bar-user/bar-user.module#BarUserPageModule' },
+                ]
+                
+            },
+            {
+                path: 'searchAbar',
+                children: [
+                    { path: '', loadChildren: '../search-a-bar/search-a-bar.module#SearchABarPageModule' },
+                ]
+                
             },
         ]
     },

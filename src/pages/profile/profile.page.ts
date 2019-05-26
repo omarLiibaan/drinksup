@@ -3,7 +3,9 @@ import { Storage } from '@ionic/storage';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NavController, Platform } from '@ionic/angular';
 import { Router, ActivatedRoute } from '@angular/router';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import * as moment from 'moment';
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
 
 
 @Component({
@@ -22,7 +24,7 @@ export class ProfilePage implements OnInit {
     data: any;
     dateInscription = '';
     idInternaute: number;
-    constructor(private route: Router, public navCtrl : NavController, public storage: Storage, private http : HttpClient, private platform : Platform) {
+    constructor(private emailComposer: EmailComposer, private googlePlus : GooglePlus, private route: Router, public navCtrl : NavController, public storage: Storage, private http : HttpClient, private platform : Platform) {
 
 
     }
@@ -33,10 +35,10 @@ export class ProfilePage implements OnInit {
 
     ionViewWillEnter(){
         moment.locale('fr');
+
         this.storage.get('SessionIdKey').then((val) => {
             this.loadData(val);
         });
-
     }
 
     loadData(idSession : string){
@@ -64,7 +66,8 @@ export class ProfilePage implements OnInit {
         this.storage.remove("SessionRoleKey");
         this.storage.remove("SessionEmailKey");
         this.storage.remove("SessionIdKey");
-        this.navCtrl.navigateForward('login');
+        this.googlePlus.logout().then(res => {console.log(res);}).catch(err => console.error(err));
+        this.navCtrl.navigateRoot('login');
     }
 
     async navTabs(msg: string) {
@@ -74,6 +77,27 @@ export class ProfilePage implements OnInit {
     goSetting(){
         console.log('salut ' + this.idInternaute);
         this.navTabs('/settings');
+    }
+
+
+    goFaq(){
+        console.log('salut');
+        this.navTabs('/faq');
+    }
+    goAbonnement(){
+        this.navTabs('/abonnement');
+    }
+    sendEmail(){
+
+        const email = {
+            to: 'admin@drinksup.ch',
+            subject: 'Drinks up contact',
+            body: '',
+            isHtml: true
+        };
+
+// Send a text message using default options
+        this.emailComposer.open(email);
     }
 
 }

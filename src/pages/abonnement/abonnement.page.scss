@@ -1,3 +1,4 @@
+
 ion-card{
   background-color: rgba(0,0,0,.2);
   border : 1px solid rgba(255,255,255,0.5);
@@ -18,4 +19,30 @@ div{
   width:100%;
   justify-content: space-between;
   margin-bottom: 20px;
+}
+
+h3{
+  margin-top: 70px;
+  font-family: "NBL";
+  font-size: 1.2rem;
+}
+
+p{
+  font-family: "NBO";
+  font-size: .9rem;
+  color: rgb(172, 172, 172);
+}
+
+.validerBtn{
+  margin: 0 16px;
+  width: calc(100% - 32px);
+  text-transform: none;
+  font-size: .9rem;
+  --background : #fff;
+  --border-width : 1px;
+  --border-color : #fff;
+  --border-style : solid; 
+  color : #070708; 
+  margin-top: 40px;
+  font-family: "NBL";
 }

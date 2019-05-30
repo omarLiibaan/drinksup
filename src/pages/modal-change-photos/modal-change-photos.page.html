@@ -1,0 +1,68 @@
+<ion-content padding>
+  
+  <div id="pho_choices_wrapper">
+      <h1>Choisissez le n° de photo</h1>
+      <div class="pho_choices" (click)="whichPhoto(1)">
+          <ion-icon name="image"></ion-icon>&nbsp;Photo n° 1
+      </div>
+      <hr>
+      <div class="pho_choices" (click)="whichPhoto(2)">
+          <ion-icon name="image"></ion-icon>&nbsp;Photo n° 2
+      </div>
+      <hr>
+      <div class="pho_choices" (click)="whichPhoto(3)">
+          <ion-icon name="image"></ion-icon>&nbsp;Photo n° 3
+      </div>
+  </div>
+
+  <div id="pho_1_wrapper">
+      <h1>Photo n° 1</h1>
+      <div class="pho_choices" (click)="upl(1)">
+          <ion-icon name="camera"></ion-icon>&nbsp;Appareil Photo
+      </div>
+      <hr>
+      <div class="pho_choices" (click)="gal(1)">
+          <ion-icon name="images"></ion-icon>&nbsp;Galerie
+      </div>
+      <hr>
+      <div class="pho_choices" (click)="backToChoices(1)">
+          <ion-icon name="arrow-round-back"></ion-icon>&nbsp;Retour
+      </div>
+  </div>
+
+  <div id="pho_2_wrapper">
+      <h1>Photo n° 2</h1>
+      <div class="pho_choices" (click)="upl(2)">
+          <ion-icon name="camera"></ion-icon>&nbsp;Appareil Photo
+      </div>
+      <hr>
+      <div class="pho_choices" (click)="gal(2)">
+          <ion-icon name="images"></ion-icon>&nbsp;Galerie
+      </div>
+      <hr>
+      <div class="pho_choices" (click)="backToChoices(2)">
+          <ion-icon name="arrow-round-back"></ion-icon>&nbsp;Retour
+      </div>
+  </div>
+
+  <div id="pho_3_wrapper">
+      <h1>Photo n° 3</h1>
+      <div class="pho_choices" (click)="upl(3)">
+          <ion-icon name="camera"></ion-icon>&nbsp;Appareil Photo
+      </div>
+      <hr>
+      <div class="pho_choices" (click)="gal(3)">
+          <ion-icon name="images"></ion-icon>&nbsp;Galerie
+      </div>
+      <hr>
+      <div class="pho_choices" (click)="backToChoices(3)">
+          <ion-icon name="arrow-round-back"></ion-icon>&nbsp;Retour
+      </div>
+  </div>
+</ion-content>
+
+<ion-footer>
+    <ion-toolbar color="tertiary">
+        <ion-button expand="full" fill="clear" color="light" id="close" (click)="closeModal()">Annuler</ion-button>
+      </ion-toolbar>
+</ion-footer>

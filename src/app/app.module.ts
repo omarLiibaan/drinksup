@@ -20,6 +20,9 @@ import { LoadingpagePageModule } from '../pages/loadingpage/loadingpage.module';
 import { ModalQrcodePageModule } from '../pages/modal-qrcode/modal-qrcode.module';
 import { OffersAddbarPageModule } from '../pages/offers-addbar/offers-addbar.module';
 import { ModalRatingsPageModule } from '../pages/modal-ratings/modal-ratings.module';
+import { ModalChangePhotosPageModule } from '../pages/modal-change-photos/modal-change-photos.module';
+import { ModalChangeUserphotoPageModule } from '../pages/modal-change-userphoto/modal-change-userphoto.module';
+
 
 import { Calendar } from '@ionic-native/calendar/ngx';
 import {EmailComposer} from '@ionic-native/email-composer/ngx';
@@ -31,7 +34,7 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
 @NgModule({
     declarations: [AppComponent],
     entryComponents: [],
-    imports: [NgxQRCodeModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, UsersPageModule, ModalPageModule, ModalQrcodePageModule, ModalbarAdminPageModule, ModalSchedulePageModule, LoadingpagePageModule, OffersAddbarPageModule, ModalRatingsPageModule, IonicStorageModule.forRoot()],
+    imports: [NgxQRCodeModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, UsersPageModule, ModalChangePhotosPageModule, ModalChangeUserphotoPageModule, ModalPageModule, ModalQrcodePageModule, ModalbarAdminPageModule, ModalSchedulePageModule, LoadingpagePageModule, OffersAddbarPageModule, ModalRatingsPageModule, IonicStorageModule.forRoot()],
     providers: [
         StatusBar,
         SplashScreen,

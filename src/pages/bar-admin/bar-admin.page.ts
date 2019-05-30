@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {ModalController, NavController, ToastController} from '@ionic/angular';
 import {ModalbarAdminPage} from '../modalbar-admin/modalbar-admin.page';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-bar-admin',
@@ -17,14 +18,12 @@ export class BarAdminPage implements OnInit {
   usersFilter = [];
   // public baseURI = 'http://localhost/drinksupProject/serveur/';
   public baseURI = 'https://macfi.ch/serveur/';
-  constructor(private navCtrl: NavController, private toastCtrl: ToastController, public http: HttpClient, public modalController: ModalController) { }
+  constructor(private navCtrl: NavController, private toastCtrl: ToastController, public http: HttpClient, public modalController: ModalController, private route: Router) { }
 
-  ngOnInit() {
-      this.ionViewWillEnter();
-  }
-    public ionViewWillEnter(): void {
+    ngOnInit() {}
+
+    ionViewWillEnter(): void {
         this.getProprio();
-
     }
   public getProprio() {
         const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -54,6 +53,17 @@ export class BarAdminPage implements OnInit {
         this.ionViewWillEnter();
 
     }
+
+    checkPartenaireBar(userId){
+        // this.navCtrl.navigateForward("/tabsadmin/bar/"+userId)
+        this.navTabs("bar/"+userId);
+    }
+
+    async navTabs(msg: string) {
+        this.route.navigateByUrl(msg);
+    }
+
+
     async search(ev: any) {
         const val = ev.target.value;
         if (val && val.trim() !== '') {

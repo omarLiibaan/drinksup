@@ -1,17 +1,19 @@
+<div class="profile_overlay" [ngStyle]="{'height' : loadHeight}">
+    <!-- <div class="loader_wrapper">
+      <div class="loader" [ngStyle]="{'transform' : loadSlide}">
+        <div class="spinner"></div>
+        <h1>Chargement de page</h1>
+      </div>
+    </div> -->
+</div>
 <div class="tab_header">Profil</div>
 
 <ion-content color="secondary">
-  <!-- <div class="profile-section">
-    <img src="../../assets/img/user-icon.svg" alt="" class="animated fadeIn delay-200 fast">
-    <p [innerHTML]="loggedUser.INT_PRENOM" class="animated fadeInUp delay-400 fast"></p>
-    <p [innerHTML]="loggedUser.INT_EMAIL" class="animated fadeInUp delay-600 fast"></p>
-    <p class="animated fadeInUp delay-600 fast">Membre  {{dateInscription}} </p>
-    <ion-button (click)="logoutFromApp()" class="animated fadeInUp delay-800 fast">Se déloguer</ion-button>
-  </div> -->
   <div class="profile_header">
     <h1 (click)="logoutFromApp()">Se déloguer</h1>
     <div class="profile_pic_frame">
-      <img src="../../assets/img/user-icon.svg">
+      <img class="profpic" [src]="profilePic">
+      <img class="defpic" [src]="defaultPic">
     </div>
   </div>
 
@@ -20,11 +22,10 @@
     <h2>{{loggedUser.INT_EMAIL}}</h2>
     <p>Membre {{dateInscription}}</p>
 
-    
-    <div class="otherStuff" (click)="goAbonnement()"><ion-icon name="arrow-forward"></ion-icon>&nbsp;S'abonner</div>
+    <div *ngIf="loggedUser.Roles_ROL_ID != 2 && loggedUser.Roles_ROL_ID != 1 && paidUser !='good'" class="otherStuff" (click)="goAbonnement()"><ion-icon name="arrow-forward"></ion-icon>&nbsp;S'abonner</div>
     <div class="otherStuff" (click)="sendEmail()"><ion-icon name="arrow-forward"></ion-icon>&nbsp;Contactez-nous</div>
     <div class="otherStuff" (click)="goFaq()"><ion-icon name="arrow-forward"></ion-icon>&nbsp;Foire aux questions</div>
-    <div class="otherStuff"><ion-icon name="arrow-forward"></ion-icon>&nbsp;Changer photo de profil</div>
+    <div class="otherStuff" (click)="changerPhoto(loggedUser.INT_EMAIL)"><ion-icon name="arrow-forward"></ion-icon>&nbsp;Changer photo de profil</div>
     <div class="otherStuff"><ion-icon name="arrow-forward"></ion-icon>&nbsp;Conditions Générales d'Utilisation</div>
   </div>
 

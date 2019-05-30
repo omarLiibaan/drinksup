@@ -2,36 +2,30 @@
   <div class="img-slide">
     <ion-slides pager="true" [options]="slideOpts">
         <ion-slide>
-            <div class="uploadbtn">
-                <ion-button shape="round" (click)="upload1(1)"><ion-icon name="camera"></ion-icon></ion-button>
-                <ion-button shape="round" (click)="uploadGal1(1)"><ion-icon name="image"></ion-icon></ion-button>
-            </div>
-            <img [src]="imgLink1" alt="Photo n° 1">
+            <div class="pho_number">Photo n° 1</div>
+            <div class="pre_cover" [ngStyle]="{'opacity' : preCovOpac, 'display' : preCovDis}"></div>
+            <img [src]="imgLink1" alt="Photo n° 1" (load)="imgLoad()">
         </ion-slide>
 
         <ion-slide>
-          <div class="uploadbtn">
-              <ion-button shape="round" (click)="upload2(2)"><ion-icon name="camera"></ion-icon></ion-button>
-              <ion-button shape="round" (click)="uploadGal2(2)"><ion-icon name="image"></ion-icon></ion-button>
-          </div>
+            <div class="pho_number">Photo n° 2</div>
             <img [src]="imgLink2" alt="Photo n° 2">
       </ion-slide>
 
       <ion-slide>
-        <div class="uploadbtn">
-            <ion-button shape="round" (click)="upload3(3)"><ion-icon name="camera"></ion-icon></ion-button>
-            <ion-button shape="round" (click)="uploadGal3(3)"><ion-icon name="image"></ion-icon></ion-button>
-        </div>
-          <img [src]="imgLink3" alt="Photo n° 3">
-    </ion-slide>
-    
+            <div class="pho_number">Photo n° 3</div>
+            <img [src]="imgLink3" alt="Photo n° 3">
+      </ion-slide>
     </ion-slides>
+    <!-- <div class="fade_top"></div> -->
+    <div class="fade_bot">
+      <p *ngIf="barFromAdminSide===null" class="changeImg" (click)="editPhotos()"><ion-icon name="images"></ion-icon>&nbsp;Mettre à jour vos photos</p>
+    </div>
   </div>
   <div padding class="bar-content">
-    <img class="roundCorner" src="../../assets/img/round-corner-light.svg" alt="">
-    
-    <div class="note">
-      <div class="bar-div"></div>
+    <h1 *ngIf="barFromAdminSide!==null"class="status" (click)="lirePlus()">Son statut actuel : <span [ngClass]="(barStatus == 'Actif') ? 'active_status' : 'inactive_status'">{{barStatus}}</span>&nbsp;<i id="lireplustext">(Lire plus&nbsp;<ion-icon name="arrow-dropdown"></ion-icon>)</i></h1>
+    <h1 *ngIf="barFromAdminSide===null" class="status" (click)="lirePlus()">Votre statut actuel : <span [ngClass]="(barStatus == 'Actif') ? 'active_status' : 'inactive_status'">{{barStatus}}</span>&nbsp;<i id="lireplustext">(Lire plus&nbsp;<ion-icon name="arrow-dropdown"></ion-icon>)</i></h1>
+    <div class="note" id="noteSect">
       <div class="span-div">Attention :</div> Si vous modifiez les infos de votre bar, votre statut passera en <div class="span-div">inactif</div>.
       <br>
       L'administrateur vous changera le statut une fois que vous modifications seront validées.
@@ -39,65 +33,44 @@
       Cela ne s'applique pas aux modifications d'horaire.
     </div>
 
-    <span></span>
-    <h1>Infos du bar</h1>
-    
     <form [formGroup]="editBarForm" (ngSubmit)="editBar()">
-      <ion-input formControlName="nomEnt" type="text" [readonly]="barInputDisabled" [ngStyle]="{'background-color': activeColor, 'border-bottom': activeBorder, 'height' : activeHeight}"></ion-input>
-      <ion-input formControlName="typeEnt" type="text" [readonly]="barInputDisabled" [ngStyle]="{'background-color': activeColor, 'border-bottom': activeBorder, 'height' : activeHeight, 'font-size' : activeFS}"></ion-input>
-      <ion-input formControlName="adresseEnt" type="text" [readonly]="barInputDisabled" [ngStyle]="{'background-color': activeColor, 'border-bottom': activeBorder, 'height' : activeHeight, 'font-size' : activeFS}"></ion-input>
+      <ion-input class="barname_input" formControlName="nomEnt" type="text" [readonly]="barInputDisabled" [ngStyle]="{'background-color': activeColor, 'border-bottom': activeBorder, 'height' : activeHeight}"></ion-input>
+      <ion-input class="bartype_input"  formControlName="typeEnt" type="text" [readonly]="barInputDisabled" [ngStyle]="{'background-color': activeColor, 'border-bottom': activeBorder, 'height' : activeHeight, 'font-size' : activeFS}"></ion-input>
+      <ion-input  class="baradd_input" formControlName="adresseEnt" type="text" [readonly]="barInputDisabled" [ngStyle]="{'background-color': activeColor, 'border-bottom': activeBorder, 'height' : activeHeight, 'font-size' : activeFS}"></ion-input>
       <div class="inputRow">
-        <ion-input class="inputNpa" formControlName="NPAEnt" type="text" [readonly]="barInputDisabled" [ngStyle]="{'background-color': activeColor, 'border-bottom': activeBorder, 'height' : activeHeight, 'font-size' : activeFS}"></ion-input>
-        <ion-input formControlName="localiteEnt" type="text" [readonly]="barInputDisabled" [ngStyle]="{'background-color': activeColor, 'border-bottom': activeBorder, 'height' : activeHeight, 'font-size' : activeFS}"></ion-input>
+        <ion-input class="barnpa_input" formControlName="NPAEnt" type="text" [readonly]="barInputDisabled" [ngStyle]="{'background-color': activeColor, 'border-bottom': activeBorder, 'height' : activeHeight, 'font-size' : activeFS}"></ion-input>
+        <ion-input class="barloc_input"  formControlName="localiteEnt" type="text" [readonly]="barInputDisabled" [ngStyle]="{'background-color': activeColor, 'border-bottom': activeBorder, 'height' : activeHeight, 'font-size' : activeFS}"></ion-input>
       </div>
-      <ion-textarea rows="6" formControlName="descEnt" type="text" [readonly]="barInputDisabled" [ngStyle]="{'background-color': activeColor, 'border-bottom': activeBorder, 'height' : activeHeightTA, 'font-size' : activeFS}"></ion-textarea>
+      <ion-textarea class="bardesc_input"  rows="6" formControlName="descEnt" type="text" [readonly]="barInputDisabled" [ngStyle]="{'background-color': activeColor, 'border-bottom': activeBorder, 'height' : activeHeightTA, 'font-size' : activeFS}"></ion-textarea>
 
       <div class="editBtnSection">
-        <ion-button (click)="allowEdit()" [ngStyle]="{'display': dHide}" shape="round" class="animated fadeInUp btnModif">Modifier</ion-button>
-        <ion-button type="submit" shape="round" [ngStyle]="{'display': dNone}" class="animated fadeInUp btnValider">Valider</ion-button>
-        <ion-button (click)="disableEdit()" shape="round" [ngStyle]="{'display': dNone}" class="animated fadeInUp delay-200 btnAnnuler">Annuler</ion-button>
+        <ion-button class="modval" (click)="allowEdit()" [ngStyle]="{'display': dHide}" shape="round">Modifier</ion-button>
+        <ion-button class="modval" type="submit" shape="round" [ngStyle]="{'display': dNone}">Valider</ion-button>
+        <ion-button class="annul"(click)="disableEdit()" shape="round" [ngStyle]="{'display': dNone}">Annuler</ion-button>
       </div>
     </form>
 
     <div class="scheduleSection">
-      <span></span>
-      <h1>horaire</h1>
+      <h1>Glisser le jour pour modifier</h1>
+      <ion-item-sliding *ngFor="let schedule of mySchedule" #slidingItem>
+          <ion-item-options side="start">
+            <ion-item-option color="secondary" (click)="editSchedule(schedule.HOR_ID, schedule.HOR_JOURS, schedule.HOR_HEUREDEBUT_JOUR, schedule.HOR_HEUREFIN_JOUR, schedule.HOR_HEUREDEBUT_SOIR, schedule.HOR_HEUREFIN_SOIR)"><ion-icon slot="top" name="create"></ion-icon>&nbsp;Modifier</ion-item-option>
+          </ion-item-options>
 
-      <ion-grid *ngFor="let schedule of mySchedule; let i = index">
-          <ion-row [ngClass]="(i % 2 == 0) ? 'odd' : 'even'">
-            <ion-col size="4" align-self-center>
-              <div>
-                {{schedule.HOR_JOURS}}
-              </div>
-            </ion-col>
-            <ion-col size="3" align-self-center>
-              <div [ngClass]="(schedule.HOR_HEUREDEBUT == '00:00:00' && schedule.HOR_HEUREFIN == '00:00:00') ? 'closed' : 'open'">
-                <ion-datetime [readonly]="true" displayFormat="HH:mm" value="{{schedule.HOR_HEUREDEBUT}}"></ion-datetime>
-              </div>
-              <div class="closedCol" [ngClass]="(schedule.HOR_HEUREDEBUT == '00:00:00' && schedule.HOR_HEUREFIN == '00:00:00') ? 'open' : 'closed'">
-                  Fermé
-              </div>
-            </ion-col>
-            <ion-col size="3" align-self-center>
-              <div [ngClass]="(schedule.HOR_HEUREDEBUT == '00:00:00' && schedule.HOR_HEUREFIN == '00:00:00') ? 'closed' : 'open'">
-                <ion-datetime [readonly]="true" displayFormat="HH:mm" value="{{schedule.HOR_HEUREFIN}}"></ion-datetime>            
-              </div>
-            </ion-col>
-            <ion-col size="2" align-self-center>
-              <div>
-                <ion-button shape="round" size="small" (click)="editSchedule(schedule.HOR_ID, schedule.HOR_JOURS, schedule.HOR_HEUREDEBUT, schedule.HOR_HEUREFIN)">Edit</ion-button>
-              </div>
-            </ion-col>
-            
-          </ion-row>
-        </ion-grid>
+          <ion-item class="sched_row" [ngClass]="(schedule.HOR_JOURS == dayOfTheWeek) ? 'today' : 'notToday'">
+            <ion-label class="sched_left">{{schedule.HOR_JOURS}}</ion-label>
+            <ion-label class="sched_right">
+                <p *ngIf="(schedule.HOR_HEUREDEBUT_JOUR == '00:00:00' && schedule.HOR_HEUREFIN_JOUR == '00:00:00') && (schedule.HOR_HEUREDEBUT_SOIR != '00:00:00' || schedule.HOR_HEUREFIN_SOIR != '00:00:00')">Fermé le matin</p>
+                <p *ngIf="schedule.HOR_HEUREDEBUT_JOUR != '00:00:00' || schedule.HOR_HEUREFIN_JOUR != '00:00:00'"><ion-icon name="sunny"></ion-icon>&nbsp;<ion-datetime [readonly]="true" displayFormat="HH:mm" value="{{schedule.HOR_HEUREDEBUT_JOUR}}"></ion-datetime> - <ion-datetime [readonly]="true" displayFormat="HH:mm" value="{{schedule.HOR_HEUREFIN_JOUR}}"></ion-datetime></p>
+                <p *ngIf="schedule.HOR_HEUREDEBUT_SOIR != '00:00:00' || schedule.HOR_HEUREFIN_SOIR != '00:00:00'"><ion-icon name="moon"></ion-icon>&nbsp;<ion-datetime [readonly]="true" displayFormat="HH:mm" value="{{schedule.HOR_HEUREDEBUT_SOIR}}"></ion-datetime> - <ion-datetime [readonly]="true" displayFormat="HH:mm" value="{{schedule.HOR_HEUREFIN_SOIR}}"></ion-datetime></p>
+                <p *ngIf="(schedule.HOR_HEUREDEBUT_SOIR == '00:00:00' && schedule.HOR_HEUREFIN_SOIR == '00:00:00') && (schedule.HOR_HEUREDEBUT_JOUR != '00:00:00' || schedule.HOR_HEUREFIN_JOUR != '00:00:00')">Fermé le soir</p>
+                <p *ngIf="schedule.HOR_HEUREDEBUT_SOIR == '00:00:00' && schedule.HOR_HEUREFIN_SOIR == '00:00:00' && schedule.HOR_HEUREDEBUT_JOUR == '00:00:00' && schedule.HOR_HEUREFIN_JOUR == '00:00:00'">Fermé toute la journée</p>
+            </ion-label>
+          </ion-item>
+      </ion-item-sliding>
 
     </div><!-- end schedule section -->
     
   </div><!-- end bar content-->
-  <div class="status-section">
-    <img src="../../assets/img/invalid-icon.svg" alt="" [ngClass]="(barStatus == 'Inactif') ? 'open' : 'closed'">
-    <img src="../../assets/img/valid-icon.svg" alt="" [ngClass]="(barStatus == 'Inactif') ? 'closed' : 'open'">
-    <p [ngStyle]="{'color' : invalidColor}">votre status est <span>{{barStatus}}</span> </p>
-  </div>
+
 </ion-content>

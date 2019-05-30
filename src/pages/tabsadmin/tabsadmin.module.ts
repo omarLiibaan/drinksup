@@ -15,7 +15,6 @@ const routes: Routes = [
         path: '',
         component: TabsadminPage,
         children: [
-
             {
                 path: 'users',
                 children: [

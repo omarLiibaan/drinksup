@@ -14,8 +14,6 @@ export class ModalSchedulePage implements OnInit {
   baseURI = 'https://macfi.ch/serveur/aksi.php';
   jourId : string;
   jour : string;
-  hDeb : string;
-  hFin : string;
 
   //form
   updateSched : FormGroup;
@@ -23,19 +21,26 @@ export class ModalSchedulePage implements OnInit {
 
   constructor(private modalCtrl : ModalController, private navParam : NavParams, private toastCtrl : ToastController, private http : HttpClient) { 
     this.updateSched = new FormGroup({
-      heureDebut: new FormControl(),
-      heureFin: new FormControl()
+      heureDebutJour: new FormControl(),
+      heureFinJour: new FormControl(),
+      heureDebutSoir: new FormControl(),
+      heureFinSoir: new FormControl()
     });
   }
 
   ngOnInit() {
     this.jourId = this.navParam.get('jourId');
     this.jour = this.navParam.get('jour');
-    this.hDeb = this.navParam.get('hdeb');
-    this.hFin = this.navParam.get('hfin');
+    var horDebJ = this.navParam.get('horDebJ');
+    var horFinJ = this.navParam.get('horFinJ');
+    var horDebS = this.navParam.get('horDebS');
+    var horFinS = this.navParam.get('horFinS');
 
-    this.updateSched.get('heureDebut').setValue(this.hDeb);
-    this.updateSched.get('heureFin').setValue(this.hFin);
+
+    this.updateSched.get('heureDebutJour').setValue(horDebJ);
+    this.updateSched.get('heureFinJour').setValue(horFinJ);
+    this.updateSched.get('heureDebutSoir').setValue(horDebS);
+    this.updateSched.get('heureFinSoir').setValue(horFinS);
   }
 
   validButton(){
@@ -47,16 +52,18 @@ export class ModalSchedulePage implements OnInit {
   }
 
   editSched() {
-    const hDeb: string = this.updateSched.controls['heureDebut'].value;
-    const hFin: string = this.updateSched.controls['heureFin'].value;
+    const hDebJ: string = this.updateSched.controls['heureDebutJour'].value;
+    const hFinJ: string = this.updateSched.controls['heureFinJour'].value;
+    const hDebS: string = this.updateSched.controls['heureDebutSoir'].value;
+    const hFinS: string = this.updateSched.controls['heureFinSoir'].value;
     const jId: string = this.jourId;
     // Validation Bar to display for Users interface
-    this.updateSchedule(jId, hDeb, hFin);
+    this.updateSchedule(jId, hDebJ, hFinJ, hDebS, hFinS);
   }
 
-  updateSchedule(idParam: string, hDebParam: string, hFinParam : string) {
+  updateSchedule(idParam: string, hDebJParam: string, hFinJParam : string, hDebSParam: string, hFinSParam : string) {
     const headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
-        options: any		= { 'key' : 'updateSched', 'jourId': idParam, 'heureDeb': hDebParam, 'heureFin': hFinParam},
+        options: any		= { 'key' : 'updateSched', 'jourId': idParam, 'heureDebJour': hDebJParam, 'heureFinJour': hFinJParam, 'heureDebSoir': hDebSParam, 'heureFinSoir': hFinSParam},
         url: any      	= this.baseURI;
   
     this.http.post(url, JSON.stringify(options), headers).subscribe((data: any) => {

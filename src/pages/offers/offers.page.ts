@@ -17,6 +17,9 @@ export class OffersPage implements OnInit {
   uplPhotoURI = 'https://www.macfi.ch/serveur/barphotos/';
   items : Array<any> = [];
   Filtereditems : Array<any> = [];
+  scannedOffers : Array<any> = [];
+  pushedScannedOffers : Array<any> = [];
+  user_id;
   random : number;
   randomImgNo : number;
   tabPosition : string = "translateX(0)";
@@ -28,12 +31,13 @@ export class OffersPage implements OnInit {
   tousClicked : boolean = false;
   encoursClicked : boolean = false;
   imminentClicked : boolean = false;
+  intervalInit;
 
     
-    constructor(private router: Router, private navCtrl : NavController, private nativePageTransitions: NativePageTransitions, private modalCtrl : ModalController, private storage : Storage, private http : HttpClient, private toastCtrl : ToastController) { 
+  constructor(private router: Router, private navCtrl : NavController, private nativePageTransitions: NativePageTransitions, private modalCtrl : ModalController, private storage : Storage, private http : HttpClient, private toastCtrl : ToastController) { 
     this.random = Math.floor(Math.random() * 100);
     this.randomImgNo = Math.floor(Math.random() * 3)+1;
-    this.loadBar();
+    
   }
 
   ngOnInit() {
@@ -42,11 +46,17 @@ export class OffersPage implements OnInit {
   ionViewWillEnter(): void { 
     this.storage.get('SessionIdKey').then((val) => {
       this.getPaidUser(val);
+      this.loadBar(val);
     }); 
 
-    setInterval(() => { 
+    this.intervalInit = setInterval(() => { 
       this.setCountDown(); 
-    }, 1000);
+    }, 1000);   
+  }
+
+  ionViewDidLeave(){
+    clearInterval(this.intervalInit);
+    this.tous();
   }
 
   getPaidUser(id : string) {
@@ -62,14 +72,18 @@ export class OffersPage implements OnInit {
         });
   }
 
-  loadBar() : void{
+  loadBar(userId) : void{
     let headers 	: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
-        options 	: any		= { "key" : "getAllOffers"},
+        options 	: any		= { "key" : "getAllOffers", "user_id" : userId},
         url       : any      	= this.baseURI;
 
     this.http.post(url, JSON.stringify(options), headers).subscribe((data : any) =>
     {
+        // var scans = this.scannedOffers;
+        // console.log(scans)
+                  
         this.items = data;
+        console.log(this.items.length);
         this.Filtereditems = this.items;
     },
     (error : any) =>
@@ -193,12 +207,12 @@ export class OffersPage implements OnInit {
     let options: NativeTransitionOptions = {
       direction: 'left',
       duration: 150,
-      slowdownfactor: 3,
-      iosdelay: 100,
+      slowdownfactor: 1,
+      iosdelay: 50,
       androiddelay: 150
      }
     this.nativePageTransitions.slide(options); 
-    this.router.navigateByUrl("/tabs/bar-user/"+id+"/"+id_offer);
+    this.navCtrl.navigateForward("/bar-user/"+id+"/"+id_offer);
     // this.navCtrl.navigateForward();
   }
 

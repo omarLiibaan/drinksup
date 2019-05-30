@@ -43,6 +43,12 @@ export class QrcodePage implements OnInit {
         });
   }
 
+  scannerCodeDelay(){
+    setTimeout(() => {
+      this.scannerCode();
+    }, 500);
+  }
+
   scannerCode(){
     this.barcode.scan().then(data =>{
       this.codeContenu = data.text;
@@ -70,9 +76,13 @@ export class QrcodePage implements OnInit {
 
       setTimeout(() => {
         if(!this.ifScanned){
-          this.addToScannedCode(desc, start, end, offId, barId, userId);
-          alert("Validé !");
-          this.ionViewWillEnter();
+          if(desc == "" || desc === null || desc === undefined){
+            alert("Scan annulé")
+          }else{
+            this.addToScannedCode(desc, start, end, offId, barId, userId);
+            alert("Validé !");
+            this.ionViewWillEnter();
+          }  
         }else{
           alert("It is already scanned !");
           this.ionViewWillEnter();

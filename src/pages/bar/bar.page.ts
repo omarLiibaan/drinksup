@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Storage } from '@ionic/storage';
-import { ModalController, ToastController  } from '@ionic/angular';
+import { ModalController, ToastController, IonItemSliding } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Observable } from 'rxjs';
 import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 import { ModalSchedulePage } from '../modal-schedule/modal-schedule.page';
+import { ModalChangePhotosPage } from '../modal-change-photos/modal-change-photos.page';
 import { LoadingpagePage } from '../loadingpage/loadingpage.page';
+import { ActivatedRoute } from '@angular/router';
 
 
 
@@ -17,6 +19,7 @@ import { LoadingpagePage } from '../loadingpage/loadingpage.page';
   styleUrls: ['./bar.page.scss'],
 })
 export class BarPage implements OnInit {
+  @ViewChild(IonItemSliding) slidingItem: IonItemSliding;
   baseURI = 'https://macfi.ch/serveur/aksi.php';
   uplPhotoURI = 'https://www.macfi.ch/serveur/barphotos/';
   myBar : any = {};
@@ -29,10 +32,12 @@ export class BarPage implements OnInit {
   imgLink3 : string;
   ID_ENT : string;
   barStatus : string;
+  dayOfTheWeek : string;
+  lirePlusClicked : boolean = false;
 
   //style
   barInputDisabled : boolean = true;
-  activeColor : string = "#12141b";
+  activeColor : string = "#070708";
   dNone : string = "none";
   dHide : string = "inline-flex";
   activeBorder : string = "none";
@@ -40,15 +45,18 @@ export class BarPage implements OnInit {
   activeHeightTA : string = "auto";
   activeFS : string = ".9rem"
   invalidColor : string = "#DC143C";
+  preCovOpac : string = "1";
+  preCovDis : string = "block";
   //form
   editBarForm : FormGroup;
+  barFromAdminSide;
 
 
 
-  constructor(private modalCtrl : ModalController, private formBuilder : FormBuilder, private http : HttpClient, private storage : Storage, private camera : Camera, private toastCtrl : ToastController) { 
-    this.storage.get('SessionIdKey').then((val) => {
-      this.loadBar(val);
-    });
+  constructor(private aRoute : ActivatedRoute, private modalCtrl : ModalController, private formBuilder : FormBuilder, private http : HttpClient, private storage : Storage, private camera : Camera, private toastCtrl : ToastController) { 
+    // this.storage.get('SessionIdKey').then((val) => {
+    //   this.loadBar(val);
+    // });
 
     this.editBarForm = new FormGroup({
       nomEnt: new FormControl(),
@@ -70,16 +78,32 @@ export class BarPage implements OnInit {
         'localiteEnt': ['', Validators.required],
         'NPAEnt' : ['', Validators.required]
     });
-}
-
-  ngOnInit() {
-    this.ionViewWillEnter();
   }
 
-  ionViewWillEnter(): void { 
-    this.storage.get('SessionIdKey').then((val) => {
-      this.loadBar(val);
+  imgLoad(){
+    this.preCovOpac = "0";
+    setTimeout(() => {
+      this.preCovDis = "none";
+    }, 500);
+  }
+
+  ngOnInit() {
+    this.barFromAdminSide = this.aRoute.snapshot.paramMap.get('id_partenaire');
+  }
+
+  ionViewWillEnter(){ 
+    if(this.barFromAdminSide === null || this.barFromAdminSide === undefined || this.barFromAdminSide === ""){
+      this.storage.get('SessionIdKey').then((val) => {
+        this.loadBar(val);
     }); 
+    }else{
+      this.loadBar(this.barFromAdminSide);
+    }
+    
+    console.log(this.barFromAdminSide)
+    var jours = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
+    var date = new Date();
+    this.dayOfTheWeek = jours[date.getDay()-1];
   }
 
   loadBar(idUserParam : string) : void{
@@ -89,7 +113,7 @@ export class BarPage implements OnInit {
 
     this.http.post(url, JSON.stringify(options), headers).subscribe((data : any) =>
     {
-        var random = Math.floor(Math.random() * 100);
+        var random = Math.floor(Math.random() * 10000);
         this.myBar = data;
         this.barName = data.ENT_NOM;
         this.imgLink1 = this.uplPhotoURI+this.barName+"_1?ran="+random;
@@ -179,9 +203,22 @@ loadSchedule(idBarParam : string){
     });
 }
 
+lirePlus(){
+  if(this.lirePlusClicked === false){
+    document.getElementById("lireplustext").innerHTML = "(Lire moins&nbsp;<ion-icon name='arrow-dropup'></ion-icon>)";
+    document.getElementById("noteSect").style.height = "125px";
+    this.lirePlusClicked = true;
+  }else{
+    document.getElementById("lireplustext").innerHTML = "(Lire plus&nbsp;<ion-icon name='arrow-dropdown'></ion-icon>)";
+    document.getElementById("noteSect").style.height = "0px";
+    this.lirePlusClicked = false;
+  }
+}
+
 //modal
 
-async editSchedule(jourIdParam : string, jourParam : string, hDebParam : string, hFinParam : string) {
+async editSchedule(jourIdParam : string, jourParam : string, hdj : string, hfj : string, hds : string, hfs : string) {
+  this.slidingItem.close();
   const modal = await this.modalCtrl.create( {
       component: ModalSchedulePage,
       cssClass: "edit-schedule-modal",
@@ -189,12 +226,33 @@ async editSchedule(jourIdParam : string, jourParam : string, hDebParam : string,
       componentProps: {
         jourId : jourIdParam,
         jour : jourParam,
-        hdeb : hDebParam,
-        hfin : hFinParam
+        horDebJ : hdj,
+        horFinJ : hfj,
+        horDebS : hds,
+        horFinS : hfs
       },
   });
   modal.onDidDismiss().then(() => {
       this.loadSchedule(this.ID_ENT);
+  })
+  modal.present();
+}
+
+async editPhotos() {
+  const modal = await this.modalCtrl.create( {
+      component: ModalChangePhotosPage,
+      cssClass: "edit-photos-modal",
+      showBackdrop : true,
+      componentProps: {
+        bar_name : this.barName
+      },
+  });
+  modal.onDidDismiss().then((data) => {
+    if(data.data.uploaded == "Yes"){
+      this.loadingModal();//open loading modal
+    }else{
+      console.log("Just an oridnary cancellation");
+    }
   })
   modal.present();
 }
@@ -214,7 +272,7 @@ async editSchedule(jourIdParam : string, jourParam : string, hDebParam : string,
 
   disableEdit(){
     this.barInputDisabled = true;
-    this.activeColor = "#12141b";
+    this.activeColor = "#070708";
     this.dNone = "none";
     this.dHide = "inline-flex";
     this.activeBorder = "none"
@@ -224,98 +282,6 @@ async editSchedule(jourIdParam : string, jourParam : string, hDebParam : string,
 
     //
     this.ionViewWillEnter()
-  }
-
-  //Upload functions
-
-  upload1(photoNum : string){
-    this.upl(photoNum);
-  }
-
-  upload2(photoNum : string){
-    this.upl(photoNum);
-  }
-
-  upload3(photoNum : string){
-    this.upl(photoNum);
-  }
-
-  uploadGal1(photoNum : string){
-    this.gal(photoNum);
-  }
-
-  uploadGal2(photoNum : string){
-    this.gal(photoNum);
-  }
-
-  uploadGal3(photoNum : string){
-    this.gal(photoNum);
-  }
-
-  upl(photoNumber : string){
-    this.photoNUM = photoNumber;
-    const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      saveToPhotoAlbum: false,
-      allowEdit: true,
-      correctOrientation: true,
-      targetHeight: 750,
-      targetWidth: 900
-    }
-    
-    this.camera.getPicture(options).then((imageData) => {
-      let barName = "?ImageName="+this.barName+"_"+this.photoNUM;
-      let postData = new FormData();
-      postData.append("file",imageData);
-      let data:Observable<any> = this.http.post(this.uplPhotoURI+"uploadPhoto.php"+barName, postData);
-      this.loadingModal();//open loading modal
-      data.subscribe((res)=>{
-      console.log(res);
-      console.log("Upload Successful");
-      setTimeout(() => {
-        this.modalCtrl.dismiss();
-      }, 5000);
-      
-      });
-    }, (err) => {
-      console.log(err);
-    });
-  }
-
-  gal(photoNumber : string){
-    this.photoNUM = photoNumber;
-    const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      saveToPhotoAlbum: false,
-      allowEdit: true,
-      correctOrientation: true,
-      targetHeight: 750,
-      targetWidth: 900
-    }
-    this.camera.getPicture(options).then((imageData) => { 
-      let barName = "?ImageName="+this.barName+"_"+this.photoNUM;
-      let postData = new FormData();
-      postData.append("file",imageData);
-      let data:Observable<any> = this.http.post(this.uplPhotoURI+"uploadPhoto.php"+barName, postData);
-      this.loadingModal();//open loadung modal
-      data.subscribe((res)=>{
-      console.log(res);
-      console.log("Upload Successful");
-      setTimeout(() => {
-        this.modalCtrl.dismiss();
-      }, 5000);
-      
-      });
-    }, (err) => {
-      console.log(err);
-    });
   }
 
   async sendNotification(msg: string) {
@@ -334,10 +300,13 @@ async loadingModal() {
       showBackdrop : true,
       componentProps: {},
   });
+  modal.present();
+  setTimeout(() => {
+    modal.dismiss();
+  }, 8000);
   modal.onDidDismiss().then(() => {
       this.ionViewWillEnter();
-  })
-  modal.present();
+  });
 }
 
 

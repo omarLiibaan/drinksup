@@ -1,0 +1,53 @@
+ion-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    --padding-top: 20%;
+}
+
+.scan_button{
+    margin: 0 auto;
+    height: 70%;
+    width: 90%;
+    background-color: #101012;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 2px 5px 10px #000;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    img{
+        width: 80%;
+        opacity: .5;
+    }
+}
+
+ //ripple effect start
+ .rippleEffect{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-position: center;
+    transition: background 0.4s;
+}
+
+.scan_button:hover .rippleEffect{
+    background: #101012 radial-gradient(circle, transparent 1%, #101012 1%) center/15000%;
+}
+
+.scan_button:active  .rippleEffect{
+    background-color: rgba(255, 255, 255, 0.1);
+    background-size: 100%;
+    transition: background 0s;
+}
+
+.scan_button:active{
+    transform: scale(.98)
+}

@@ -1,17 +1,28 @@
-<ion-content padding color="secondary">
-<h1>{{jour}}</h1>
+<ion-content padding>
+<h1><ion-icon name="time"></ion-icon>&nbsp;Votre horaire le {{jour}}</h1>
 
 <form [formGroup]="updateSched" (ngSubmit)="editSched()">
-  <div class="inputWrapper">
-    <ion-label>Heure d'ouverture</ion-label>
-    <ion-datetime formControlName="heureDebut" display-format="HH:mm" attr.id="timeStart"></ion-datetime>
-    <img src="../../assets/img/time-icon.svg" alt="">
+  <h2><ion-icon name="sunny"></ion-icon>&nbsp;Horaire du jour</h2>
+  <div class="datetime_row">
+    <div>
+      <h3>Ouverture</h3>
+      <ion-datetime formControlName="heureDebutJour" display-format="HH:mm" min="05:00" max="12:00" minuteValues="0,10,15,20,25,30,35,40,45,50,55"></ion-datetime>
+    </div>
+    <div>
+      <h3>Fermeture</h3>
+      <ion-datetime formControlName="heureFinJour" display-format="HH:mm" min="05:00" max="12:00" minuteValues="0,10,15,20,25,30,35,40,45,50,55"></ion-datetime>
+    </div>
   </div>
-
-  <div class="inputWrapper">
-    <ion-label>Heure de fermeture</ion-label>
-    <ion-datetime formControlName="heureFin" display-format="HH:mm" attr.id="timeStart"></ion-datetime>
-    <img src="../../assets/img/time-icon.svg" alt="">
+  <h2 class="horaire_du_soir"><ion-icon name="moon"></ion-icon>&nbsp;Horaire du soir</h2>
+  <div class="datetime_row">
+    <div>
+      <h3>Ouverture</h3>
+      <ion-datetime formControlName="heureDebutSoir" display-format="HH:mm" minuteValues="0,10,15,20,25,30,35,40,45,50,55"></ion-datetime>
+    </div>
+    <div>
+      <h3>Fermeture</h3>
+      <ion-datetime formControlName="heureFinSoir" display-format="HH:mm" minuteValues="0,10,15,20,25,30,35,40,45,50,55"></ion-datetime>
+    </div>
   </div>
   <ion-button type="submit" id="submitBtn" style="display : none"></ion-button>
 </form>
@@ -20,7 +31,7 @@
 
 
 <ion-footer>
-    <ion-toolbar color="primary">
+    <ion-toolbar color="tertiary">
         <ion-grid>
           <ion-row>
             <ion-col>

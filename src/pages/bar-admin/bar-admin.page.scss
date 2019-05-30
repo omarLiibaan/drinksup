@@ -1,12 +1,12 @@
 ion-card{
-    background-color: rgba(0,0,0,.2);
-    border : 1px solid rgba(255,255,255,0.5);
-    font-size: .75rem;
+    background-color: rgba(255,255,255,0.1);
+    border-radius: 0px;
 
     ion-card-header{
         ion-card-title{
             color : #fff;
-            font-size: .9rem;
+            font-size: 1.2rem;
+            font-family: "NBL";
         }
     }
 }

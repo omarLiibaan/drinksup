@@ -89,6 +89,7 @@ export class BarsPage{
     {
         this.items = data;
         this.Filtereditems = this.items;
+        console.log(this.Filtereditems)
         this.activeBarsNo = this.items.length;
     },
     (error : any) =>
@@ -109,7 +110,6 @@ export class BarsPage{
           this.offerIds.push(data[i].Entreprises_ENT_ID);
         }
 
-        console.log(this.offerIds);
     },
     (error : any) =>
     {
@@ -233,46 +233,6 @@ export class BarsPage{
     this.zindex  = "-1";
   }
 
-
-  // tousBtn(){
-  //   this.Filtereditems = this.items;
-    
-  //   this.tous = "#bf052b";
-  //   this.offres = "#0a0b0f";
-  //   this.top10  = "#0a0b0f";
-  //   this.presdemoi = "#0a0b0f";
-  // }
-
-  // offresBtn(){
-  //   var ids = this.offerIds;
-  //   this.Filtereditems = this.items.filter(function(data){
-  //     return ids.indexOf(data.ENT_ID) > -1;
-  //   });
-    
-  //   this.tous = "#0a0b0f";
-  //   this.offres = "#bf052b";
-  //   this.top10  = "#0a0b0f";
-  //   this.presdemoi = "#0a0b0f";
-  // }
-
-  // top10Btn(){
-  //   this.Filtereditems = this.items;
-    
-  //   this.tous = "#0a0b0f";
-  //   this.offres = "#0a0b0f";
-  //   this.top10  = "#bf052b";
-  //   this.presdemoi = "#0a0b0f";
-  // }
-
-  // presdemoiBtn(){
-  //   this.Filtereditems = this.items;
-    
-  //   this.tous = "#0a0b0f";
-  //   this.offres = "#0a0b0f";
-  //   this.top10  = "#0a0b0f";
-  //   this.presdemoi = "#bf052b";
-  // }
-
   scrollEvent(event){
     var position = 0;
 
@@ -298,7 +258,7 @@ export class BarsPage{
       androiddelay: 150
      }
     this.nativePageTransitions.slide(options); 
-    this.navCtrl.navigateForward("/tabs/searchAbar");
+    this.navCtrl.navigateForward("/search-a-bar");
   }
 
   moveToBar(id : string){
@@ -310,7 +270,7 @@ export class BarsPage{
       androiddelay: 150
      }
     this.nativePageTransitions.slide(options); 
-    this.navCtrl.navigateForward('/tabs/bar-user/'+id);
+    this.navCtrl.navigateForward('/bar-user/'+id);
     setTimeout(() => {
       this.hideElem = "block";
     }, 500);

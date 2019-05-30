@@ -219,6 +219,10 @@ ion-tab-bar, ion-tab-button{
   padding-inline-end: 0 !important;
 }
 
+.swiper-pagination {
+  bottom: 50px !important;
+  bottom: calc(env(safe-area-inset-bottom) + 50px) !important;
+}
 
 ion-modal.edit-schedule-modal {
   @media (min-width: 300px) and (min-height: 500px) {
@@ -233,7 +237,57 @@ ion-modal.edit-schedule-modal {
     overflow: hidden;
     max-width: 310px;
     width: 80vw;
-    height: 50vh;
+    height: 60vh;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 0 16px 20px rgba(0,0,0,.4);
+    background-color: transparent;
+  }
+}
+
+ion-modal.edit-photos-modal {
+  @media (min-width: 300px) and (min-height: 500px) {
+    ion-backdrop {
+      visibility: visible;
+      opacity: .75 !important;
+    }
+  }
+
+  .modal-wrapper {
+    position: absolute;
+    overflow: hidden;
+    max-width: 310px;
+    width: 80vw;
+    height: 45vh;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 0 16px 20px rgba(0,0,0,.4);
+    background-color: transparent;
+  }
+}
+
+ion-modal.edit-profilepic-modal {
+  @media (min-width: 300px) and (min-height: 500px) {
+    ion-backdrop {
+      visibility: visible;
+      opacity: .75 !important;
+    }
+  }
+
+  .modal-wrapper {
+    position: absolute;
+    overflow: hidden;
+    max-width: 310px;
+    width: 80vw;
+    height: 35vh;
     top: 0;
     bottom: 0;
     left: 0;
@@ -246,11 +300,12 @@ ion-modal.edit-schedule-modal {
 }
 
 
+
 ion-modal.loading-modal {
   @media (min-width: 300px) and (min-height: 500px) {
     ion-backdrop {
       visibility: visible;
-      opacity: .75 !important;
+      opacity: .85 !important;
     }
   }
 

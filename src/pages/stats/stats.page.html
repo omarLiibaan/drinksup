@@ -4,12 +4,41 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding color="secondary">
+<ion-content color="secondary">
   <div *ngFor="let stat of stats" >
-    <p>
-      Nombre de QrCode scanné : {{stat.nbOffre}} pour le mois de {{stat.Mois}}
+    <p class="text">
+     <span>Nombre de QrCode scanné :</span>&nbsp;{{stat.nbOffre}} ( {{stat.Mois}} ) 
     </p>
   </div>
-  <p>{{msg}} </p>
+  <p *ngIf="statUser===null || statUser===undefined" class="text">
+    Pas de donnée
+  </p>
+
+  <div class="chart_wrapper">
+    <span class="y_legend">Nombre de code scanné</span>
+    <span class="max">{{maxClick}}</span>
+    <span class="zero">0</span>
+    <div class="chart_box">
+        <div *ngFor="let stat of stats" class="graph_wrapper">
+          <div class="graph" [ngStyle]="{'height' : (stat.nbOffre/maxClick)*100+'%'}">
+            {{stat.nbOffre}}
+            <span>{{stat.Mois}}</span>
+          </div>
+        </div>
+    </div>
+
+    <div class="grid_wrapper">
+      <span class="grid"></span>
+      <span class="grid"></span>
+      <span class="grid"></span>
+      <span class="grid"></span>
+      <span class="grid"></span>
+      <span class="grid"></span>
+      <span class="grid"></span>
+      <span class="grid"></span>
+      <span class="grid"></span>
+      <span class="grid"></span>
+    </div>
+  </div>
 
 </ion-content>

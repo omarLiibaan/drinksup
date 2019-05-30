@@ -1,0 +1,65 @@
+.qrcode{
+    filter: invert(1) !important;
+    img{
+        filter: invert(1) !important;
+    }
+}
+
+ngx-qrcode{
+    filter: invert(1) !important;
+    .qrcode{
+        filter: invert(1) !important;
+        img{
+            filter: invert(1) !important;
+        }
+    }
+}
+
+ion-card{
+    border: none !important;
+    box-shadow: none !important;
+    filter: invert(1) !important;
+        ngx-qrcode{
+            filter: invert(1) !important;
+            .qrcode{
+                filter: invert(1) !important;
+                img{
+                    filter: invert(1) !important;
+            }
+        }
+    }
+}
+
+ion-content{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    --background : #000;
+    --padding-top : 10%;
+}
+
+h1{
+    margin-top: 70px;
+    font-family: "NBL";
+    font-size: 1.2rem;
+    color: #fff;
+    padding: 0 35px;
+    text-align: center;
+    margin-bottom: 5%;
+}
+
+.annulerBtn{
+  margin: 0 35px;
+  width: calc(100% - 70px);
+  text-transform: none;
+  font-size: .9rem;
+  --background : rgb(196, 0, 0);
+  --border-width : 1px;
+  --border-color : rgb(196, 0, 0);
+  --border-style : solid; 
+  color : #fff; 
+  margin-top: 40px;
+  font-family: "NBL";
+}

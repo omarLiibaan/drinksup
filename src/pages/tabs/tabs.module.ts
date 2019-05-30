@@ -40,27 +40,6 @@ const routes: Routes = [
                     { path: '', loadChildren: '../profile/profile.module#ProfilePageModule' },
                 ]
             },
-            {
-                path: 'bar-user/:id',
-                children: [
-                    { path: '', loadChildren: '../bar-user/bar-user.module#BarUserPageModule' },
-                ]
-                
-            },
-            {
-                path: 'bar-user/:id/:idOffer',
-                children: [
-                    { path: '', loadChildren: '../bar-user/bar-user.module#BarUserPageModule' },
-                ]
-                
-            },
-            {
-                path: 'searchAbar',
-                children: [
-                    { path: '', loadChildren: '../search-a-bar/search-a-bar.module#SearchABarPageModule' },
-                ]
-                
-            },
         ]
     },
     {

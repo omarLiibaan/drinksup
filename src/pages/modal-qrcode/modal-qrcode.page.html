@@ -1,14 +1,10 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>modal-qrcode</ion-title>
-  </ion-toolbar>
-</ion-header>
+<div class="header-solid">
+  <div class="hs-button" (click)="annuler()"><img src="../../assets/img/back-arrow-icon.svg"> retour</div>
+</div>
 
-<ion-content padding>
-
+<ion-content>
+  <h1>Veuillez présenter le Qrcode au barman</h1>
   <ion-card *ngIf="codeContent">
       <ngx-qrcode [(qrc-value)]="codeContent" ></ngx-qrcode>
     </ion-card>
-
-  <ion-button expand="full" (click)="annuler()">Annuler</ion-button>
 </ion-content>

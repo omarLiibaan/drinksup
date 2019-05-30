@@ -47,23 +47,6 @@
         <p class="addressBar">{{myBar.ENT_ADRESSE}}, {{myBar.ENT_NPA}} - {{myBar.ENT_LOCALITE}}</p>
     </div>
 
-    <!-- <div class="offer-wrapper">
-        <div *ngFor="let offer of myOffers" class="offers">
-          <h1>{{offer.OFF_DESCRIPTION}}</h1>
-          <p><b>De :</b> {{offer.OFF_DATEDEBUT}}</p>
-          <p><b>À :</b> {{offer.OFF_DATEFIN}}</p>
-          
-
-          <div class="lds-ring"  *ngIf="!showBtns"><div></div><div></div><div></div><div></div></div>
-          <div *ngIf="payed=='good' && showBtns">
-              <ion-button *ngIf="checkIfScanned(offer.OFF_ID,user_id)" disabled>offre utilisée</ion-button>
-              <ion-button *ngIf="!checkIfScanned(offer.OFF_ID,user_id)" (click)="activerOffre(offer.OFF_DESCRIPTION, offer.OFF_DATEDEBUT, offer.OFF_DATEFIN, offer.OFF_ID, offer.Entreprises_ENT_ID, user_id)">activer l'offre</ion-button>
-          </div>
-
-          <ion-button *ngIf="payed!='good' && showBtns" (click)="jemabonne()">Activer l'offre</ion-button>
-        </div>
-    </div> -->
-
     <div class="second-section">
       <p class="descBar">{{myBar.ENT_DESCRIPTION}}</p>
     </div>

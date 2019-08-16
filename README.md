@@ -30,7 +30,7 @@ $ ionic cordova build android
 $ ionic cordova build ios
 ```
 
-<h5>There's a chance that the app wont build on android and you might get this error :</h5>
+<h5>There's a chance that the app wont run or build on android and you might get this error :</h5>
 
 ```
 * What went wrong:
@@ -44,5 +44,9 @@ Execution failed for task ':app:processDebugResources'.
 <string name="fb_app_name">drinksup</string>
 ```
 
-<h5><i>to platform > android > app > src > main > res > values >facebookconnect.html ( inside of "resources" tag )</i></h5>
+<h5>
+  to <i>platform > android > app > src > main > res > values >facebookconnect.html</i> ( inside of "resources" tag )
+  <br>
+  <i>And then close and re-open the terminal and re-run $ionic cordova run android</i>
+</h5>
 

@@ -16,21 +16,18 @@ $ git clone -b name_of_the_branch https://github.com/omarLiibaan/drinksup.git
 
 ```
 $ npm install
-
 ```
 
 <h4>Third step, build platforms :</h4>
 
 ```
 $ ionic cordova build android
-
 ```
 
 <i>or / and</i>
 
 ```
 $ ionic cordova build ios
-
 ```
 
 Just in case the app wont build on android platform, try adding:

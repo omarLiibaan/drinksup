@@ -30,11 +30,19 @@ $ ionic cordova build android
 $ ionic cordova build ios
 ```
 
-Just in case the app wont build on android platform, try adding:
+<h5>There's a chance that the app wont build on android and you might get this error :</h5>
+
+```
+* What went wrong:
+Execution failed for task ':app:processDebugResources'.
+```
+
+<h5>In this case, you must add these lines :</h5>
+
 ```
 <string name="fb_app_id">434430730652551</string>
 <string name="fb_app_name">drinksup</string>
 ```
-to platform > android > app > src > main > res > values >facebookconnect.html
-<br />
-inside of "resources" tag
+
+<h5><i>to platform > android > app > src > main > res > values >facebookconnect.html ( inside of "resources" tag )</i></h5>
+

@@ -1,4 +1,5 @@
 # Drinksup Mobile App
+
 <h4>First step, clone the project :</h4>
 
 ```
@@ -46,7 +47,7 @@ Execution failed for task ':app:processDebugResources'.
 
 <h5>
   to <i>platform > android > app > src > main > res > values >facebookconnect.html</i> ( inside of "resources" tag )
-  <br>
-  <i>And then close and re-open the terminal and re-run $ionic cordova run android</i>
+  <br><br>
+  <i>And then, you must close and re-open the terminal and re-run $ionic cordova run android</i>
 </h5>
 

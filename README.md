@@ -36,7 +36,10 @@ $ ionic cordova build ios
 ```
 \platform\android\app\src\main\res\values\
 ```
-<h5>If the file is missing, try to close and re-open your editor and re-check the file</h5>
+<h5>If the file is missing, try to close and re-open your editor and then re-check the file. If the file is still missing, create facebookconnect.xml</h5>
+
+<br>
+<hr>
 
 <h5>There's a chance that the app wont run or build on android and you might get this error :</h5>
 

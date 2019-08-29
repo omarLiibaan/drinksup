@@ -13,7 +13,7 @@ $ git clone https://github.com/omarLiibaan/drinksup.git
 $ git clone -b name_of_the_branch https://github.com/omarLiibaan/drinksup.git
 ```
 
-<h4>Second step, install all saved plugins :</h4>
+<h4>Second step, install all dependencies :</h4>
 
 ```
 $ npm install

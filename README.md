@@ -51,3 +51,25 @@ Execution failed for task ':app:processDebugResources'.
   <i>And then, you must close and re-open the terminal and re-run $ionic cordova run android</i>
 </h5>
 
+<br>
+<hr>
+Fixing the gray screen before splash screen [Cordova]
+
+1. Create a new style file in path :
+```
+\platforms\android\res\values\
+```
+2. Add these lines in the new style.xml file.
+```
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <style name="Theme.Transparent" parent="android:style/Theme.DeviceDefault.Light.NoActionBar">
+      <item name="android:windowDisablePreview">true</item>
+  </style>
+</resources>
+```
+3. Update theme in AndroidManifest.xml
+```
+ <activity ... android:theme="@style/Theme.Transparent" ... >
+```
+

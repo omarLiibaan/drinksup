@@ -31,6 +31,13 @@ $ ionic cordova build android
 $ ionic cordova build ios
 ```
 
+<h4>Fourth step, Check if the facebookconnect.xml file exists in path :</h4>
+
+```
+\platform\android\app\src\main\res\values\
+```
+<h5>If the file is missing, try to close and re-open your editor and re-check the file</h5>
+
 <h5>There's a chance that the app wont run or build on android and you might get this error :</h5>
 
 ```
@@ -59,7 +66,7 @@ Execution failed for task ':app:processDebugResources'.
 
 ##### Step 1, Create a new style file in path :
 ```
-\platforms\android\res\values\
+\platform\android\app\src\main\res\values\
 ```
 ##### Step 2, Add these lines in the new style.xml file.
 ```

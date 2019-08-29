@@ -53,13 +53,15 @@ Execution failed for task ':app:processDebugResources'.
 
 <br>
 <hr>
-Fixing the gray screen before splash screen [Cordova]
 
-1. Create a new style file in path :
+# Fixing the gray screen before splash screen [Cordova]
+<br>
+
+##### Step 1, Create a new style file in path :
 ```
 \platforms\android\res\values\
 ```
-2. Add these lines in the new style.xml file.
+##### Step 2, Add these lines in the new style.xml file.
 ```
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
@@ -68,7 +70,7 @@ Fixing the gray screen before splash screen [Cordova]
   </style>
 </resources>
 ```
-3. Update theme in AndroidManifest.xml
+##### Step 3, Update theme in AndroidManifest.xml
 ```
  <activity ... android:theme="@style/Theme.Transparent" ... >
 ```
